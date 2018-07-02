@@ -1,0 +1,29 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+
+<head>
+  <title>Pastuhox</title>
+  <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type = "text/css"/>
+  <link rel="stylesheet" href="{% static "desk/stats.css" %}" type = "text/css"/>
+  <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+  <html lang="en">
+
+</head>
+
+
+<h1>{{city}}</h1>
+<div class="container-fluid-create_day bg-2">
+  <ul>
+    <li>Общая прибыль : {{gain_total}} рублей</li>
+    <li>Продано : {{count_sold}} билетов </li>
+    <li>Продано по акции : {{gaint_share}}</li>
+    <li>По пригласительным {{count_free}} билетов</li>
+    <li>Не продано {{count_vacant}} билетов</li>
+</ul>
+<form method="post">
+    {%csrf_token%}
+    <input type="hidden" name="next" value="{% url 'desk:city_stats' city.id%}">
+    <button type="submit" class="btn-primary-stats btn-lg sharp" name="export", id="sell_button"> Загрузить статистику </button>
+</form>
+</div>

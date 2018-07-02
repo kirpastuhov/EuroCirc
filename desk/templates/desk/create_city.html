@@ -1,0 +1,29 @@
+
+
+{% load staticfiles %}
+<!DOCTYPE html>
+<title>Pastuhox</title>
+
+<link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type = "text/css"/>
+<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{% static "desk/index.css" %}" type = "text/css"/>
+<html lang="en">
+<head>
+	<title>Pasuhox</title>
+	<meta charset="utf-8" />
+</head>
+<div class="container-fluid-create_day">
+ <form action="{% url 'desk:create_city'%}" method="post">
+    {% csrf_token%}
+    <label for="party">Введите название города: </label>
+    <input type="text" name="city_name">
+  <div class="my_btn_discount">
+      <button type="submit" class="btn btn-primary-discount btn-lg sharp">Открыть Город</button>
+  </div>
+  </form>
+</div>
+
+<div class="back">
+	<a href="{%url 'desk:index'%}"><button class="btn btn-primary-back btn-lg sharp"> К выбору города </button>	</a>
+</div>
+

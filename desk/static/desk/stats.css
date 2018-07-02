@@ -1,0 +1,65 @@
+.container-fluid-create_day {
+	text-align:center;
+	padding-top: 40px;
+	padding-bottom: 0px;
+	background-color: #b4b4b4; /* Whole background	*/
+	border: 0;
+	border-radius: 0;
+	margin-bottom: 0;
+	font-size: 20px;
+	color: black;
+	letter-spacing: 1px;
+	padding-left: 100px;
+	padding-right: 100px;
+}
+
+.container-fluid-log_in {
+	margin: auto;
+	text-align:center;
+	padding-top: 40px;
+	padding-bottom: 0px;
+	background-color: #b4b4b4; /* Whole background	*/
+	border: 0;
+	border-radius: 0;
+	margin-bottom: 0;
+	font-size: 20px;
+	color: black;
+	letter-spacing: 1px;
+	padding-left: 100px;
+	padding-right: 100px;
+}
+
+#parent {
+   display: table;
+   width: 100%;
+}
+#form_login {
+   display: table-cell;
+   text-align: center;
+   vertical-align: middle;
+}
+.content {
+    max-width: 500px;
+    margin: auto;
+}
+
+.bg-2 {
+	background-color: #b4b4b4; /* Black Gray */
+	color: Black /* font color */
+}
+
+html, body {
+  font-size: 15;
+    background-color: #b4b4b4; /* Background */
+    height:100%
+}
+
+h1 {
+    text-shadow: 3px 2px SlateGrey;
+}
+
+ul li {
+  font-size: 15;
+
+    margin: 5px;
+}
