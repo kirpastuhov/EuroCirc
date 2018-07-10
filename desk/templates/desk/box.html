@@ -49,7 +49,7 @@
 
 
 
-<div class="my_btn_makefree">
+		<div class="my_btn_makefree">
 					<form method="post">
 						{%csrf_token%}
 						<input type="hidden" name="next" value="{{ request.path }}">
@@ -65,13 +65,21 @@
 						</form>
 		</div>
 
-		<div class="free">
+		<div class="my_btn_book">
+						<form method="post">
+							{%csrf_token%}
+							<input type="hidden" name="next" value="{{ request.path }}">
+							<button type="submit" class="btn btn-primary-book btn-lg round" name="Book", id="sell_button">Забронировать</button>
+							<input type="text" name="book_name"></input>
+						</form>
+		</div>
 
-				<form method="post">
+		<div class="free">
+			<form method="post">
 					{%csrf_token%}
 					<input type="hidden" name="next" value="{{ request.path }}">
 					<button type="submit" class="btn btn-primary-free btn-lg sharp" name="Sell_Free", id="sell_button">Бесплатно</button>
-				</form>
+			</form>
 </div>
 
 <div class="free2">

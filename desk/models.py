@@ -162,8 +162,8 @@ class Seat(models.Model):
     sold = models.CharField(max_length=50, default='Vacant')
     user_id = models.IntegerField(default=0)
     date = models.DateTimeField()
-    #holder_name = models.CharField(max_length=1000, default=None, null=True, blank=True)
-
+    name = models.CharField(max_length=1000, default=' ')
+    
     def __str__(self):
         return str(self.row.sector.sector_number) + ' СЕКТОР, ' + str(self.row.row_number) + ' РЯД, ' + str(self.seat_number) + ' МЕСТО ' +  str(self.date)
 

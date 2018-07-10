@@ -151,6 +151,21 @@ div[class="my_btn_share"]{
 	display: inline-block;
 }
 
+div[class="my_btn_book"]{
+	display: inline-block;
+}
+.btn-primary-book {
+color: #fff;
+background-color: #6666ff;
+border-color: #6666ff;
+}
+.btn-primary-book:hover{
+	background-color: #4d4dff; /* Цвет кнопки при наведении курсора */
+}
+.btn-primary-book:active{
+	background-color: #3333ff; /* Цвет кнопки при нажатии */
+}
+
 div [class="free"]{
 	display: inline-block;
 	position: absolute;
