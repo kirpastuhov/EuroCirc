@@ -1,4 +1,4 @@
-from django.shortcuts import render
+﻿from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import View
 from .models import City, Day, Sector, Row, Seat, User
@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 import xlsxwriter
 from string import ascii_uppercase
 import io
+import datetime
 
 # Create your views here.
 
@@ -1416,12 +1417,27 @@ class CityStats(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
+'''
+    	date_ = datetime.datetime.now().date()
+    	if self.kwargs['date'] == date_:
+    		print('YOOOO')'''
 
 class Box(LoginRequiredMixin, View):
     template_name = 'desk/box.html'
 
     def get(self, request, city_id, *arg, **kwargs):
+        date_ = datetime.datetime.now().replace(second=0, microsecond=0) 
         sector = Sector.get_sector(self, self.kwargs['date'], self.kwargs['hour'], self.kwargs['sector_number'], city_id )
+        c = sector.date.replace(second=0, microsecond=0) - date_
+        if c.total_seconds() < 3600: 
+        	needed = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Booked', sector__city__id=city_id)
+        	for seat in needed:
+        		seat.sold = 'Vacant'
+        		seat.save()
+
+
+
+
         city = City.objects.get(id=city_id)
         date = self.kwargs['date']
         hour = self.kwargs['hour']
@@ -1455,16 +1471,17 @@ class Box(LoginRequiredMixin, View):
 
 
     def post(self, request, *arg, city_id, **kwargs):
-        if 'Hold' in request.POST:
-            if  seat.sold == 'Vacant':
-                        seat.user_id = 0
-                        seat.holder_name =  self.kwargs['name']
-                        seat.sold = 'Hold'
-                        seat.selected = False
-                        seat.save()
-            else:
-                seat.selected = False
-                seat.save()
+        if 'Book' in request.POST:
+	        for seat in all_seats:
+	            if  seat.sold == 'Vacant':
+	                        seat.user_id = 0
+	                        seat.holder_name =  self.kwargs['booked_name']
+	                        seat.sold = 'Booked'
+	                        seat.selected = False
+	                        seat.save()
+	            else:
+	                seat.selected = False
+	                seat.save()
 
 
         next = request.POST.get('next')
@@ -1504,12 +1521,12 @@ class Box(LoginRequiredMixin, View):
             next = request.POST.get('next', '/')
             #all_seats = Seat.get_all_selected_seats(self, sector__city__id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'], current_user.id)
             for seat in all_seats:
-                if  seat.sold == 'Vacant':
+                if  seat.sold == 'Vacant' or seat.sold == 'Booked':
                         seat.user_id = 0
                         seat.sold = 'Sold'
                         seat.selected = False
                         seat.save()
-
+                        seat.name = ''
                         if seat.price == 500:
                             current_user.sold_500 += 1
 
