@@ -1,4 +1,4 @@
-html,
+﻿html,
 body {
 	background-color: #b4b4b4; /* Background */
 	height:100%
@@ -34,28 +34,28 @@ margin-top: 40px;
 }
 
 
-button[title="1500"] {
+button[title="1500, "] {
 background-color: #ba1f61;
 }
 
-button[title="1200"] {
+button[title="1200, "] {
 background-color: #6630ff;
 }
 
-button[title="1000"] {
+button[title="1000, "] {
 background-color: #aee062;
 }
-button[title="900"] {
+button[title="900, "] {
 background-color: #00CED1;
 }
-button[title="800"]{
+button[title="800, "]{
 background-color: #edd52c;
 }
 
-button[title="700"]{
+button[title="700, "]{
 background-color: #ff00ff;
 }
-button[title="500"]{
+button[title="500, "]{
 background-color: #1c8aff;
 }
 button[id=Sold]
@@ -79,6 +79,7 @@ button[id=Free]
 {
 background-color: black;
 }
+
 button[selected=True]{
 background-color: Crimson;
 }

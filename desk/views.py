@@ -1432,18 +1432,7 @@ class Box(LoginRequiredMixin, View):
     template_name = 'desk/box.html'
 
     def get(self, request, city_id, *arg, **kwargs):
-        date_ = datetime.datetime.now().replace(second=0, microsecond=0, tzinfo=None) 
         sector = Sector.get_sector(self, self.kwargs['date'], self.kwargs['hour'], self.kwargs['sector_number'], city_id )
-        c = sector.date.replace(second=0, microsecond=0, tzinfo=None) - date_
-        if c.total_seconds() < 3600: 
-        	needed = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Booked', sector__city__id=city_id)
-        	for seat in needed:
-        		seat.sold = 'Vacant'
-        		seat.save()
-
-
-
-
         city = City.objects.get(id=city_id)
         date = self.kwargs['date']
         hour = self.kwargs['hour']
@@ -1451,6 +1440,15 @@ class Box(LoginRequiredMixin, View):
         all_rows = []
         current_user = User.objects.get(id=request.user.id)
         batch = current_user.batch
+        date_ = datetime.datetime.now().replace(second=0, microsecond=0, tzinfo=None) 
+        
+        c = sector.date.replace(second=0, microsecond=0, tzinfo=None) - date_
+        if c.total_seconds() < 3600: 
+        	needed = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Booked', sector__city__id=city_id)
+        	for seat in needed:
+        		seat.sold = 'Vacant'
+        		seat.save()
+
         if self.kwargs['sector_number'] != '5':
             for i in range(0,9):
                 all_rows.append(rows[i].seat_set.all()[::1])
@@ -1477,22 +1475,26 @@ class Box(LoginRequiredMixin, View):
 
 
     def post(self, request, *arg, city_id, **kwargs):
-        if 'Book' in request.POST:
-	        for seat in all_seats:
-	            if  seat.sold == 'Vacant':
-	                        seat.user_id = 0
-	                        seat.holder_name =  self.kwargs['booked_name']
-	                        seat.sold = 'Booked'
-	                        seat.selected = False
-	                        seat.save()
-	            else:
-	                seat.selected = False
-	                seat.save()
-
-
         next = request.POST.get('next')
         current_user = User.objects.get(id=request.user.id)
         all_seats = Seat.get_all_selected_seats(self, current_user.id, city_id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'])
+        if 'Book' in request.POST:
+            for seat in all_seats:
+                if  seat.sold == 'Vacant':
+                        seat.user_id = 0
+                        current_user.batch = 0
+                        current_user.save()
+                        print(request.POST.get('booked_name'))
+                        seat.name =  request.POST.get('booked_name')
+                        seat.sold = 'Booked'
+                        seat.selected = False
+
+                        seat.save()
+            else:
+                seat.selected = False
+                seat.save()
+            return HttpResponseRedirect(next)
+
         if 'Back' in request.POST:
             current_user.batch = 0
             current_user.save()

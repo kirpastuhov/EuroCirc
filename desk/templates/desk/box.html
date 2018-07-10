@@ -29,7 +29,7 @@
 			<div class="seats">
 				<form method="post">
 					{%csrf_token%}
-				<button type="submit" class="btn btn-primary" id="{{seat.sold}}" title="{{seat.price}}" name="Select" selected="{{seat.selected}}" value="{{seat.id}}">{{seat.seat_number}}</button>
+				<button type="submit" class="btn btn-primary" id="{{seat.sold}}" title="{{seat.price}},{{seat.name}}" name="Select" selected="{{seat.selected}}" value="{{seat.id}}">{{seat.seat_number}}</button>
 				<input type="hidden" name="next" value="{{ request.path }}">
 				</form>
 			</div>
@@ -70,7 +70,7 @@
 							{%csrf_token%}
 							<input type="hidden" name="next" value="{{ request.path }}">
 							<button type="submit" class="btn btn-primary-book btn-lg round" name="Book", id="sell_button">Забронировать</button>
-							<input type="text" name="book_name"></input>
+							<input type="text" name='booked_name'></input>
 						</form>
 		</div>
 
