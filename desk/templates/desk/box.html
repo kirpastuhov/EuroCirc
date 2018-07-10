@@ -65,11 +65,19 @@
 		</div>
 
 		<div class="free">
-			
+
 				<form method="post">
 					{%csrf_token%}
 					<input type="hidden" name="next" value="{{ request.path }}">
 					<button type="submit" class="btn btn-primary-free btn-lg sharp" name="Sell_Free", id="sell_button">Бесплатно</button>
+				</form>
+</div>
+
+<div class="my_btn_share">
+				<form method="post">
+					{%csrf_token%}
+					<input type="hidden" name="next" value="{{ request.path }}">
+					<button type="submit" class="btn btn-primary-event btn-lg round" name="Local_cashdesks", id="sell_button">В Городские кассы </button>
 				</form>
 </div>
 

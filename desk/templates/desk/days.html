@@ -20,9 +20,11 @@
       <h3>Доступные для продажи дни: </h3>
         <ul>
           {% for day  in all_days %}
-					<li class="active">
-              <a  href ="{% url 'desk:odeum' day.date.date day.date.hour city_id%}">{{day.date|date:"d F H:i" }}</a>
+
+	         <li class="active">
+              <a  href ="{% url 'desk:odeum' day.date.date day.date.hour city_id%}">{{day.date|date:"d F H-i" }}</a>
 					</li>
+        
             {% endfor %}
           </ul>
   {% else %}
@@ -38,4 +40,3 @@
     <li>
       <a href ="{%url 'desk:index'%}">К Городам</a>
     </li>
-

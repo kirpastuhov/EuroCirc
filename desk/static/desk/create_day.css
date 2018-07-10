@@ -1,6 +1,6 @@
-﻿body {
-	background-color: #b4b4b4; /* Background */
-	height:100%
+html, body {
+    background-color: #b4b4b4; /* Background */
+    height:100%
 }
 
 p {
@@ -46,7 +46,7 @@ p {
 
 input[type="datetime-local"] {
   position: relative;
-  padding: 5px;	
+  padding: 5px;
 }
 div[class="my_btn_discount"]{
 display: inline-block;
@@ -117,3 +117,85 @@ input 	{
     width: 10%;
 }
 
+
+div[class="back"]{
+  position: relative;
+  left: 90%
+}
+
+div[class="delete"]
+{
+
+  position: relative;
+  top: -5.5%;
+  left: 90%;
+}
+div[class="stats"]
+{
+
+  position: relative;
+  top: -20.5%;
+  left: 67%;
+}
+
+div[class="my_btn_deleteday"]{
+
+display: inline-block;
+}
+
+div[class="my_btn_stats"]{
+top: : 10%;
+display: inline-block;
+}
+
+div[class="my_btn_backdays"]{
+  padding-left: 75px;
+display: inline-block;
+}
+
+.btn-primary-stats {
+
+color: Black;
+background-color: LightSlateGray;
+border-color: LightSlateGray;
+}
+.btn-primary-stats:hover{
+	background-color: SlateGrey; /* Цвет кнопки при наведении курсора */
+}
+.btn-primary-stats:active{
+	background-color: SlateGrey; /* Цвет кнопки при нажатии */
+}
+
+
+.btn-primary-backdays {
+color: Black;
+background-color: LightSlateGray;
+border-color: LightSlateGray;
+}
+.btn-primary-backdays:hover{
+	background-color: SlateGrey; /* Цвет кнопки при наведении курсора */
+}
+.btn-primary-backdays:active{
+	background-color: SlateGrey; /* Цвет кнопки при нажатии */
+}
+
+.btn-primary-deleteday {
+  text-align: center;
+padding-right: 35px;
+color: Black;
+background-color: LightSlateGray;
+border-color: LightSlateGray;
+}
+.btn-primary-deleteday:hover{
+	background-color: SlateGrey; /* Цвет кнопки при наведении курсора */
+}
+.btn-primary-deleteday:active{
+	background-color: SlateGrey; /* Цвет кнопки при нажатии */
+}
+
+.round {
+border-radius: 24px;
+}
+.sharp {
+border-radius: 0px;
+}
