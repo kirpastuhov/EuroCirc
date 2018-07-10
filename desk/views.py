@@ -1132,6 +1132,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 class Odeum(LoginRequiredMixin, View):
     template_name = 'desk/odeum.html'
     def get(self, request, city_id, *arg, **kwargs):
+        seat_given = Seat.objects.all().filter(sold='Local_cashdesks', sector__city__id=city_id)
         seat_vacant = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Vacant', sector__city__id=city_id)
         seat_sold = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Sold', sector__city__id=city_id)
         seat_share = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Share', sector__city__id=city_id)
@@ -1147,6 +1148,8 @@ class Odeum(LoginRequiredMixin, View):
             #gain_discount = gain_discount + seat.price*0.8
         for seat in seat_share:
             gain_share = gain_share + 1
+        for seat in seat_given:
+        	gain_sold = gain_sold + seat.price
         gain_total = gain_sold
 
 
@@ -1268,6 +1271,7 @@ class CityStats(LoginRequiredMixin, View):
 
     def post(self, request, city_id,  *args, **kwargs):
         next = request.POST.get('next')
+        seat_given = Seat.objects.all().filter(sold='Local_cashdesks', sector__city__id=city_id)
         seat_vacant = Seat.objects.all().filter(sold='Vacant', sector__city__id=city_id)
         seat_sold = Seat.objects.all().filter(sold='Sold', sector__city__id=city_id)
         seat_share = Seat.objects.all().filter(sold='Share', sector__city__id=city_id)
@@ -1284,7 +1288,10 @@ class CityStats(LoginRequiredMixin, View):
             #gain_discount = gain_discount + seat.price*0.8
         for seat in seat_share:
             gain_share = gain_share + 1
+        for seat in seat_given:
+        	gain_sold = gain_sold + seat.price
         gain_total = gain_sold
+
 
         count_sold = len(seat_sold)
         #count_discount = len(seat_discount)
@@ -1721,6 +1728,26 @@ class Box(LoginRequiredMixin, View):
                                 seat.selected = False
                                 seat.save()
                         elif  seat.sold == 'Free':
+                                seat.user_id = 0
+                                seat.sold = 'Vacant'
+                                seat.selected = False
+                                seat.save()
+                    current_user.batch = 0
+                    current_user.save()
+                    return HttpResponseRedirect(next)
+                else:
+                    return HttpResponseRedirect(next)
+        if 'Local_cashdesks' in request.POST:
+                next = request.POST.get('next', '/')
+                if current_user.staff == True:
+                    #all_seats = Seat.get_all_selected_seats(self, self.kwargs['sector_number'], current_user.id)
+                    for seat in all_seats:
+                        if  seat.sold == 'Vacant':
+                                seat.user_id = 0
+                                seat.sold = 'Local_cashdesks'
+                                seat.selected = False
+                                seat.save()
+                        elif  seat.sold == 'Given':
                                 seat.user_id = 0
                                 seat.sold = 'Vacant'
                                 seat.selected = False

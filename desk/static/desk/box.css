@@ -70,6 +70,11 @@ button[id=Share]
 {
 background-color: grey;
 }
+
+button[id=Local_cashdesks]{
+	background-color: white;
+}
+
 button[id=Free]
 {
 background-color: black;

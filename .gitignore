@@ -3,3 +3,5 @@ eurocircus_new/__pycache__/**
 desk/__pycache__/**
 
 desk/migrations/**
+
+db.sqlite3
