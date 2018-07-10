@@ -1149,6 +1149,8 @@ class Odeum(LoginRequiredMixin, View):
             gain_share = gain_share + 1
         gain_total = gain_sold
 
+
+        count_share = len(seat_share)
         count_sold = len(seat_sold)
         #count_discount = len(seat_discount)
         count_free = len(seat_free)
@@ -1189,6 +1191,7 @@ class Odeum(LoginRequiredMixin, View):
         context['gain_sold_pr'] = gain_sold_pr
         context['count_sold'] = count_sold
         context['count_free'] = count_free
+        context['count_share'] = count_share
         context['gain_free_pr'] = gain_free_pr
         context['count_vacant'] = count_vacant
         return render(request, self.template_name, context)
