@@ -40,9 +40,15 @@ class Days(LoginRequiredMixin, View):
         city_id = city_id
         city = City.objects.get(id=city_id)
         try:
-            context = Day.get_all_days(self, city_id)
+            # context = Day.get_all_days(self, city_id)['all_days'].order_by(now, date)
+            context = {}
+
+            all_days = Day.objects.all().order_by('-date')
+            
+            print(all_days)
             context["city_id"] = city_id
             context["city"] = city
+            context["all_days"] = all_days
         except Day.DoesNotExist:
             context["city_id"] = city_id
             context["city"] = city

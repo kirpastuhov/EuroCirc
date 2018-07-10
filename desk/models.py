@@ -7,7 +7,7 @@ from django.contrib.auth.models import (
 
 class UserManager(BaseUserManager):
 	def create_user(self, full_name, email, password=None, is_staff=False, is_admin=False, is_active=True):
-		if not email: 
+		if not email:
 			raise ValueError("Users must have an email address")
 		if not password:
 			raise ValueError("Users must have password")
@@ -18,7 +18,7 @@ class UserManager(BaseUserManager):
 		user_obj.admin = is_admin
 		user_obj.full_name = full_name
 		user_obj.save(using=self._db)
-			
+
 		return user_obj
 
 	def create_staffuser(self, full_name, email, password=None):
@@ -68,7 +68,7 @@ class User(AbstractBaseUser):
 
 
 	USERNAME_FIELD = 'email'
-	
+
 	REQUIRED_FIELDS = ['full_name']
 
 	objects = UserManager()
@@ -108,12 +108,12 @@ class Day(models.Model):
 	date = models.DateTimeField(default=None)
 
 	def __str__(self):
-	    return 'Открытый день' + str(self.date) + 'Город    ' + str(self.city)
+	    return 'Открытый день ' + str(self.date) + 'Город    ' + str(self.city)
 
 	def get_all_days(self, city_id):
 	    all_days = (Day.objects.all().filter(city__id=int(city_id)))
 	    print(all_days)
-	    #all_days = all_days.sort(key=lambda r: r.date)
+	    # all_days = all_days.sort(key=lambda r: r.date)
 	    context = {'all_days':all_days}
 	    return context
 
@@ -182,5 +182,3 @@ class Seat(models.Model):
     		lens.append(len(Seat.objects.all().filter(sector__sector_number=s, date__date=date, date__hour=hour, sector__city__id=city_id, sold='Vacant')))
 
     	return lens
-
-
