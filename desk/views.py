@@ -1549,7 +1549,7 @@ class Box(LoginRequiredMixin, View):
                     next = request.POST.get('next', '/')
                     #all_seats = Seat.get_all_selected_seats(self, sector__city__id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'], current_user.id)
                     for seat in all_seats:
-                        if  seat.sold != 'Free' and seat.sold != 'Discount' and seat.sold != 'Share':
+                        if  seat.sold != 'Free' and seat.sold != 'Local_cashdesks'and seat.sold != 'Discount' and seat.sold != 'Share':
                             current_user.sold_vacant = current_user.sold_vacant + 1
                             seat.user_id = 0
                             current_user.gain = current_user.gain - seat.price
@@ -1558,7 +1558,7 @@ class Box(LoginRequiredMixin, View):
                             seat.sold = 'Vacant'
                             seat.selected = False
                             seat.save()
-                        elif  seat.sold != 'Free' and seat.sold == 'Discount':
+                        elif  seat.sold != 'Free' and seat.sold != 'Local_cashdesks'  and seat.sold == 'Discount':
                             current_user.sold_vacant = current_user.sold_vacant + 1
                             seat.user_id = 0
                             current_user.gain = current_user.gain - (seat.price)*0.8
@@ -1567,7 +1567,7 @@ class Box(LoginRequiredMixin, View):
                             seat.sold = 'Vacant'
                             seat.selected = False
                             seat.save()
-                        elif  seat.sold != 'Free' and seat.sold == 'Share':
+                        elif  seat.sold != 'Free'and seat.sold != 'Local_cashdesks' and seat.sold == 'Share':
                             current_user.sold_vacant = current_user.sold_vacant + 1
                             seat.user_id = 0
                             current_user.sold_share = current_user.sold_share - 1
@@ -1747,7 +1747,7 @@ class Box(LoginRequiredMixin, View):
                                 seat.sold = 'Local_cashdesks'
                                 seat.selected = False
                                 seat.save()
-                        elif  seat.sold == 'Given':
+                        elif  seat.sold == 'Local_cashdesks':
                                 seat.user_id = 0
                                 seat.sold = 'Vacant'
                                 seat.selected = False
