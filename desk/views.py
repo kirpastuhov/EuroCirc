@@ -1432,9 +1432,9 @@ class Box(LoginRequiredMixin, View):
     template_name = 'desk/box.html'
 
     def get(self, request, city_id, *arg, **kwargs):
-        date_ = datetime.datetime.now().replace(second=0, microsecond=0) 
+        date_ = datetime.datetime.now().replace(second=0, microsecond=0, tzinfo=None) 
         sector = Sector.get_sector(self, self.kwargs['date'], self.kwargs['hour'], self.kwargs['sector_number'], city_id )
-        c = sector.date.replace(second=0, microsecond=0) - date_
+        c = sector.date.replace(second=0, microsecond=0, tzinfo=None) - date_
         if c.total_seconds() < 3600: 
         	needed = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Booked', sector__city__id=city_id)
         	for seat in needed:
