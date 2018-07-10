@@ -157,6 +157,14 @@ div [class="free"]{
 	left: 5%;
 	top: 100%;
 }
+
+div [class="free2"]{
+	display: inline-block;
+	position: absolute;
+	left: 20%;
+	top: 100%;
+}
+
 div[class="back"]{
 	position: absolute;
 	top: 5%;
