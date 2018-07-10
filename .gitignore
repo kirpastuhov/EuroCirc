@@ -5,3 +5,7 @@ desk/__pycache__/**
 desk/migrations/**
 
 db.sqlite3
+
+.DS_Store
+
+Северодвинск.xlsx
