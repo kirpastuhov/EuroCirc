@@ -1,6 +1,6 @@
  {% load staticfiles %}
 <!DOCTYPE html>
-<title>Pastuhox</title>
+<title>Days</title>
 
 <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type = "text/css"/>
 <meta name="viewport" content = "width=device-width, initial-scale=1.0">
@@ -24,7 +24,7 @@
 	         <li class="active">
               <a  href ="{% url 'desk:odeum' day.date.date day.date.hour city_id%}">{{day.date|date:"d F H-i" }}</a>
 					</li>
-        
+
             {% endfor %}
           </ul>
   {% else %}
