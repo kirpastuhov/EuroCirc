@@ -45,8 +45,10 @@ class Days(LoginRequiredMixin, View):
             # context = Day.get_all_days(self, city_id)['all_days'].order_by(now, date)
             context = {}
 
-            all_days = Day.objects.filter(city_id=city_id).order_by('-date')
+
             
+            all_days = Day.objects.filter(city_id = city_id).order_by('-date')
+
             print(all_days)
             context["city_id"] = city_id
             context["city"] = city
@@ -1441,11 +1443,15 @@ class Box(LoginRequiredMixin, View):
         all_rows = []
         current_user = User.objects.get(id=request.user.id)
         batch = current_user.batch
+
         date_ = datetime.datetime.now().replace(second=0, microsecond=0, tzinfo=pytz.timezone('UTC')) 
         
         c = sector.date.replace(second=0, microsecond=0) - date_
-        print(c.total_seconds)
-        if c.total_seconds() < 3600: 
+
+        date_ = datetime.datetime.now().replace(second=0, microsecond=0)
+
+        c = sector.date.replace(second=0, microsecond=0, tzinfo=None) - date_
+
         	needed = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Booked', sector__city__id=city_id)
         	for seat in needed:
         		seat.sold = 'Vacant'
