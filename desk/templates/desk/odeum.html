@@ -44,10 +44,10 @@
 					<input type="hidden" name="next" value="{%url 'desk:days' city_id%}">
 					<button type="submit" class="btn-primary-deleteday btn-lg sharp" name="Delete", onclick="return confirm('Вы уверены, что хотите удалить день? ')" id="sell_button"> Удалить день </button>
 			</form>
-		</div>
+
 
 		<div class="stats">
-			<div class="container-fluid-create_day bg-2">
+
 				<ul>
 					<p></p>
 					<li>Загруженность зала : {{stat}} % </li>
@@ -57,7 +57,7 @@
 					<li>По пригласительным {{count_free}} билетов: {{gain_free_pr}} % </li>
 					<li>Не продано {{count_vacant}} билетов</li>
 			 </ul>
-			</div>
+		</div>
 		</div>
 
 

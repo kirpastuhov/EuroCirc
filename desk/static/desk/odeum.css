@@ -20,9 +20,9 @@ div[class="delete"]
 div[class="stats"]
 {
 
-  position: relative;
-  top: -20.5%;
-  left: 67%;
+  /* padding-left: 50px; */
+  padding-top: 10px;
+
 }
 
 div[class="my_btn_deleteday"]{
