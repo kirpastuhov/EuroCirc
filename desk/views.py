@@ -1783,3 +1783,5 @@ class Box(LoginRequiredMixin, View):
                     return HttpResponseRedirect(next)
                 else:
                     return HttpResponseRedirect(next)
+
+print(1)
