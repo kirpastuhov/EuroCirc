@@ -1443,6 +1443,7 @@ class Box(LoginRequiredMixin, View):
         date_ = datetime.datetime.now().replace(second=0, microsecond=0, tzinfo=None) 
         
         c = sector.date.replace(second=0, microsecond=0, tzinfo=None) - date_
+        print(c.total_seconds)
         if c.total_seconds() < 3600: 
         	needed = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Booked', sector__city__id=city_id)
         	for seat in needed:
