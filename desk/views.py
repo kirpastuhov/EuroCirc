@@ -7,6 +7,7 @@ import xlsxwriter
 from string import ascii_uppercase
 import io
 import datetime
+import pytz
 
 # Create your views here.
 
@@ -44,8 +45,8 @@ class Days(LoginRequiredMixin, View):
             # context = Day.get_all_days(self, city_id)['all_days'].order_by(now, date)
             context = {}
 
-            all_days = Day.objects.all().order_by('-date')
-            
+            all_days = Day.objects.filter(city_id=city_id).order_by('-date')
+
             print(all_days)
             context["city_id"] = city_id
             context["city"] = city
@@ -1440,14 +1441,15 @@ class Box(LoginRequiredMixin, View):
         all_rows = []
         current_user = User.objects.get(id=request.user.id)
         batch = current_user.batch
-        date_ = datetime.datetime.now().replace(second=0, microsecond=0, tzinfo=None) 
-        
-        c = sector.date.replace(second=0, microsecond=0, tzinfo=None) - date_
+        date_ = datetime.datetime.now().replace(second=0, microsecond=0, tzinfo=pytz.timezone('UTC'))
+
+        c = sector.date.replace(second=0, microsecond=0) - date_
         print(c.total_seconds)
-        if c.total_seconds() < 3600: 
+        if c.total_seconds() < 3600:
         	needed = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Booked', sector__city__id=city_id)
         	for seat in needed:
         		seat.sold = 'Vacant'
+        		seat.name = ' '
         		seat.save()
 
         if self.kwargs['sector_number'] != '5':
@@ -1489,11 +1491,10 @@ class Box(LoginRequiredMixin, View):
                         seat.name =  request.POST.get('booked_name')
                         seat.sold = 'Booked'
                         seat.selected = False
-
                         seat.save()
-            else:
-                seat.selected = False
-                seat.save()
+                else:
+	                seat.selected = False
+	                seat.save()
             return HttpResponseRedirect(next)
 
         if 'Back' in request.POST:
@@ -1509,6 +1510,10 @@ class Box(LoginRequiredMixin, View):
             next = request.POST.get('next', '/')
             selected_seat = Seat.objects.get(id=request.POST.get("Select", ""))
             if selected_seat.selected == False and selected_seat.sold == 'Vacant':
+                selected_seat.user_id = request.user.id
+                selected_seat.selected = True
+                current_user.batch = current_user.batch + selected_seat.price
+            elif selected_seat.selected == False and selected_seat.sold == 'Booked':
                 selected_seat.user_id = request.user.id
                 selected_seat.selected = True
                 current_user.batch = current_user.batch + selected_seat.price
@@ -1583,7 +1588,12 @@ class Box(LoginRequiredMixin, View):
                             current_user.save()
                             seat.sold = 'Vacant'
                             seat.selected = False
+                            seat.name = ' '
                             seat.save()
+                        elif seat.sold == 'Booked':
+                        	seat.sold == 'Vacant'
+                        	seat.name = ' '
+                        	seat.save()
                         elif  seat.sold != 'Free' and seat.sold != 'Local_cashdesks'  and seat.sold == 'Discount':
                             current_user.sold_vacant = current_user.sold_vacant + 1
                             seat.user_id = 0
@@ -1592,6 +1602,7 @@ class Box(LoginRequiredMixin, View):
                             current_user.save()
                             seat.sold = 'Vacant'
                             seat.selected = False
+                            seat.name = ' '
                             seat.save()
                         elif  seat.sold != 'Free'and seat.sold != 'Local_cashdesks' and seat.sold == 'Share':
                             current_user.sold_vacant = current_user.sold_vacant + 1
@@ -1600,6 +1611,7 @@ class Box(LoginRequiredMixin, View):
                             current_user.save()
                             seat.sold = 'Vacant'
                             seat.selected = False
+                            seat.name = ' '
                             seat.save()
                         if seat.price == 500 :
                             current_user.sold_500 -= 1

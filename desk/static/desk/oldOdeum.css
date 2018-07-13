@@ -1,0 +1,201 @@
+html, body {
+    background-color: #b4b4b4; /* Background */
+    height:100%
+}
+
+p {
+	font-size: 18px;
+}
+
+.container-fluid-2 {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	background-color: #b4b4b4; /* Whole background	*/
+	border: 0;
+	border-radius: 0;
+	margin-bottom: 0;
+	font-size: 12px;
+	letter-spacing: 1px;
+	padding-left: 100px;
+	padding-right: 100px;
+}
+
+.container-fluid-create_day {
+	text-align:center;
+	padding-top: 40px;
+	padding-bottom: 0px;
+	background-color: #b4b4b4; /* Whole background	*/
+	border: 0;
+	border-radius: 0;
+	margin-bottom: 0;
+	font-size: 15px;
+	color: black;
+	letter-spacing: 1px;
+	padding-left: 100px;
+	padding-right: 100px;
+}
+
+::-webkit-datetime-edit { padding: 1em; }
+::-webkit-datetime-edit-fields-wrapper { background: White; }
+::-webkit-datetime-edit-text { color: Black; padding: 3px; }
+::-webkit-datetime-edit-month-field { color: Black; }
+::-webkit-datetime-edit-day-field { color: Black; }
+::-webkit-datetime-edit-year-field { color: Black; }
+::-webkit-inner-spin-button { display: none; }
+::-webkit-calendar-picker-indicator { background: #b4b4b4;}
+
+input[type="datetime-local"] {
+  position: relative;
+  padding: 5px;
+}
+div[class="my_btn_discount"]{
+display: inline-block;
+}
+
+.btn-primary-discount {
+color: Black;
+background-color: LightSlateGray;
+border-color: LightSlateGray;
+}
+.btn-primary-discount:hover{
+	background-color: SlateGrey; /* Цвет кнопки при наведении курсора */
+}
+.btn-primary-discount:active{
+	background-color: SlateGrey; /* Цвет кнопки при нажатии */
+}
+
+div[class="back"]{
+	position: absolute;
+	top: 7%;
+	left:4%;
+}
+
+.btn-primary-back1 {
+	padding-left: 10px;
+color: #Black;
+background-color: RosyBrown;
+border-color: RosyBrown;
+}
+.btn-primary-back1:hover{
+	background-color: Salmon; /* Цвет кнопки при наведении курсора */
+}
+.btn-primary-back1:active{
+	background-color: Salmon; /* Цвет кнопки при нажатии */
+}
+
+/* div [name="Sector_1"]{
+	position: absolute;
+	left: 2%;
+	top:20%;
+}
+
+div [name="Sector_2"]{
+	position: absolute;
+	left: 17%;
+	top:20%;
+}
+
+div [name="Sector_3"]{
+	position: absolute;
+	left: 32%;
+	top:20%;
+}
+
+div [name="Sector_4"]{
+	position: absolute;
+	left: 47%;
+	top:20%;
+}
+
+div [name="Sector_5"]{
+	position: absolute;
+	left: 62%;
+	top:20%;
+} */
+
+input 	{
+    width: 10%;
+}
+
+
+div[class="back"]{
+  position: relative;
+  left: 90%
+}
+
+div[class="delete"]
+{
+
+  position: relative;
+  top: -5.5%;
+  left: 90%;
+}
+div[class="stats"]
+{
+
+  position: relative;
+  top: -20.5%;
+  left: 67%;
+}
+
+div[class="my_btn_deleteday"]{
+
+display: inline-block;
+}
+
+div[class="my_btn_stats"]{
+top: : 10%;
+display: inline-block;
+}
+
+div[class="my_btn_backdays"]{
+  padding-left: 75px;
+display: inline-block;
+}
+
+.btn-primary-stats {
+
+color: Black;
+background-color: LightSlateGray;
+border-color: LightSlateGray;
+}
+.btn-primary-stats:hover{
+	background-color: SlateGrey; /* Цвет кнопки при наведении курсора */
+}
+.btn-primary-stats:active{
+	background-color: SlateGrey; /* Цвет кнопки при нажатии */
+}
+
+
+.btn-primary-backdays {
+color: Black;
+background-color: LightSlateGray;
+border-color: LightSlateGray;
+}
+.btn-primary-backdays:hover{
+	background-color: SlateGrey; /* Цвет кнопки при наведении курсора */
+}
+.btn-primary-backdays:active{
+	background-color: SlateGrey; /* Цвет кнопки при нажатии */
+}
+
+.btn-primary-deleteday {
+  text-align: center;
+padding-right: 35px;
+color: Black;
+background-color: LightSlateGray;
+border-color: LightSlateGray;
+}
+.btn-primary-deleteday:hover{
+	background-color: SlateGrey; /* Цвет кнопки при наведении курсора */
+}
+.btn-primary-deleteday:active{
+	background-color: SlateGrey; /* Цвет кнопки при нажатии */
+}
+
+.round {
+border-radius: 24px;
+}
+.sharp {
+border-radius: 0px;
+}

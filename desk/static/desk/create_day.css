@@ -70,20 +70,20 @@ div[class="back"]{
 	left:4%;
 }
 
-.btn-primary-back {
+.btn-primary-back1 {
 	padding-left: 10px;
 color: #Black;
 background-color: RosyBrown;
 border-color: RosyBrown;
 }
-.btn-primary-back:hover{
+.btn-primary-back1:hover{
 	background-color: Salmon; /* Цвет кнопки при наведении курсора */
 }
-.btn-primary-back:active{
+.btn-primary-back1:active{
 	background-color: Salmon; /* Цвет кнопки при нажатии */
 }
 
-div [name="Sector_1"]{
+/* div [name="Sector_1"]{
 	position: absolute;
 	left: 2%;
 	top:20%;
@@ -111,7 +111,7 @@ div [name="Sector_5"]{
 	position: absolute;
 	left: 62%;
 	top:20%;
-}
+} */
 
 input 	{
     width: 10%;

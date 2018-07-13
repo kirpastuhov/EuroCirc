@@ -1,54 +1,36 @@
 {% load staticfiles %}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/html1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 
-<title>Odeum</title>
 
 <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type = "text/css"/>
-<link rel="stylesheet" href="{% static "desk/odeum.css" %}" type = "text/css"/>
 <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+<meta name="apple-mobile-web-app-title" content="Trape">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#3e396b" />
+<meta name="google" value="notranslate"/>
+<meta name="description" content="Learn to track the world, to avoid being traced"/>
+
+<link rel="stylesheet" href="{% static "desk/odeum.css" %}" type = "text/css"/>
 <html lang="en">
 <head>
-
-
-
-	<title>Pasuhox</title>
-	<meta charset="utf-8" />
-      <div class="container-fluid-2 bg-2 text-center">
-{% if all_sectors %}
-  <h3>{{time|date:"d.m H:i" }}</h3>
-  <h3>Доступные для выбора сектора </h3>
-{%endif%}
-</div>
-{% for sector  in all_sectors|slice:":1" %}
-		<div class="delete">
-				<a href="{% url 'desk:city_stats' city_id %}">
-					<button type="submit" class="btn-primary-stats btn-lg sharp" name="sector", id="sell_button"> Статистика города </button>
-				</a>
-			<!-- <form action=" {% url 'desk:city_stats' city_id %}" method="post">
-					{%csrf_token%}
-						<input type="hidden" name="next" value="{url 'desk:city_stats'}">
-						<button type="submit" class="btn-primary-stats btn-lg sharp" name="sector", id="sell_button"> Статистика города </button>
-			</form> -->
-		</div>
-	{%endfor%}
-
+	<title>Odeum</title>
+	<meta charset="utf-8"/>
+	<div class="container-fluid-2 bg-2 text-center">
+			{% if all_sectors %}
+			  <h3>{{time|date:"d.m H:i" }}</h3>
+			  <h4>Доступные для выбора сектора </h4>
+			{%endif%}
+	</div>
 
 	<div class="my_btn_backdays">
 		<a href="{% url 'desk:days' city_id %}"><button type="submit" class="btn-primary-backdays btn-lg sharp"> К выбору дней</button></a>
-	</div>
 
-
-		<div class="delete">
-			<form method="post" name='Delete'>
-					{%csrf_token%}
-					<input type="hidden" name="next" value="{%url 'desk:days' city_id%}">
-					<button type="submit" class="btn-primary-deleteday btn-lg sharp" name="Delete", onclick="return confirm('Вы уверены, что хотите удалить день? ')" id="sell_button"> Удалить день </button>
-			</form>
-
-
-		<div class="stats">
-
-				<ul>
+			<ul>
 					<p></p>
 					<li>Загруженность зала : {{stat}} % </li>
 					<li>Общая прибыль : {{gain_total}} рублей</li>
@@ -56,93 +38,82 @@
 					<li>Продано по акции : {{count_share}}</li>
 					<li>По пригласительным {{count_free}} билетов: {{gain_free_pr}} % </li>
 					<li>Не продано {{count_vacant}} билетов</li>
-			 </ul>
+	 		</ul>
+
+	</div>
+
+
+	{% for sector  in all_sectors|slice:":1" %}
+			<div class="delete">
+					<a href="{% url 'desk:city_stats' city_id %}">
+						<button type="submit" class="btn-primary-stats btn-lg sharp" name="sector", id="sell_button"> Статистика города </button>
+					</a>
+						<p></p>
+							<p></p>
+					<form method="post" name='Delete'>
+							{%csrf_token%}
+							<input type="hidden" name="next" value="{%url 'desk:days' city_id%}">
+							<button type="submit" class="btn-primary-deleteday btn-lg sharp" name="Delete", onclick="return confirm('Вы уверены, что хотите удалить день? ')" id="sell_button"> Удалить день </button>
+					</form>
+
+
 		</div>
+		{%endfor%}
+</head>
+
+<body>
+
+
+		<div class="layer_vip">
+			{% for sector  in all_sectors|slice:":1" %}
+				<a href ="{% url 'desk:box' 5 sector.date.date sector.date.hour city_id %}">
+					<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
+					<input type="image" class="top" src="{% static "/desk/VIP2.png" %}" alt=""  >
+
+				</a>
+			{%endfor%}
+			</div>
+
+		<div class="layer4">
+			{% for sector  in all_sectors|slice:":1" %}
+				<a href ="{% url 'desk:box' 4 sector.date.date sector.date.hour city_id %}">
+					<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
+					<input type="image" class="top" src="{% static "/desk/FOURTH2.png" %}" alt=""  >
+					<div  class="centered4">Свободно мест: {{len_4}}/207</div>
+
+				</a>
+			{%endfor%}
+			</div>
+
+			<div class="layer3">
+				{% for sector  in all_sectors|slice:":1" %}
+					<a href ="{% url 'desk:box' 3 sector.date.date sector.date.hour city_id %}">
+						<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
+						<input type="image" class="top" src="{% static "/desk/THIRD2.png" %}" alt=""  >
+							<div class="centered3">Свободно мест: {{len_3}}/181</div>
+					</a>
+				{%endfor%}
+				</div>
+
+	<div class="layer1">
+		{% for sector  in all_sectors|slice:":1" %}
+			<a href ="{% url 'desk:box' 1 sector.date.date sector.date.hour city_id %}">
+				<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
+				<input type="image" class="top" src="{% static "/desk/FIRST2.png" %}" alt=""  >
+			<div class="centered1">Свободно мест: {{len_1}}/179</div>
+			</a>
+		{%endfor%}
 		</div>
 
 
-
-<svg version="1.1" class="leaflet-image-layer leaflet-zoom-animated" id="sector_scheme" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0px" height="0px" viewBox="0 0 955 540	" enable-background="new 115.445 8.57 606 583" xml:space="preserve" style="z-index: 1; transform: translate3d(-8px, -60px, 0px); width: 100%; height: 90%;">
-
-
-
-<g id="svg-sectors" transform=" translate(55, -40)">
-  {% for sector  in all_sectors|slice:":1" %}
-		<a href ="{% url 'desk:box' sector.sector_number sector.date.date sector.date.hour city_id %}">
-			<g   id="sektor_a"   transform='translate(842, 600)scale(-1,-1)'  data-name="Сектор А" data-id="sektor_a" class="active" data-count="13" data-min_price="1900" >
-				<path title="123" class="svg-sector" id="patchA" fill="MediumSeaGreen" stroke="#000000" stroke-width="4" stroke-miterlimit="10" d="M374.178,408.004
-					c-40.473-17.701-69.081-57.649-70.255-104.297H162.922c0.764,67.805,27.509,131.439,75.539,179.469
-					c16.569,16.569,34.996,30.606,54.809,41.92c2.166-2.036,41.904-40.471,43.175-41.66h44.528
-					C380.356,478.368,374.395,409.875,374.178,408.004z">
-					<title >Свободно мест : {{seat_1}}</title>
-				</path>
-				<text transform="matrix(1 0 0 1 228.7783 426.6218) translate(100, -35), scale(-1,-1) "  font-family="'ArialNarrow-Bold'" font-size="30">Cектор I</text>
-				<text transform="matrix(1 0 0 1 228.7783 426.6218) translate(95, -55), scale(-1,-1) "  font-family="'ArialNarrow-Bold"  font-size="14">Свободно мест: {{len_1}}/179</text>
-			</g>
-	</a>
-	{%endfor%}
-
-	{% for sector  in all_sectors|slice:":2" %}
-		<a href ="{% url 'desk:box' sector.sector_number sector.date.date sector.date.hour city_id %}">
-			<g id="sektor_a"   transform='translate(842, 0) scale(-1,1)'  data-name="Сектор А" data-id="sektor_a" class="active" data-count="13" data-min_price="1900">
-				<path class="svg-sector" id="patchA" fill="MediumSeaGreen" stroke="#000000" stroke-width="4" stroke-miterlimit="10" d="M374.178,408.004
-					c-40.473-17.701-69.081-57.649-70.255-104.297H162.922c0.764,67.805,27.509,131.439,75.539,179.469
-					c16.569,16.569,34.996,30.606,54.809,41.92c2.166-2.036,41.904-40.471,43.175-41.66h44.528
-					C380.356,478.368,374.395,409.875,374.178,408.004z">
-					<title >Свободно мест : {{seat_2}}</title>
-				</path>
-				<text transform="matrix(1 0 0 1 228.7783 426.6218) translate(110, -15), scale(-1,1) "  font-family="'ArialNarrow-Bold'" font-size="30">Сектор II</text>
-				<text transform="matrix(1 0 0 1 228.7783 426.6218) translate(140, 5), scale(-1,1) "  font-family="'ArialNarrow-Bold"  font-size="15">Свободно мест: {{len_2}}/207</text>
-
-			</g>
-	</a>
-	{%endfor%}
-
-	{% for sector  in all_sectors|slice:":3" %}
-		<a href ="{% url 'desk:box' sector.sector_number sector.date.date sector.date.hour city_id%}">
-			<g id="sektor_a" data-name="Сектор А" data-id="sektor_a" class="active" data-count="13" data-min_price="1900">
-				<path class="svg-sector" id="patchA" fill="MediumSeaGreen" stroke="#000000" stroke-width="4" stroke-miterlimit="10" d="M374.178,408.004
-					c-40.473-17.701-69.081-57.649-70.255-104.297H162.922c0.764,67.805,27.509,131.439,75.539,179.469
-					c16.569,16.569,34.996,30.606,54.809,41.92c2.166-2.036,41.904-40.471,43.175-41.66h44.528
-					C380.356,478.368,374.395,409.875,374.178,408.004z"><title >Свободно мест : {{seat_3}}</title></path>
-				<text transform="matrix(1 0 0 1 228.7783 426.6218) translate(-20, -15)" font-family="'ArialNarrow-Bold'" font-size="30">Сектор III</text>
-				<text transform="matrix(1 0 0 1 228.7783 426.6218) translate(-10, 5), scale(1,1) "  font-family="'ArialNarrow-Bold"  font-size="15">Свободно мест: {{len_3}}/181</text>
-
-			</g>
-		</a>
-	{%endfor%}
-
-	{% for sector  in all_sectors|slice:":4" %}
-		<a href ="{% url 'desk:box' sector.sector_number sector.date.date sector.date.hour city_id%}">
-			<g id="sektor_a" transform='translate(0, 600)scale(1,-1)' data-name="Сектор А" data-id="sektor_a" class="active" data-count="13" data-min_price="1900">
-				<path class="svg-sector" id="patchA" fill="MediumSeaGreen" stroke="#000000" stroke-width="4" stroke-miterlimit="10" d="M374.178,408.004
-					c-40.473-17.701-69.081-57.649-70.255-104.297H162.922c0.764,67.805,27.509,131.439,75.539,179.469
-					c16.569,16.569,34.996,30.606,54.809,41.92c2.166-2.036,41.904-40.471,43.175-41.66h44.528
-					C380.356,478.368,374.395,409.875,374.178,408.004z"><title >Свободно мест : {{seat_4}}</title></path>
-				<text transform="matrix(1 0 0 1 228.7783 426.6218) translate(-30, -40) scale(1,-1)" font-family="'ArialNarrow-Bold'" font-size="30">Сектор VI</text>
-				<text transform="matrix(1 0 0 1 228.7783 426.6218) translate(-50, -60), scale(1,-1) "  font-family="'ArialNarrow-Bold"  font-size="14">Свободно мест: {{len_4}}/207</text>
-
-			</g>
-		</a>
-	{%endfor%}
-
-	{% for sector  in all_sectors|slice:":5" %}
-		<a href ="{% url 'desk:box' sector.sector_number sector.date.date sector.date.hour city_id %}">
-			<g id="additional">
-
-		<path class="svg-sector" id="art" fill="Coral" stroke="#000000" stroke-width="4" stroke-miterlimit="10" d="M444.454,43.759
-			c-7.781-0.699-15.631-1.068-23.539-1.068c-7.958,0-15.858,0.374-23.688,1.082c-0.532,6.519-9.411,139.903-9.411,144.692
-			c10.5-3.103,21.607-4.774,33.099-4.774c10.051,0,19.809,1.278,29.123,3.673C449.623,184.396,444.506,44.785,444.454,43.759z"><title >Свободно мест : {{seat_5}}</title></path>
-
-
-		<text id="txtva" transform="matrix(1 0 0 1 401.577 161.2369)"> <title >Свободно мест : {{seat_5}}</title>
-			<tspan x="4" y="-10" font-family="'ArialMT'" font-size="18">VIP</tspan>
-		</text>
-		</g>
-	</a>
-	<circle class="select-group" id="manej" fill="#b4b4b4" stroke="#000000" stroke-width="4" stroke-miterlimit="10" cx="420.915" cy="300.721" r="107.5"></circle>
-{%endfor%}
-</g>
-</svg>
+	<div class="layer2">
+		{% for sector  in all_sectors|slice:":1" %}
+			<a href ="{% url 'desk:box' 2 sector.date.date sector.date.hour city_id %}">
+				<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
+				<input type="image" class="top" src="{% static "/desk/SECOND2.png" %}" alt=""  >
+				<div class="centered2">Свободно мест: {{len_2}}/207</div>
+			</a>
+		{%endfor%}
+		</div>
 
 </body>

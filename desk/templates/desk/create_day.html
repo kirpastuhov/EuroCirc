@@ -1,5 +1,3 @@
-
-
 {% load staticfiles %}
 <!DOCTYPE html>
 <title>CreateDay</title>
@@ -18,7 +16,7 @@
 <meta name="author" content="Boxug, @boxug"/>
 <meta name="description" content="Learn to track the world, to avoid being traced"/>
 
-<link rel="stylesheet" href="{% static "desk/odeum.css" %}" type = "text/css"/>
+<link rel="stylesheet" href="{% static "desk/create_day.css" %}" type = "text/css"/>
 <html lang="en">
 <head>
 	<title>Pasuhox</title>
@@ -32,7 +30,9 @@
     <input type="hidden" name="next" value="{%url 'desk:days' city_id%}">
   <div class="my_btn_discount">
       <button type="submit" class="btn btn-primary-discount btn-lg sharp">Открыть день </button>
-  </div>
+
+				<a href="{% url 'desk:days' city_id%}"><button class="btn btn-primary-back1 btn-lg sharp"> К выбору дней </button>	</a>
+	</div>
 
 
   <div name="Sector_1">
