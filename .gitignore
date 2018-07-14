@@ -6,7 +6,13 @@ desk/migrations/**
 
 db.sqlite3
 
-.DS_Store
+desk/.DS_Store
+
+desk/static/.DS_Store
+
+desk/templates/.DS_Store
+
+
 
 Северодвинск.xlsx
 
