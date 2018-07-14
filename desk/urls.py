@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from django.urls import path
 from django.contrib.auth.views import LoginView
-from desk.views import Index, CreateCity, Days, CreateDay, Odeum, Box, Stats, CityStats
+from desk.views import Index, CreateCity, Days, CreateDay, Odeum, Box, Stats, CityStats, BookedList
 
 
 app_name = 'desk'
@@ -16,5 +16,6 @@ urlpatterns = [
 	path('box/<str:sector_number>/<str:date>/<str:hour>/<int:city_id>', Box.as_view(), name='box'),
 	path('city_stats/<int:city_id>', CityStats.as_view(), name='city_stats'),
 	path('stats/<str:date>/<str:hour>/<int:city_id>', Stats.as_view(), name='stats'),
+	path('bookings/<str:date>/<str:hour>/<int:city_id>', BookedList.as_view(), name='bookedlist'),
 	path('login/', LoginView.as_view(), name='login')
 ]

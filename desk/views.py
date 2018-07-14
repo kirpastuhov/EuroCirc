@@ -9,9 +9,6 @@ import io
 import datetime
 import pytz
 
-# Create your views here.
-
-
 class Index(LoginRequiredMixin, View):
     template_name = 'desk/index.html'
     def get(self, request, *arg, **kwargs):
@@ -1272,8 +1269,6 @@ class Stats(LoginRequiredMixin, View):
         'gain_free_pr': gain_free_pr}
         return render(request, self.template_name, context)
 
-
-
 class CityStats(LoginRequiredMixin, View):
     template_name = "desk/city_stats.html"
 
@@ -1422,12 +1417,6 @@ class CityStats(LoginRequiredMixin, View):
 
 
         return render(request, self.template_name, context)
-
-
-'''
-    	date_ = datetime.datetime.now().date()
-    	if self.kwargs['date'] == date_:
-    		print('YOOOO')'''
 
 class Box(LoginRequiredMixin, View):
     template_name = 'desk/box.html'
@@ -1796,4 +1785,17 @@ class Box(LoginRequiredMixin, View):
                 else:
                     return HttpResponseRedirect(next)
 
-print(1)
+
+class BookedList(LoginRequiredMixin, View):
+    template_name = "desk/booked_list.html"
+
+    def get(self, request, city_id, date, hour, *arg, **kwargs):
+        seats = Seat.objects.filter(date__date=date, date__hour=hour, sold='Booked', sector__city__id=city_id)
+        context = {}
+        try:
+            context['time'] = seats[0].date
+        except IndexError:
+            pass
+        context['seats'] = seats
+        return render(request, self.template_name, context)
+        

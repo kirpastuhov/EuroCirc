@@ -28,7 +28,10 @@
 	</div>
 
 	<div class="my_btn_backdays">
-		<a href="{% url 'desk:days' city_id %}"><button type="submit" class="btn-primary-backdays btn-lg sharp"> К выбору дней</button></a>
+		<a href="{% url 'desk:days' city_id %}"><button type="submit" class="btn-primary-backdays btn-lg sharp"> К выбору дней</button>
+		</a><br><br>
+		<a href="{% url 'desk:bookedlist' time.date time.hour city_id %}"><button type="submit" class="btn-primary-backdays btn-lg sharp">Брони</button>
+		</a>
 
 			<ul>
 					<p></p>
