@@ -74,6 +74,10 @@ background-color: grey;
 button[id=Local_cashdesks]{
 	background-color: #4d2800;
 }
+button[id=Booked]{
+	opacity: .4;
+	background-color: #fa8e47;
+}
 
 button[id=Free]
 {
@@ -300,6 +304,7 @@ border-radius: 0px;
 .btn-primary {
 color: #fff;
 background-color: #fa8e47;
+/* opacity: .4; */
 border-color: #357ebd;
 }
 .btn-primary:hover{
