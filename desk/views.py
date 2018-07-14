@@ -1470,6 +1470,26 @@ class Box(LoginRequiredMixin, View):
         next = request.POST.get('next')
         current_user = User.objects.get(id=request.user.id)
         all_seats = Seat.get_all_selected_seats(self, current_user.id, city_id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'])
+
+        if 'Change_Price' in request.POST:
+            if current_user.staff == True:
+                for seat in all_seats:
+                    if  seat.sold == 'Vacant':
+                            seat.user_id = 0
+                            current_user.batch = 0
+                            current_user.save()
+                            print(request.POST.get('booked_name'))
+                            seat.price =  request.POST.get('change_price')
+                            seat.selected = False
+                            seat.save()
+                    else:
+    	                seat.selected = False
+    	                seat.save()
+                return HttpResponseRedirect(next)
+            else:
+                return HttpResponseRedirect(next)
+
+
         if 'Book' in request.POST:
             for seat in all_seats:
                 if  seat.sold == 'Vacant':
@@ -1798,4 +1818,3 @@ class BookedList(LoginRequiredMixin, View):
             pass
         context['seats'] = seats
         return render(request, self.template_name, context)
-        

@@ -170,6 +170,7 @@ border-color: #6666ff;
 div [class="free"]{
 	display: inline-block;
 	position: absolute;
+	padding-top: 30px;
 	left: 5%;
 	top: 100%;
 }
@@ -177,7 +178,15 @@ div [class="free"]{
 div [class="free2"]{
 	display: inline-block;
 	position: absolute;
+	padding-top: 30px;
 	left: 20%;
+	top: 100%;
+}
+div [class="free3"]{
+	display: inline-block;
+	padding-top: 30px;
+	position: absolute;
+	left: 35%;
 	top: 100%;
 }
 

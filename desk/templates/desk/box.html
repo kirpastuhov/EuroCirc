@@ -91,5 +91,14 @@
 				</form>
 </div>
 
+<div class="free3">
+				<form method="post">
+					{%csrf_token%}
+					<input type="hidden" name="next" value="{{ request.path }}">
+					<button type="submit" class="btn btn-primary-free btn-lg sharp" name="Change_Price", id="sell_button">Изменить цену </button>
+					<input type="number" name='change_price' step="100"></input>
+				</form>
+</div>
+
 <h1>К оплате : {{batch}} </h1>
 </body>
