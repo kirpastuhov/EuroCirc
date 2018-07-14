@@ -1,6 +1,10 @@
 
 html, body {
-    background-color: #b4b4b4; /* BACKground */
+    /* background-image: url("../desk/2.png"); */
+    background-repeat: no-repeat;
+    background-color: #b4b4b4;
+
+    background-size: cover;
     height:100%
 }
 div[class="back"]{
@@ -8,43 +12,29 @@ div[class="back"]{
   left: 90%
 }
 
-
-
 div[class="delete"]
 {
-
-  position: relative;
-  top: -5.5%;
-  left: 90%;
+  position: fixed;
+  left: 80%;
+  top: 5%;
+  padding-right: 10px;
 }
 div[class="stats"]
 {
-
-  position: relative;
-  top: -20.5%;
-  left: 67%;
-}
-
-div[class="my_btn_deleteday"]{
-
-display: inline-block;
+  padding-top: 10px;
 }
 
 div[class="my_btn_stats"]{
-top: : 10%;
-display: inline-block;
-}
-
-div[class="my_btn_backdays"]{
-  padding-left: 75px;
-display: inline-block;
+  top: : 10%;
+  padding-bottom: 10px;
+  display: inline-block;
 }
 
 .btn-primary-stats {
 
-color: Black;
-background-color: LightSlateGray;
-border-color: LightSlateGray;
+  color: Black;
+  background-color: LightSlateGray;
+  border-color: LightSlateGray;
 }
 .btn-primary-stats:hover{
 	background-color: SlateGrey; /* Цвет кнопки при наведении курсора */
@@ -53,6 +43,11 @@ border-color: LightSlateGray;
 	background-color: SlateGrey; /* Цвет кнопки при нажатии */
 }
 
+
+div[class="my_btn_backdays"]{
+  padding-left: 75px;
+  display: inline-block;
+}
 
 .btn-primary-backdays {
 color: Black;
@@ -66,6 +61,10 @@ border-color: LightSlateGray;
 	background-color: SlateGrey; /* Цвет кнопки при нажатии */
 }
 
+div[class="my_btn_deleteday"]{
+  padding-top: 10px;
+  display: inline-block;
+}
 .btn-primary-deleteday {
   text-align: center;
 padding-right: 35px;
@@ -86,15 +85,21 @@ border-radius: 24px;
 .sharp {
 border-radius: 0px;
 }
+.v {
+  float: right;
+  position: absolute;
+  width: 70px;
+  height: 100px;
+}
 
 div[class="my_btn_discount"]{
 display: inline-block;
 }
 
 .btn-primary-discount {
-color: Black;
-background-color: LightSlateGray;
-border-color: LightSlateGray;
+  color: Black;
+  background-color: LightSlateGray;
+  border-color: LightSlateGray;
 }
 .btn-primary-discount:hover{
 	background-color: SlateGrey; /* Цвет кнопки при наведении курсора */
@@ -111,9 +116,9 @@ div[class="back1"]{
 
 .btn-primary-back1 {
 	padding-left: 10px;
-color: #Black;
-background-color: RosyBrown;
-border-color: RosyBrown;
+  color: #Black;
+  background-color: RosyBrown;
+  border-color: RosyBrown;
 }
 .btn-primary-back1:hover{
 	background-color: Salmon; /* Цвет кнопки при наведении курсора */
@@ -122,18 +127,32 @@ border-color: RosyBrown;
 	background-color: Salmon; /* Цвет кнопки при нажатии */
 }
 
+.container-fluid-Odeum   {
+	padding-top: 0px;
+	padding-bottom: 0px;
 
+  background-color: #b4b4b4; /* Whole background	*/
+	border: 0;
+	border-radius: 0;
+	margin-bottom: 0;
+	font-size: 12px;
 
-/* div [name="Sector_1"]{
-	position: absolute;
-	left: 2%;
-	top:20%;
+	letter-spacing: 1px;
+	padding-left: 100px;
+	padding-right: 100px;
 }
 
+
+div [name="Sector_1"]{
+    position: absolute;
+    left: 70px;
+  	top:200px;
+  }
+
 div [name="Sector_2"]{
-	position: absolute;
-	left: 17%;
-	top:20%;
+	position: fixed;
+	left: 170px;
+	top:200px;
 }
 
 div [name="Sector_3"]{
@@ -149,7 +168,107 @@ div [name="Sector_4"]{
 }
 
 div [name="Sector_5"]{
-	position: absolute;
-	left: 62%;
-	top:20%;
-} */
+	position: relative;
+
+  padding-bottom: 100px;
+}
+
+
+div[class="my_btn_sector"]{
+display: inline-block;
+}
+
+.btn-primary-sector {
+  position: absolute;
+  color: Black;
+  background-color: Coral;
+  border-color: LightSlateGray;
+}
+.btn-primary-sector:hover{
+	background-color: Coral; /* Цвет кнопки при наведении курсора */
+}
+.btn-primary-sector:active{
+	background-color: SlateGrey; /* Цвет кнопки при нажатии */
+}
+
+
+.layer1 {
+  padding-top: 30px;
+  background-image: url("Слой 3.png");
+  position: absolute;
+  left: 929px;
+  top: 122px;
+  width: 387px;
+  height: 374px;
+  z-index: 4;
+}
+
+.layer2 {
+  padding-top: 30px;
+  background-image: url("Слой 2.png");
+  position: absolute;
+  left: 918px;
+  top: 494px;
+  width: 394px;
+  height: 395px;
+  z-index: 3;
+}
+
+.layer3 {
+  padding-top: 30px;
+  background-image: url("Слой 1.png");
+  position: absolute;
+  left: 443px;
+  top: 498px;
+  width: 487px;
+  height: 376px;
+  z-index: 2;
+}
+
+.layer4 {
+  padding-top: 30px;
+  background-image: url("Слой 5.png");
+  position: absolute;
+  left: 448px;
+  top: 120px;
+  width: 369px;
+  height: 377px;
+  z-index: 6;
+}
+.layer_vip {
+  padding-top: 30px;
+  background-image: url("Слой 4.png");
+  position: absolute;
+  left: 807px;
+  top: 37px;
+  width: 132px;
+  height: 317px;
+  z-index: 5;
+}
+
+.centered1 {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.centered2 {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.centered3 {
+    position: absolute;
+    top: 65%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.centered4 {
+    position: absolute;
+    top: 77%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+}

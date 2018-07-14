@@ -83,35 +83,6 @@ border-color: RosyBrown;
 	background-color: Salmon; /* Цвет кнопки при нажатии */
 }
 
-/* div [name="Sector_1"]{
-	position: absolute;
-	left: 2%;
-	top:20%;
-}
-
-div [name="Sector_2"]{
-	position: absolute;
-	left: 17%;
-	top:20%;
-}
-
-div [name="Sector_3"]{
-	position: absolute;
-	left: 32%;
-	top:20%;
-}
-
-div [name="Sector_4"]{
-	position: absolute;
-	left: 47%;
-	top:20%;
-}
-
-div [name="Sector_5"]{
-	position: absolute;
-	left: 62%;
-	top:20%;
-} */
 
 input 	{
     width: 10%;
