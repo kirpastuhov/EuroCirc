@@ -76,7 +76,7 @@
 
 		<div class="layer4">
 			{% for sector  in all_sectors|slice:":1" %}
-				<a href ="{% url 'desk:box' 4 sector.date.date sector.date.hour city_id %}">
+				<a href ="{% url 'desk:box' 4 sector.date.date sector.date.hour city_id %}"><font color="000">
 					<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
 					<input type="image" class="top" src="{% static "/desk/FOURTH2.png" %}" alt=""  >
 					<div  class="centered4">Свободно мест: {{len_4}}/207</div>
@@ -87,7 +87,7 @@
 
 			<div class="layer3">
 				{% for sector  in all_sectors|slice:":1" %}
-					<a href ="{% url 'desk:box' 3 sector.date.date sector.date.hour city_id %}">
+					<a href ="{% url 'desk:box' 3 sector.date.date sector.date.hour city_id %}"><font color="000">
 						<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
 						<input type="image" class="top" src="{% static "/desk/THIRD2.png" %}" alt=""  >
 							<div class="centered3">Свободно мест: {{len_3}}/181</div>
@@ -97,7 +97,7 @@
 
 	<div class="layer1">
 		{% for sector  in all_sectors|slice:":1" %}
-			<a href ="{% url 'desk:box' 1 sector.date.date sector.date.hour city_id %}">
+			<a href ="{% url 'desk:box' 1 sector.date.date sector.date.hour city_id %}"><font color="000">
 				<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
 				<input type="image" class="top" src="{% static "/desk/FIRST2.png" %}" alt=""  >
 			<div class="centered1">Свободно мест: {{len_1}}/179</div>
@@ -108,7 +108,7 @@
 
 	<div class="layer2">
 		{% for sector  in all_sectors|slice:":1" %}
-			<a href ="{% url 'desk:box' 2 sector.date.date sector.date.hour city_id %}">
+			<a href ="{% url 'desk:box' 2 sector.date.date sector.date.hour city_id %}"><font color="000">
 				<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
 				<input type="image" class="top" src="{% static "/desk/SECOND2.png" %}" alt=""  >
 				<div class="centered2">Свободно мест: {{len_2}}/207</div>
