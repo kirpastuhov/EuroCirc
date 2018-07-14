@@ -17,7 +17,7 @@
     				<input type="hidden" name="next" value="{% url 'desk:odeum' date hour city.id%}">
 					<button type="submit" class="btn btn-primary-back btn-lg sharp" name="Back", id="sell_button">Назад</button>
 					<p></p>
-					<button type="submit" class="btn btn-primary-book btn-lg sharp" name="Book", id="sell_button">Брони</button>
+					<button type="submit" disabled class="btn btn-primary-book btn-lg sharp" name="ListBooked", id="sell_button">Брони</button>
 				</form>
 	</div>
 {%endfor%}
