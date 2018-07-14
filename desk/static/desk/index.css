@@ -28,6 +28,19 @@ p {font-size: 16px;}
 	color: #f3bebe;
 }
 
+.btn-primary-back1 {
+	padding-left: 10px;
+color: #Black;
+background-color: RosyBrown;
+border-color: RosyBrown;
+}
+.btn-primary-back1:hover{
+	background-color: Salmon; /* Цвет кнопки при наведении курсора */
+}
+.btn-primary-back1:active{
+	background-color: Salmon; /* Цвет кнопки при нажатии */
+}
+
 ul {
 
     list-style-type: none;

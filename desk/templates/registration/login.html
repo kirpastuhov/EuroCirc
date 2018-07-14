@@ -11,7 +11,7 @@
 
 
 {% block content %}
-<div class="container-fluid-log_in">
+<div class="container-fluid-log_in text-center">
   {% if form.errors %}
   <p>Your username and password didn't match. Please try again.</p>
   {% endif %}
@@ -26,9 +26,9 @@
   {% endif %}
 
 <form method="post" action="{% url 'desk:login' %}">
-  <div class="container-fluid-login-form">
+  <div class="container-fluid-login-form text-center">
     {% csrf_token %}
-    <table>
+    <table align='center'>
     <tr>
         <td>{{ form.username.label_tag }}</td>
         <td>{{ form.username }}</td>
