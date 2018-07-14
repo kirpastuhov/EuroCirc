@@ -1140,7 +1140,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 class Odeum(LoginRequiredMixin, View):
     template_name = 'desk/odeum.html'
     def get(self, request, city_id, *arg, **kwargs):
-        seat_given = Seat.objects.all().filter(sold='Local_cashdesks', sector__city__id=city_id)
+        seat_given = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Local_cashdesks', sector__city__id=city_id)
         seat_vacant = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Vacant', sector__city__id=city_id)
         seat_sold = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Sold', sector__city__id=city_id)
         seat_share = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Share', sector__city__id=city_id)
