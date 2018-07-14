@@ -22,7 +22,12 @@
 	<title>Pasuhox</title>
 	<meta charset="utf-8" />
 </head>
+<div class="back1">
+	<a href="{% url 'desk:days' city_id%}"><button class="btn btn-primary-back1 btn-lg sharp"> К выбору дней </button>	</a>
+</div>
+
 <div class="container-fluid-create_day">
+
  <form action="{% url 'desk:create_day' city_id %}" method="post">
     {% csrf_token%}
     <label for="party">Выберите дату для открытия дня :</label>
@@ -30,9 +35,8 @@
     <input type="hidden" name="next" value="{%url 'desk:days' city_id%}">
   <div class="my_btn_discount">
       <button type="submit" class="btn btn-primary-discount btn-lg sharp">Открыть день </button>
-
-				<a href="{% url 'desk:days' city_id%}"><button class="btn btn-primary-back1 btn-lg sharp"> К выбору дней </button>	</a>
 	</div>
+
 
 
   <div name="Sector_1">
