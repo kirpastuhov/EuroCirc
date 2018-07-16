@@ -1469,7 +1469,7 @@ class Box(LoginRequiredMixin, View):
                    'hour':hour,
                    'date_full':sector.date
                   }
-        return render(request, 'desk/box.html', context)
+        return render(request, template_name, context)
 
 
     def post(self, request, *arg, city_id, **kwargs):
