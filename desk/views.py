@@ -1419,8 +1419,6 @@ class CityStats(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 class Box(LoginRequiredMixin, View):
-    template_name = 'desk/box.html'
-
     def get(self, request, city_id, *arg, **kwargs):
         sector = Sector.get_sector(self, self.kwargs['date'], self.kwargs['hour'], self.kwargs['sector_number'], city_id )
         city = City.objects.get(id=city_id)
@@ -1429,6 +1427,14 @@ class Box(LoginRequiredMixin, View):
         rows = sector.get_all_rows()
         all_rows = []
         current_user = User.objects.get(id=request.user.id)
+
+        if current_user.staff == True:
+        	template_name = 'desk/box_admin.html'
+        else: 
+        	template_name = 'desk/box.html'
+
+
+
         batch = current_user.batch
         date_ = datetime.datetime.now().replace(second=0, microsecond=0, tzinfo=pytz.timezone('UTC'))
 
