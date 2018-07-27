@@ -15,7 +15,7 @@
 				<form method="post">
 					{%csrf_token%}
     				<input type="hidden" name="next" value="{% url 'desk:odeum' date hour city.id%}">
-					<button type="submit" class="btn btn-primary-back btn-lg sharp" name="Back", id="sell_button">Назад</button>
+				<button type="submit" class="btn-primary-backdays btn-lg sharp" name="Back", id="sell_button">Назад</button>
 					<p></p>
 				</form>
 	</div>
