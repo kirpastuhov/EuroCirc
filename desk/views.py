@@ -1420,14 +1420,23 @@ class CityStats(LoginRequiredMixin, View):
 
 class Box(LoginRequiredMixin, View):
     def get(self, request, city_id, *arg, **kwargs):
+        current_user = User.objects.get(id=request.user.id)
+        if self.kwargs['name'] != 'Noname':
+            seats = Seat.objects.filter(sold = 'Booked', name = str(self.kwargs['name']), sector__city=self.kwargs['city_id'], date__hour=self.kwargs['hour'], date__date=self.kwargs['date'], sector__sector_number=int(self.kwargs['sector_number']))
+            print(self.kwargs['name'])
+            for seat in seats:
+                seat.selected = True
+                seat.user_id = current_user.id
+                current_user.batch = current_user.batch + seat.price
+                seat.save()
+                current_user.save()
         sector = Sector.get_sector(self, self.kwargs['date'], self.kwargs['hour'], self.kwargs['sector_number'], city_id )
         city = City.objects.get(id=city_id)
         date = self.kwargs['date']
         hour = self.kwargs['hour']
         rows = sector.get_all_rows()
         all_rows = []
-        current_user = User.objects.get(id=request.user.id)
-
+        
         if current_user.staff == True:
         	template_name = 'desk/box_admin.html'
         else: 
@@ -1460,6 +1469,9 @@ class Box(LoginRequiredMixin, View):
             for row in all_rows:
                 row.sort(key=lambda x: x.seat_number, reverse=True)
 
+
+
+
         all_rows =  sorted(all_rows,key = len)
         context = {'all_rows':all_rows,
                    'batch':batch,
@@ -1474,6 +1486,7 @@ class Box(LoginRequiredMixin, View):
 
     def post(self, request, *arg, city_id, **kwargs):
         next = request.POST.get('next')
+        print(request.POST.get('next'))
         current_user = User.objects.get(id=request.user.id)
         all_seats = Seat.get_all_selected_seats(self, current_user.id, city_id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'])
 
@@ -1536,6 +1549,10 @@ class Box(LoginRequiredMixin, View):
                  selected_seat.user_id = request.user.id
                  selected_seat.selected = True
             elif selected_seat.selected == True and selected_seat.user_id == request.user.id and selected_seat.sold == 'Vacant':
+                selected_seat.selected = False
+                selected_seat.user_id = 0
+                current_user.batch = current_user.batch - selected_seat.price
+            elif selected_seat.selected == True and selected_seat.user_id == request.user.id and selected_seat.sold == 'Booked':
                 selected_seat.selected = False
                 selected_seat.user_id = 0
                 current_user.batch = current_user.batch - selected_seat.price
@@ -1818,6 +1835,10 @@ class BookedList(LoginRequiredMixin, View):
     def get(self, request, city_id, date, hour, *arg, **kwargs):
         seats = Seat.objects.filter(date__date=date, date__hour=hour, sold='Booked', sector__city__id=city_id)
         context = {}
+        for seat in seats:
+            context[seat.name] = seat
+        seats = list(context.values())
+        print(seats)
         try:
             context['time'] = seats[0].date
         except IndexError:

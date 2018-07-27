@@ -16,7 +16,7 @@
         <ul>
           {% for booked_seat in seats %}
 	         <li class="active">
-              <a  href ="{% url 'desk:box' booked_seat.sector.sector_number booked_seat.date.date booked_seat.date.hour booked_seat.sector.city_id %} ">{{booked_seat.name}}, Сектор: {{booked_seat.sector.sector_number}}, Ряд: {{booked_seat.row.row_number}}, Место: {{booked_seat.seat_number}}</a>
+              <a  href ="{% url 'desk:box' booked_seat.sector.sector_number booked_seat.date.date booked_seat.date.hour booked_seat.sector.city_id booked_seat.name %} ">{{booked_seat.name}}</a>
 					</li>
             {% endfor %}
           </ul>

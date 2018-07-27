@@ -85,6 +85,7 @@ background-color: black;
 }
 
 button[selected=True]{
+opacity: .90;
 background-color: Crimson;
 }
 button {

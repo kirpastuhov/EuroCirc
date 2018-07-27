@@ -13,9 +13,9 @@ urlpatterns = [
 	path('days/<int:city_id>', Days.as_view(), name='days'),
 	path('create_day/<int:city_id>', CreateDay.as_view(), name='create_day'),
 	path('odeum/<str:date>/<str:hour>/<int:city_id>', Odeum.as_view(), name='odeum'),
-	path('box/<str:sector_number>/<str:date>/<str:hour>/<int:city_id>', Box.as_view(), name='box'),
+	path('box/<str:sector_number>/<str:date>/<str:hour>/<int:city_id>/<str:name>', Box.as_view(), name='box'),
 	path('city_stats/<int:city_id>', CityStats.as_view(), name='city_stats'),
 	path('stats/<str:date>/<str:hour>/<int:city_id>', Stats.as_view(), name='stats'),
 	path('bookings/<str:date>/<str:hour>/<int:city_id>', BookedList.as_view(), name='bookedlist'),
-	path('login/', LoginView.as_view(), name='login')
+	path('login/', LoginView.as_view(), name='login'),
 ]

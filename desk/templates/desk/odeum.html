@@ -20,103 +20,97 @@
 <head>
 	<title>Odeum</title>
 	<meta charset="utf-8"/>
-	<div class="container-fluid-2 bg-2 text-center">
+
+
+
+
+
+</head>
+
+<body>	
+
+<div name = "buttons-left"> 
+
+
+		<div name="left">
+		<a href="{% url 'desk:days' city_id %}">
+			<button  name = "Days"type="submit" class="btn-primary-backdays btn-lg sharp"> К выбору дней</button>
+		</a>
+		<a href="{% url 'desk:bookedlist' time.date time.hour city_id %}">
+				<button name="Booking" type="submit" class="btn-primary-backdays btn-lg sharp">Брони</button>
+		</a>
+</div>
+
+<div name= "text-center">
 			{% if all_sectors %}
-			  <h3>{{time|date:"d.m H:i" }}</h3>
-			  <h4>Доступные для выбора сектора </h4>
+			  <h3 name="time">{{time|date:"d.m H:i" }}</h3>
+			  <h4 name="time"> Доступные для выбора сектора </h4>
 			{%endif%}
 	</div>
+</div>
 
-	<div class="my_btn_backdays">
-		<a href="{% url 'desk:days' city_id %}"><button type="submit" class="btn-primary-backdays btn-lg sharp"> К выбору дней</button>
-		</a><br><br>
-		<a href="{% url 'desk:bookedlist' time.date time.hour city_id %}"><button type="submit" class="btn-primary-backdays btn-lg sharp">Брони</button>
-		</a>
-
-			<ul>
-					<p></p>
-					<li>Загруженность зала : {{stat}} % </li>
-					<li>Общая прибыль : {{gain_total}} рублей</li>
-					<li>Продано : {{count_sold}} билетов : {{gain_sold_pr}} % </li>
-					<li>Продано по акции : {{count_share}}</li>
-					<li>По пригласительным {{count_free}} билетов: {{gain_free_pr}} % </li>
-					<li>Не продано {{count_vacant}} билетов</li>
-	 		</ul>
-
-	</div>
-
-
+<div name="buttons-right">
 	{% for sector  in all_sectors|slice:":1" %}
-			<div class="delete">
+					<div name="right">
 					<a href="{% url 'desk:city_stats' city_id %}">
-						<button type="submit" class="btn-primary-stats btn-lg sharp" name="sector", id="sell_button"> Статистика города </button>
+						<button name="stats"type="submit" class="btn-primary-stats btn-lg sharp" name="sector", id="sell_button">Статистика</button>
 					</a>
-						<p></p>
-							<p></p>
 					<form method="post" name='Delete'>
 							{%csrf_token%}
 							<input type="hidden" name="next" value="{%url 'desk:days' city_id%}">
-							<button type="submit" class="btn-primary-deleteday btn-lg sharp" name="Delete", onclick="return confirm('Вы уверены, что хотите удалить день? ')" id="sell_button"> Удалить день </button>
+							<button name="delete"type="submit" class="btn-primary-deleteday btn-lg sharp" name="Delete", onclick="return confirm('Вы уверены, что хотите удалить день? ')" id="sell_button"> Удалить день </button>
 					</form>
+					</div>
 
-
-		</div>
 		{%endfor%}
-</head>
+</div>
+</div>
+<div name="space">
 
-<body>
-
-
-		<div class="layer_vip">
 			{% for sector  in all_sectors|slice:":1" %}
-				<a href ="{% url 'desk:box' 5 sector.date.date sector.date.hour city_id %}">
-					<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
-					<input type="image" class="top" src="{% static "/desk/VIP2.png" %}" alt=""  width="auto" height="auto">
-
-				</a>
-			{%endfor%}
-			</div>
-
-		<div class="layer4">
-			{% for sector  in all_sectors|slice:":1" %}
-				<a href ="{% url 'desk:box' 4 sector.date.date sector.date.hour city_id %}"><font color="000">
-					<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
-					<input type="image" class="top" src="{% static "/desk/FOURTH2.png" %}" alt="" width="auto" height="auto" >
-					<div  class="centered4">Свободно мест: {{len_4}}/207</div>
-
-				</a>
-			{%endfor%}
-			</div>
-
-			<div class="layer3">
-				{% for sector  in all_sectors|slice:":1" %}
-					<a href ="{% url 'desk:box' 3 sector.date.date sector.date.hour city_id %}"><font color="000">
-						<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
-						<input type="image" class="top" src="{% static "/desk/THIRD2.png" %}" alt="" width="auto" height="auto">
-							<div class="centered3">Свободно мест: {{len_3}}/181</div>
-					</a>
-				{%endfor%}
+			<div class="divTable" > 
+				<div class="divTableBody" > 
+					<div class="divTableRow"> 
+						
+							<div class="divTableCell">
+								<a href="{% url 'desk:box' 4 sector.date.date sector.date.hour city_id 'Noname' %}">
+									<img class ="pic" src="{% static '/desk/odeum_01.png' %}">
+							 		<div class="IV">Свободно мест: {{len_4}}</div> 
+							 	</a>
+							</div> 
+						
+						<div class="divTableCell">
+							<a href="{% url 'desk:box' 5 sector.date.date sector.date.hour city_id 'Noname' %}">
+								<img src="{% static '/desk/odeum_02.png' %}">
+								<div class="VIP">Свободно мест: {{len_5}}</div> 
+							</a>
+						</div> 
+						<div class="divTableCell">
+							<a href="{% url 'desk:box' 1 sector.date.date sector.date.hour city_id 'Noname' %}">
+								<img src="{% static '/desk/odeum_03.png' %}">
+								<div class="I">Свободно мест: {{len_1}}</div>
+							</a>
+						</div> 
+						</div> 
+					<div class="divTableRow"> 
+						<div class="divTableCell">
+							<a href="{% url 'desk:box' 3 sector.date.date sector.date.hour city_id 'Noname' %}">
+								<img src="{% static '/desk/odeum_04.png' %}">
+								<div class="III">Свободно мест: {{len_3}}</div>
+							</a>
+						</div> 
+						<div class="divTableCell">
+							<img src="{% static '/desk/odeum_05.png' %}">
+						</div> 
+						<div class="divTableCell">
+							<a href="{% url 'desk:box' 2 sector.date.date sector.date.hour city_id 'Noname' %}">
+							<img src="{% static '/desk/odeum_06.png' %}">
+							<div class="II">Свободно мест: {{len_2}}</div>
+							</a>
+						</div> 
+						</div> 
+					</div> 
 				</div>
-
-	<div class="layer1">
-		{% for sector  in all_sectors|slice:":1" %}
-			<a href ="{% url 'desk:box' 1 sector.date.date sector.date.hour city_id %}"><font color="000">
-				<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
-				<input type="image" class="top" src="{% static "/desk/FIRST2.png" %}" alt=""  width="auto" height="auto">
-			<div class="centered1">Свободно мест: {{len_1}}/179</div>
-			</a>
-		{%endfor%}
-		</div>
-
-
-	<div class="layer2">
-		{% for sector  in all_sectors|slice:":1" %}
-			<a href ="{% url 'desk:box' 2 sector.date.date sector.date.hour city_id %}"><font color="000">
-				<!-- <button type="submit" class="btn-primary-sector btn-lg v">VIP </button> -->
-				<input type="image" class="top" src="{% static "/desk/SECOND2.png" %}" alt=""  width="auto" height="auto">
-				<div class="centered2">Свободно мест: {{len_2}}/207</div>
-			</a>
-		{%endfor%}
-		</div>
-
+				{%endfor%}
+			</div>
 </body>
