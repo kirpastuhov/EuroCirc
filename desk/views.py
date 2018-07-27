@@ -43,8 +43,6 @@ class Days(LoginRequiredMixin, View):
             context = {}
 
             all_days = Day.objects.filter(city_id=city_id).order_by('-date')
-
-            print(all_days)
             context["city_id"] = city_id
             context["city"] = city
             context["all_days"] = all_days
@@ -86,7 +84,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
             for each_sector in Sector.objects.filter(date=creation_date, city_id=city_id):
                 if each_sector.sector_number != 5:
                     for r in range(1, 10):
-                        print(r)
                         Row(sector=each_sector, row_number=r, date=creation_date).save()
                 if each_sector.sector_number == 5:
                     for r in range(1, 7):
@@ -183,7 +180,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 5:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_1_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_5_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_1_row_5_1').split(',')[0])+1):
@@ -207,7 +203,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 6:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_1_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_6_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_1_row_6_1').split(',')[0])+1):
@@ -231,7 +226,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 7:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_1_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_7_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_1_row_7_1').split(',')[0])+1):
@@ -254,7 +248,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 8:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_1_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_8_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_1_row_8_1').split(',')[0])+1):
@@ -278,7 +271,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 9:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_1_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_9_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_1_row_9_1').split(',')[0])+1):
@@ -390,7 +382,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 5:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_2_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_5_1').split(',')[1]) > 0:
                             for s in range(21, int(request.POST.get('s_2_row_5_1').split(',')[0])+1):
@@ -414,7 +405,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 6:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_2_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_6_1').split(',')[1]) > 0:
                             for s in range(23, int(request.POST.get('s_2_row_6_1').split(',')[0])+1):
@@ -438,7 +428,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 7:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_2_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_7_1').split(',')[1]) > 0:
                             for s in range(24, int(request.POST.get('s_2_row_7_1').split(',')[0])+1):
@@ -461,7 +450,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 8:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_2_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_8_1').split(',')[1]) > 0:
                             for s in range(26, int(request.POST.get('s_2_row_8_1').split(',')[0])+1):
@@ -485,7 +473,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 9:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_2_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_9_1').split(',')[1]) > 0:
                             for s in range(28, int(request.POST.get('s_2_row_9_1').split(',')[0])+1):
@@ -598,7 +585,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 5:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_3_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_5_1').split(',')[1]) > 0:
                             for s in range(24, int(request.POST.get('s_3_row_5_1').split(',')[0])+1):
@@ -622,7 +608,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 6:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_3_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_6_1').split(',')[1]) > 0:
                             for s in range(26, int(request.POST.get('s_3_row_6_1').split(',')[0])+1):
@@ -646,7 +631,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 7:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_3_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_7_1').split(',')[1]) > 0:
                             for s in range(28, int(request.POST.get('s_3_row_7_1').split(',')[0])+1):
@@ -669,7 +653,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 8:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_3_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_8_1').split(',')[1]) > 0:
                             for s in range(30, int(request.POST.get('s_3_row_8_1').split(',')[0])+1):
@@ -693,7 +676,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 9:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_3_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_9_1').split(',')[1]) > 0:
                             for s in range(32, int(request.POST.get('s_3_row_9_1').split(',')[0])+1):
@@ -806,7 +788,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 5:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_4_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_5_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_4_row_5_1').split(',')[0])+1):
@@ -830,7 +811,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 6:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_4_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_6_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_4_row_6_1').split(',')[0])+1):
@@ -854,7 +834,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 7:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_4_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_7_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_4_row_7_1').split(',')[0])+1):
@@ -877,7 +856,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 8:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_4_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_8_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_4_row_8_1').split(',')[0])+1):
@@ -901,7 +879,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 9:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_4_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_9_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_4_row_9_1').split(',')[0])+1):
@@ -1014,7 +991,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 5:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_5_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_5_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_5_row_5_1').split(',')[0])+1):
@@ -1038,7 +1014,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 6:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_5_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_6_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_5_row_6_1').split(',')[0])+1):
@@ -1062,7 +1037,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 7:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_5_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_7_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_5_row_7_1').split(',')[0])+1):
@@ -1085,7 +1059,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 8:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_5_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_8_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_5_row_8_1').split(',')[0])+1):
@@ -1109,7 +1082,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
                 if each_row.row_number == 9:
-                    print('WE ARE HERE')
                     try:
                         if int(request.POST.get('s_5_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_9_1').split(',')[1]) > 0:
                             for s in range(1, int(request.POST.get('s_5_row_9_1').split(',')[0])+1):
@@ -1180,7 +1152,6 @@ class Odeum(LoginRequiredMixin, View):
             gain_free_pr = 0
 
         lens = Seat.get_all_free_seats(self, self.kwargs['date'], self.kwargs['hour'], city_id)
-        print(len(Seat.objects.all().filter(sector__sector_number=4, date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sector__city__id=city_id,)))
         context = Sector.get_all_sectors(self, self.kwargs['date'], self.kwargs['hour'], city_id)
         context['len_1'] = lens[0]
         context['len_2'] = lens[1]
@@ -1423,7 +1394,6 @@ class Box(LoginRequiredMixin, View):
         current_user = User.objects.get(id=request.user.id)
         if self.kwargs['name'] != 'Noname':
             seats = Seat.objects.filter(sold = 'Booked', name = str(self.kwargs['name']), sector__city=self.kwargs['city_id'], date__hour=self.kwargs['hour'], date__date=self.kwargs['date'], sector__sector_number=int(self.kwargs['sector_number']))
-            print(self.kwargs['name'])
             for seat in seats:
                 seat.selected = True
                 seat.user_id = current_user.id
@@ -1448,7 +1418,6 @@ class Box(LoginRequiredMixin, View):
         date_ = datetime.datetime.now().replace(second=0, microsecond=0, tzinfo=pytz.timezone('UTC'))
 
         c = sector.date.replace(second=0, microsecond=0) - date_
-        print(c.total_seconds)
         if c.total_seconds() < 3600:
         	needed = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Booked', sector__city__id=city_id)
         	for seat in needed:
@@ -1486,7 +1455,6 @@ class Box(LoginRequiredMixin, View):
 
     def post(self, request, *arg, city_id, **kwargs):
         next = request.POST.get('next')
-        print(request.POST.get('next'))
         current_user = User.objects.get(id=request.user.id)
         all_seats = Seat.get_all_selected_seats(self, current_user.id, city_id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'])
 
@@ -1497,7 +1465,6 @@ class Box(LoginRequiredMixin, View):
                             seat.user_id = 0
                             current_user.batch = 0
                             current_user.save()
-                            print(request.POST.get('booked_name'))
                             seat.price =  request.POST.get('change_price')
                             seat.selected = False
                             seat.save()
@@ -1515,7 +1482,6 @@ class Box(LoginRequiredMixin, View):
                         seat.user_id = 0
                         current_user.batch = 0
                         current_user.save()
-                        print(request.POST.get('booked_name'))
                         seat.name =  request.POST.get('booked_name')
                         seat.sold = 'Booked'
                         seat.selected = False
@@ -1838,7 +1804,6 @@ class BookedList(LoginRequiredMixin, View):
         for seat in seats:
             context[seat.name] = seat
         seats = list(context.values())
-        print(seats)
         try:
             context['time'] = seats[0].date
         except IndexError:
