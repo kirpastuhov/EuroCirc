@@ -7,6 +7,37 @@ p {
 	font-size: 18px;
 }
 
+.btn-primary-create_city {
+border-color: Black;
+  background-color: rgba(180, 180, 180, 0.7);
+  font-family: arial;
+  font-size: 18px;
+  color: #111;
+  cursor: pointer;
+}
+
+.btn-primary-create_city:hover {
+  background-color: rgba(195, 195, 195, 0.7);
+}
+
+.btn-primary-backdays {
+  z-index: 2;
+	float: left;
+	/* width: 60px;
+	height: 30px; */
+	margin-right: 10px;
+	border-color: Black;
+	background-color: rgba(180, 180, 180, 0.7);
+	font-family: arial;
+	font-size: 14px;
+	color: #111;
+	cursor: pointer;
+}
+
+.btn-primary-backdays:hover {
+	background-color: rgba(195, 195, 195, 0.7);
+}
+
 .container-fluid-2 {
 	padding-top: 0px;
 	padding-bottom: 0px;

@@ -315,6 +315,24 @@ border-color: #357ebd;
 	background-color: #ee6206; /* Цвет кнопки при нажатии */
 }
 
+.btn-primary-backdays {
+  z-index: 2;
+	float: left;
+	/* width: 60px;
+	height: 30px; */
+	margin-right: 10px;
+	border-color: Black;
+	background-color: rgba(180, 180, 180, 0.7);
+	font-family: arial;
+	font-size: 14px;
+	color: #111;
+	cursor: pointer;
+}
+
+.btn-primary-backdays:hover {
+	background-color: rgba(195, 195, 195, 0.7);
+}
+
 .btn-primary:focus,
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
