@@ -32,7 +32,7 @@
 					<form method="post" name='Delete'>
 							{%csrf_token%}
 							<input type="hidden" name="next" value="{%url 'desk:days' city_id%}">
-							<button name="delete"type="submit" class="btn-primary-backdays btn-lg sharp" name="Delete", onclick="return confirm('Вы уверены, что хотите удалить день? ')" id="sell_button"> Удалить день </button>
+							<button name="Delete"type="submit" class="btn-primary-backdays btn-lg sharp"onclick="return confirm('Вы уверены, что хотите удалить день? ')" id="sell_button"> Удалить день </button>
 					</form>
 					</div>
 

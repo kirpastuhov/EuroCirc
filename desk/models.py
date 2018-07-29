@@ -182,3 +182,10 @@ class Seat(models.Model):
     		lens.append(len(Seat.objects.all().filter(sector__sector_number=s, date__date=date, date__hour=hour, sector__city__id=city_id, sold='Vacant')))
 
     	return lens
+
+
+class Cache(models.Model):
+	city = models.ForeignKey(City, on_delete=models.CASCADE)
+	sector = models.IntegerField()
+	number = models.IntegerField()
+	price = models.IntegerField()

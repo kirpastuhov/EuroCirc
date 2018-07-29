@@ -1176,9 +1176,10 @@ class Odeum(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *arg, city_id, **kwargs):
-        next = request.POST.get('next')
+        next = request.POST.get('next')     
         if 'Delete' in request.POST:
-            if User.objects.get(id=request.user.id).staff   == True:
+            print('YO')
+            if User.objects.get(id=request.user.id).staff   == True or User.objects.get(id=request.user.id).admin   == True :
                 Day.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], city__id=city_id).delete()
                 Sector.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], city__id=city_id).delete()
                 return HttpResponseRedirect(next)

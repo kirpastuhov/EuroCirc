@@ -4,7 +4,7 @@ from .forms import UserAdminCreationForm, UserAdminChangeForm
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .forms import UserAdminCreationForm, UserAdminChangeForm
-from .models import User, Day, Sector, Row, Seat, City
+from .models import User, Day, Sector, Row, Seat, City, Cache
 
 
 User = get_user_model()
@@ -47,7 +47,7 @@ admin.site.register(Day)
 admin.site.register(Sector)
 admin.site.register(Row)
 admin.site.register(Seat)
-
+admin.site.register(Cache)
 # Remove Group Model from admin. We're not using it.
 admin.site.unregister(Group)
 
