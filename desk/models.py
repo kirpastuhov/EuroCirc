@@ -185,7 +185,6 @@ class Seat(models.Model):
 
 
 class Cache(models.Model):
+	instance = models.CharField(max_length=20)
+	name = models.CharField(max_length=30)
 	city = models.ForeignKey(City, on_delete=models.CASCADE)
-	sector = models.IntegerField()
-	number = models.IntegerField()
-	price = models.IntegerField()

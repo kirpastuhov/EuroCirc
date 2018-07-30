@@ -1,7 +1,7 @@
 ﻿from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import View
-from .models import City, Day, Sector, Row, Seat, User
+from .models import City, Day, Sector, Row, Seat, User, Cache
 from django.http import HttpResponseRedirect, HttpResponse
 import xlsxwriter
 from string import ascii_uppercase
@@ -77,6 +77,147 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
             return HttpResponse('<h1>Такой день уже существует. Пожалуйста, выберите другую дату или удалите день с выбранной вами датой</h1>')
         except Day.DoesNotExist:
             Day(date=creation_date, city_id=city_id).save() # create a Day object in the db with posted date
+
+
+            try:
+                Cache.objects.get(city_id=city_id)
+
+            except Cache.MultipleObjectsReturned:
+                pass
+
+            except Cache.DoesNotExist:
+                Cache(city_id=city_id, name='s_1_row_1_1', instance=str(request.POST.get('s_1_row_1_1'))).save()
+                Cache(city_id=city_id, name='s_1_row_1_2', instance=str(request.POST.get('s_1_row_1_2'))).save()
+                Cache(city_id=city_id, name='s_1_row_1_3', instance=str(request.POST.get('s_1_row_1_3'))).save()
+                Cache(city_id=city_id, name='s_1_row_2_1', instance=str(request.POST.get('s_1_row_2_1'))).save()
+                Cache(city_id=city_id, name='s_1_row_2_2', instance=str(request.POST.get('s_1_row_2_2'))).save()
+                Cache(city_id=city_id, name='s_1_row_2_3', instance=str(request.POST.get('s_1_row_2_3'))).save()
+                Cache(city_id=city_id, name='s_1_row_3_1', instance=str(request.POST.get('s_1_row_3_1'))).save()
+                Cache(city_id=city_id, name='s_1_row_3_2', instance=str(request.POST.get('s_1_row_3_2'))).save()
+                Cache(city_id=city_id, name='s_1_row_3_3', instance=str(request.POST.get('s_1_row_3_3'))).save()
+                Cache(city_id=city_id, name='s_1_row_4_1', instance=str(request.POST.get('s_1_row_4_1'))).save()
+                Cache(city_id=city_id, name='s_1_row_4_2', instance=str(request.POST.get('s_1_row_4_2'))).save()
+                Cache(city_id=city_id, name='s_1_row_4_3', instance=str(request.POST.get('s_1_row_4_3'))).save()
+                Cache(city_id=city_id, name='s_1_row_5_1', instance=str(request.POST.get('s_1_row_5_1'))).save()
+                Cache(city_id=city_id, name='s_1_row_5_2', instance=str(request.POST.get('s_1_row_5_2'))).save()
+                Cache(city_id=city_id, name='s_1_row_5_3', instance=str(request.POST.get('s_1_row_5_3'))).save()
+                Cache(city_id=city_id, name='s_1_row_6_1', instance=str(request.POST.get('s_1_row_6_1'))).save()
+                Cache(city_id=city_id, name='s_1_row_6_2', instance=str(request.POST.get('s_1_row_6_2'))).save()
+                Cache(city_id=city_id, name='s_1_row_6_3', instance=str(request.POST.get('s_1_row_6_3'))).save()
+                Cache(city_id=city_id, name='s_1_row_7_1', instance=str(request.POST.get('s_1_row_7_1'))).save()
+                Cache(city_id=city_id, name='s_1_row_7_2', instance=str(request.POST.get('s_1_row_7_2'))).save()
+                Cache(city_id=city_id, name='s_1_row_7_3', instance=str(request.POST.get('s_1_row_7_3'))).save()
+                Cache(city_id=city_id, name='s_1_row_8_1', instance=str(request.POST.get('s_1_row_8_1'))).save()
+                Cache(city_id=city_id, name='s_1_row_8_2', instance=str(request.POST.get('s_1_row_8_2'))).save()
+                Cache(city_id=city_id, name='s_1_row_8_3', instance=str(request.POST.get('s_1_row_8_3'))).save()
+                Cache(city_id=city_id, name='s_1_row_9_1', instance=str(request.POST.get('s_1_row_9_1'))).save()
+                Cache(city_id=city_id, name='s_1_row_9_2', instance=str(request.POST.get('s_1_row_9_2'))).save()
+                Cache(city_id=city_id, name='s_1_row_9_3', instance=str(request.POST.get('s_1_row_9_3'))).save()
+
+                
+                Cache(city_id=city_id, name='s_2_row_1_1', instance=str(request.POST.get('s_2_row_1_1'))).save()
+                Cache(city_id=city_id, name='s_2_row_1_2', instance=str(request.POST.get('s_2_row_1_2'))).save()
+                Cache(city_id=city_id, name='s_2_row_1_3', instance=str(request.POST.get('s_2_row_1_3'))).save()
+                Cache(city_id=city_id, name='s_2_row_2_1', instance=str(request.POST.get('s_2_row_2_1'))).save()
+                Cache(city_id=city_id, name='s_2_row_2_2', instance=str(request.POST.get('s_2_row_2_2'))).save()
+                Cache(city_id=city_id, name='s_2_row_2_3', instance=str(request.POST.get('s_2_row_2_3'))).save()
+                Cache(city_id=city_id, name='s_2_row_3_1', instance=str(request.POST.get('s_2_row_3_1'))).save()
+                Cache(city_id=city_id, name='s_2_row_3_2', instance=str(request.POST.get('s_2_row_3_2'))).save()
+                Cache(city_id=city_id, name='s_2_row_3_3', instance=str(request.POST.get('s_2_row_3_3'))).save()
+                Cache(city_id=city_id, name='s_2_row_4_1', instance=str(request.POST.get('s_2_row_4_1'))).save()
+                Cache(city_id=city_id, name='s_2_row_4_2', instance=str(request.POST.get('s_2_row_4_2'))).save()
+                Cache(city_id=city_id, name='s_2_row_4_3', instance=str(request.POST.get('s_2_row_4_3'))).save()
+                Cache(city_id=city_id, name='s_2_row_5_1', instance=str(request.POST.get('s_2_row_5_1'))).save()
+                Cache(city_id=city_id, name='s_2_row_5_2', instance=str(request.POST.get('s_2_row_5_2'))).save()
+                Cache(city_id=city_id, name='s_2_row_5_3', instance=str(request.POST.get('s_2_row_5_3'))).save()
+                Cache(city_id=city_id, name='s_2_row_6_1', instance=str(request.POST.get('s_2_row_6_1'))).save()
+                Cache(city_id=city_id, name='s_2_row_6_2', instance=str(request.POST.get('s_2_row_6_2'))).save()
+                Cache(city_id=city_id, name='s_2_row_6_3', instance=str(request.POST.get('s_2_row_6_3'))).save()
+                Cache(city_id=city_id, name='s_2_row_7_1', instance=str(request.POST.get('s_2_row_7_1'))).save()
+                Cache(city_id=city_id, name='s_2_row_7_2', instance=str(request.POST.get('s_2_row_7_2'))).save()
+                Cache(city_id=city_id, name='s_2_row_7_3', instance=str(request.POST.get('s_2_row_7_3'))).save()
+                Cache(city_id=city_id, name='s_2_row_8_1', instance=str(request.POST.get('s_2_row_8_1'))).save()
+                Cache(city_id=city_id, name='s_2_row_8_2', instance=str(request.POST.get('s_2_row_8_2'))).save()
+                Cache(city_id=city_id, name='s_2_row_8_3', instance=str(request.POST.get('s_2_row_8_3'))).save()
+                Cache(city_id=city_id, name='s_2_row_9_1', instance=str(request.POST.get('s_2_row_9_1'))).save()
+                Cache(city_id=city_id, name='s_2_row_9_2', instance=str(request.POST.get('s_2_row_9_2'))).save()
+                Cache(city_id=city_id, name='s_2_row_9_3', instance=str(request.POST.get('s_2_row_9_3'))).save()
+
+                Cache(city_id=city_id, name='s_3_row_1_1', instance=str(request.POST.get('s_3_row_1_1'))).save()
+                Cache(city_id=city_id, name='s_3_row_1_2', instance=str(request.POST.get('s_3_row_1_2'))).save()
+                Cache(city_id=city_id, name='s_3_row_1_3', instance=str(request.POST.get('s_3_row_1_3'))).save()
+                Cache(city_id=city_id, name='s_3_row_2_1', instance=str(request.POST.get('s_3_row_2_1'))).save()
+                Cache(city_id=city_id, name='s_3_row_2_2', instance=str(request.POST.get('s_3_row_2_2'))).save()
+                Cache(city_id=city_id, name='s_3_row_2_3', instance=str(request.POST.get('s_3_row_2_3'))).save()
+                Cache(city_id=city_id, name='s_3_row_3_1', instance=str(request.POST.get('s_3_row_3_1'))).save()
+                Cache(city_id=city_id, name='s_3_row_3_2', instance=str(request.POST.get('s_3_row_3_2'))).save()
+                Cache(city_id=city_id, name='s_3_row_3_3', instance=str(request.POST.get('s_3_row_3_3'))).save()
+                Cache(city_id=city_id, name='s_3_row_4_1', instance=str(request.POST.get('s_3_row_4_1'))).save()
+                Cache(city_id=city_id, name='s_3_row_4_2', instance=str(request.POST.get('s_3_row_4_2'))).save()
+                Cache(city_id=city_id, name='s_3_row_4_3', instance=str(request.POST.get('s_3_row_4_3'))).save()
+                Cache(city_id=city_id, name='s_3_row_5_1', instance=str(request.POST.get('s_3_row_5_1'))).save()
+                Cache(city_id=city_id, name='s_3_row_5_2', instance=str(request.POST.get('s_3_row_5_2'))).save()
+                Cache(city_id=city_id, name='s_3_row_5_3', instance=str(request.POST.get('s_3_row_5_3'))).save()
+                Cache(city_id=city_id, name='s_3_row_6_1', instance=str(request.POST.get('s_3_row_6_1'))).save()
+                Cache(city_id=city_id, name='s_3_row_6_2', instance=str(request.POST.get('s_3_row_6_2'))).save()
+                Cache(city_id=city_id, name='s_3_row_6_3', instance=str(request.POST.get('s_3_row_6_3'))).save()
+                Cache(city_id=city_id, name='s_3_row_7_1', instance=str(request.POST.get('s_3_row_7_1'))).save()
+                Cache(city_id=city_id, name='s_3_row_7_2', instance=str(request.POST.get('s_3_row_7_2'))).save()
+                Cache(city_id=city_id, name='s_3_row_7_3', instance=str(request.POST.get('s_3_row_7_3'))).save()
+                Cache(city_id=city_id, name='s_3_row_8_1', instance=str(request.POST.get('s_3_row_8_1'))).save()
+                Cache(city_id=city_id, name='s_3_row_8_2', instance=str(request.POST.get('s_3_row_8_2'))).save()
+                Cache(city_id=city_id, name='s_3_row_8_3', instance=str(request.POST.get('s_3_row_8_3'))).save()
+                Cache(city_id=city_id, name='s_3_row_9_1', instance=str(request.POST.get('s_3_row_9_1'))).save()
+                Cache(city_id=city_id, name='s_3_row_9_2', instance=str(request.POST.get('s_3_row_9_2'))).save()
+                Cache(city_id=city_id, name='s_3_row_9_3', instance=str(request.POST.get('s_3_row_9_3'))).save()
+
+                Cache(city_id=city_id, name='s_4_row_1_1', instance=str(request.POST.get('s_4_row_1_1'))).save()
+                Cache(city_id=city_id, name='s_4_row_1_2', instance=str(request.POST.get('s_4_row_1_2'))).save()
+                Cache(city_id=city_id, name='s_4_row_1_3', instance=str(request.POST.get('s_4_row_1_3'))).save()
+                Cache(city_id=city_id, name='s_4_row_2_1', instance=str(request.POST.get('s_4_row_2_1'))).save()
+                Cache(city_id=city_id, name='s_4_row_2_2', instance=str(request.POST.get('s_4_row_2_2'))).save()
+                Cache(city_id=city_id, name='s_4_row_2_3', instance=str(request.POST.get('s_4_row_2_3'))).save()
+                Cache(city_id=city_id, name='s_4_row_3_1', instance=str(request.POST.get('s_4_row_3_1'))).save()
+                Cache(city_id=city_id, name='s_4_row_3_2', instance=str(request.POST.get('s_4_row_3_2'))).save()
+                Cache(city_id=city_id, name='s_4_row_3_3', instance=str(request.POST.get('s_4_row_3_3'))).save()
+                Cache(city_id=city_id, name='s_4_row_4_1', instance=str(request.POST.get('s_4_row_4_1'))).save()
+                Cache(city_id=city_id, name='s_4_row_4_2', instance=str(request.POST.get('s_4_row_4_2'))).save()
+                Cache(city_id=city_id, name='s_4_row_4_3', instance=str(request.POST.get('s_4_row_4_3'))).save()
+                Cache(city_id=city_id, name='s_4_row_5_1', instance=str(request.POST.get('s_4_row_5_1'))).save()
+                Cache(city_id=city_id, name='s_4_row_5_2', instance=str(request.POST.get('s_4_row_5_2'))).save()
+                Cache(city_id=city_id, name='s_4_row_5_3', instance=str(request.POST.get('s_4_row_5_3'))).save()
+                Cache(city_id=city_id, name='s_4_row_6_1', instance=str(request.POST.get('s_4_row_6_1'))).save()
+                Cache(city_id=city_id, name='s_4_row_6_2', instance=str(request.POST.get('s_4_row_6_2'))).save()
+                Cache(city_id=city_id, name='s_4_row_6_3', instance=str(request.POST.get('s_4_row_6_3'))).save()
+                Cache(city_id=city_id, name='s_4_row_7_1', instance=str(request.POST.get('s_4_row_7_1'))).save()
+                Cache(city_id=city_id, name='s_4_row_7_2', instance=str(request.POST.get('s_4_row_7_2'))).save()
+                Cache(city_id=city_id, name='s_4_row_7_3', instance=str(request.POST.get('s_4_row_7_3'))).save()
+                Cache(city_id=city_id, name='s_4_row_8_1', instance=str(request.POST.get('s_4_row_8_1'))).save()
+                Cache(city_id=city_id, name='s_4_row_8_2', instance=str(request.POST.get('s_4_row_8_2'))).save()
+                Cache(city_id=city_id, name='s_4_row_8_3', instance=str(request.POST.get('s_4_row_8_3'))).save()
+                Cache(city_id=city_id, name='s_4_row_9_1', instance=str(request.POST.get('s_4_row_9_1'))).save()
+                Cache(city_id=city_id, name='s_4_row_9_2', instance=str(request.POST.get('s_4_row_9_2'))).save()
+                Cache(city_id=city_id, name='s_4_row_9_3', instance=str(request.POST.get('s_4_row_9_3'))).save()
+
+                Cache(city_id=city_id, name='s_5_row_1_1', instance=str(request.POST.get('s_5_row_1_1'))).save()
+                Cache(city_id=city_id, name='s_5_row_1_2', instance=str(request.POST.get('s_5_row_1_2'))).save()
+                Cache(city_id=city_id, name='s_5_row_1_3', instance=str(request.POST.get('s_5_row_1_3'))).save()
+                Cache(city_id=city_id, name='s_5_row_2_1', instance=str(request.POST.get('s_5_row_2_1'))).save()
+                Cache(city_id=city_id, name='s_5_row_2_2', instance=str(request.POST.get('s_5_row_2_2'))).save()
+                Cache(city_id=city_id, name='s_5_row_2_3', instance=str(request.POST.get('s_5_row_2_3'))).save()
+                Cache(city_id=city_id, name='s_5_row_3_1', instance=str(request.POST.get('s_5_row_3_1'))).save()
+                Cache(city_id=city_id, name='s_5_row_3_2', instance=str(request.POST.get('s_5_row_3_2'))).save()
+                Cache(city_id=city_id, name='s_5_row_3_3', instance=str(request.POST.get('s_5_row_3_3'))).save()
+                Cache(city_id=city_id, name='s_5_row_4_1', instance=str(request.POST.get('s_5_row_4_1'))).save()
+                Cache(city_id=city_id, name='s_5_row_4_2', instance=str(request.POST.get('s_5_row_4_2'))).save()
+                Cache(city_id=city_id, name='s_5_row_4_3', instance=str(request.POST.get('s_5_row_4_3'))).save()
+                Cache(city_id=city_id, name='s_5_row_5_1', instance=str(request.POST.get('s_5_row_5_1'))).save()
+                Cache(city_id=city_id, name='s_5_row_5_2', instance=str(request.POST.get('s_5_row_5_2'))).save()
+                Cache(city_id=city_id, name='s_5_row_5_3', instance=str(request.POST.get('s_5_row_5_3'))).save()
+                Cache(city_id=city_id, name='s_5_row_6_1', instance=str(request.POST.get('s_5_row_6_1'))).save()
+                Cache(city_id=city_id, name='s_5_row_6_2', instance=str(request.POST.get('s_5_row_6_2'))).save()
+                Cache(city_id=city_id, name='s_5_row_6_3', instance=str(request.POST.get('s_5_row_6_3'))).save()
+
 
             for s in range(1, 6):
                 Sector(date=creation_date, sector_number=s, city_id=city_id).save()
@@ -1101,6 +1242,8 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     except ValueError:
                         err_()
                         return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
 
         return HttpResponseRedirect(next)
 
