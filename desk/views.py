@@ -12,6 +12,8 @@ import pytz
 class Index(LoginRequiredMixin, View):
     template_name = 'desk/index.html'
     def get(self, request, *arg, **kwargs):
+        if Cache.objects.get(name='s_1_row_1_3').instance.split(',')[0] == '':
+            print('You')
         context = City.get_all_cities(self)
         return render(request, self.template_name, context)
 
@@ -71,1181 +73,2183 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
             Day.objects.get(date=creation_date,  city_id=city_id).delete()
             for each_sector in Sector.objects.filter(date=creation_date, city_id=city_id):
                 each_sector.delete()
-        creation_date = request.POST['date'] # get date that user posted in the form
-        try:
-            Day.objects.get(date=creation_date,  city_id=city_id)
-            return HttpResponse('<h1>Такой день уже существует. Пожалуйста, выберите другую дату или удалите день с выбранной вами датой</h1>')
-        except Day.DoesNotExist:
-            Day(date=creation_date, city_id=city_id).save() # create a Day object in the db with posted date
 
 
+
+        if 'Cache' in request.POST:
+            print('COOL')
+            creation_date = request.POST['date'] # get date that user posted in the form
             try:
-                Cache.objects.get(city_id=city_id)
-
-            except Cache.MultipleObjectsReturned:
-                pass
-
-            except Cache.DoesNotExist:
-                Cache(city_id=city_id, name='s_1_row_1_1', instance=str(request.POST.get('s_1_row_1_1'))).save()
-                Cache(city_id=city_id, name='s_1_row_1_2', instance=str(request.POST.get('s_1_row_1_2'))).save()
-                Cache(city_id=city_id, name='s_1_row_1_3', instance=str(request.POST.get('s_1_row_1_3'))).save()
-                Cache(city_id=city_id, name='s_1_row_2_1', instance=str(request.POST.get('s_1_row_2_1'))).save()
-                Cache(city_id=city_id, name='s_1_row_2_2', instance=str(request.POST.get('s_1_row_2_2'))).save()
-                Cache(city_id=city_id, name='s_1_row_2_3', instance=str(request.POST.get('s_1_row_2_3'))).save()
-                Cache(city_id=city_id, name='s_1_row_3_1', instance=str(request.POST.get('s_1_row_3_1'))).save()
-                Cache(city_id=city_id, name='s_1_row_3_2', instance=str(request.POST.get('s_1_row_3_2'))).save()
-                Cache(city_id=city_id, name='s_1_row_3_3', instance=str(request.POST.get('s_1_row_3_3'))).save()
-                Cache(city_id=city_id, name='s_1_row_4_1', instance=str(request.POST.get('s_1_row_4_1'))).save()
-                Cache(city_id=city_id, name='s_1_row_4_2', instance=str(request.POST.get('s_1_row_4_2'))).save()
-                Cache(city_id=city_id, name='s_1_row_4_3', instance=str(request.POST.get('s_1_row_4_3'))).save()
-                Cache(city_id=city_id, name='s_1_row_5_1', instance=str(request.POST.get('s_1_row_5_1'))).save()
-                Cache(city_id=city_id, name='s_1_row_5_2', instance=str(request.POST.get('s_1_row_5_2'))).save()
-                Cache(city_id=city_id, name='s_1_row_5_3', instance=str(request.POST.get('s_1_row_5_3'))).save()
-                Cache(city_id=city_id, name='s_1_row_6_1', instance=str(request.POST.get('s_1_row_6_1'))).save()
-                Cache(city_id=city_id, name='s_1_row_6_2', instance=str(request.POST.get('s_1_row_6_2'))).save()
-                Cache(city_id=city_id, name='s_1_row_6_3', instance=str(request.POST.get('s_1_row_6_3'))).save()
-                Cache(city_id=city_id, name='s_1_row_7_1', instance=str(request.POST.get('s_1_row_7_1'))).save()
-                Cache(city_id=city_id, name='s_1_row_7_2', instance=str(request.POST.get('s_1_row_7_2'))).save()
-                Cache(city_id=city_id, name='s_1_row_7_3', instance=str(request.POST.get('s_1_row_7_3'))).save()
-                Cache(city_id=city_id, name='s_1_row_8_1', instance=str(request.POST.get('s_1_row_8_1'))).save()
-                Cache(city_id=city_id, name='s_1_row_8_2', instance=str(request.POST.get('s_1_row_8_2'))).save()
-                Cache(city_id=city_id, name='s_1_row_8_3', instance=str(request.POST.get('s_1_row_8_3'))).save()
-                Cache(city_id=city_id, name='s_1_row_9_1', instance=str(request.POST.get('s_1_row_9_1'))).save()
-                Cache(city_id=city_id, name='s_1_row_9_2', instance=str(request.POST.get('s_1_row_9_2'))).save()
-                Cache(city_id=city_id, name='s_1_row_9_3', instance=str(request.POST.get('s_1_row_9_3'))).save()
-
-                
-                Cache(city_id=city_id, name='s_2_row_1_1', instance=str(request.POST.get('s_2_row_1_1'))).save()
-                Cache(city_id=city_id, name='s_2_row_1_2', instance=str(request.POST.get('s_2_row_1_2'))).save()
-                Cache(city_id=city_id, name='s_2_row_1_3', instance=str(request.POST.get('s_2_row_1_3'))).save()
-                Cache(city_id=city_id, name='s_2_row_2_1', instance=str(request.POST.get('s_2_row_2_1'))).save()
-                Cache(city_id=city_id, name='s_2_row_2_2', instance=str(request.POST.get('s_2_row_2_2'))).save()
-                Cache(city_id=city_id, name='s_2_row_2_3', instance=str(request.POST.get('s_2_row_2_3'))).save()
-                Cache(city_id=city_id, name='s_2_row_3_1', instance=str(request.POST.get('s_2_row_3_1'))).save()
-                Cache(city_id=city_id, name='s_2_row_3_2', instance=str(request.POST.get('s_2_row_3_2'))).save()
-                Cache(city_id=city_id, name='s_2_row_3_3', instance=str(request.POST.get('s_2_row_3_3'))).save()
-                Cache(city_id=city_id, name='s_2_row_4_1', instance=str(request.POST.get('s_2_row_4_1'))).save()
-                Cache(city_id=city_id, name='s_2_row_4_2', instance=str(request.POST.get('s_2_row_4_2'))).save()
-                Cache(city_id=city_id, name='s_2_row_4_3', instance=str(request.POST.get('s_2_row_4_3'))).save()
-                Cache(city_id=city_id, name='s_2_row_5_1', instance=str(request.POST.get('s_2_row_5_1'))).save()
-                Cache(city_id=city_id, name='s_2_row_5_2', instance=str(request.POST.get('s_2_row_5_2'))).save()
-                Cache(city_id=city_id, name='s_2_row_5_3', instance=str(request.POST.get('s_2_row_5_3'))).save()
-                Cache(city_id=city_id, name='s_2_row_6_1', instance=str(request.POST.get('s_2_row_6_1'))).save()
-                Cache(city_id=city_id, name='s_2_row_6_2', instance=str(request.POST.get('s_2_row_6_2'))).save()
-                Cache(city_id=city_id, name='s_2_row_6_3', instance=str(request.POST.get('s_2_row_6_3'))).save()
-                Cache(city_id=city_id, name='s_2_row_7_1', instance=str(request.POST.get('s_2_row_7_1'))).save()
-                Cache(city_id=city_id, name='s_2_row_7_2', instance=str(request.POST.get('s_2_row_7_2'))).save()
-                Cache(city_id=city_id, name='s_2_row_7_3', instance=str(request.POST.get('s_2_row_7_3'))).save()
-                Cache(city_id=city_id, name='s_2_row_8_1', instance=str(request.POST.get('s_2_row_8_1'))).save()
-                Cache(city_id=city_id, name='s_2_row_8_2', instance=str(request.POST.get('s_2_row_8_2'))).save()
-                Cache(city_id=city_id, name='s_2_row_8_3', instance=str(request.POST.get('s_2_row_8_3'))).save()
-                Cache(city_id=city_id, name='s_2_row_9_1', instance=str(request.POST.get('s_2_row_9_1'))).save()
-                Cache(city_id=city_id, name='s_2_row_9_2', instance=str(request.POST.get('s_2_row_9_2'))).save()
-                Cache(city_id=city_id, name='s_2_row_9_3', instance=str(request.POST.get('s_2_row_9_3'))).save()
-
-                Cache(city_id=city_id, name='s_3_row_1_1', instance=str(request.POST.get('s_3_row_1_1'))).save()
-                Cache(city_id=city_id, name='s_3_row_1_2', instance=str(request.POST.get('s_3_row_1_2'))).save()
-                Cache(city_id=city_id, name='s_3_row_1_3', instance=str(request.POST.get('s_3_row_1_3'))).save()
-                Cache(city_id=city_id, name='s_3_row_2_1', instance=str(request.POST.get('s_3_row_2_1'))).save()
-                Cache(city_id=city_id, name='s_3_row_2_2', instance=str(request.POST.get('s_3_row_2_2'))).save()
-                Cache(city_id=city_id, name='s_3_row_2_3', instance=str(request.POST.get('s_3_row_2_3'))).save()
-                Cache(city_id=city_id, name='s_3_row_3_1', instance=str(request.POST.get('s_3_row_3_1'))).save()
-                Cache(city_id=city_id, name='s_3_row_3_2', instance=str(request.POST.get('s_3_row_3_2'))).save()
-                Cache(city_id=city_id, name='s_3_row_3_3', instance=str(request.POST.get('s_3_row_3_3'))).save()
-                Cache(city_id=city_id, name='s_3_row_4_1', instance=str(request.POST.get('s_3_row_4_1'))).save()
-                Cache(city_id=city_id, name='s_3_row_4_2', instance=str(request.POST.get('s_3_row_4_2'))).save()
-                Cache(city_id=city_id, name='s_3_row_4_3', instance=str(request.POST.get('s_3_row_4_3'))).save()
-                Cache(city_id=city_id, name='s_3_row_5_1', instance=str(request.POST.get('s_3_row_5_1'))).save()
-                Cache(city_id=city_id, name='s_3_row_5_2', instance=str(request.POST.get('s_3_row_5_2'))).save()
-                Cache(city_id=city_id, name='s_3_row_5_3', instance=str(request.POST.get('s_3_row_5_3'))).save()
-                Cache(city_id=city_id, name='s_3_row_6_1', instance=str(request.POST.get('s_3_row_6_1'))).save()
-                Cache(city_id=city_id, name='s_3_row_6_2', instance=str(request.POST.get('s_3_row_6_2'))).save()
-                Cache(city_id=city_id, name='s_3_row_6_3', instance=str(request.POST.get('s_3_row_6_3'))).save()
-                Cache(city_id=city_id, name='s_3_row_7_1', instance=str(request.POST.get('s_3_row_7_1'))).save()
-                Cache(city_id=city_id, name='s_3_row_7_2', instance=str(request.POST.get('s_3_row_7_2'))).save()
-                Cache(city_id=city_id, name='s_3_row_7_3', instance=str(request.POST.get('s_3_row_7_3'))).save()
-                Cache(city_id=city_id, name='s_3_row_8_1', instance=str(request.POST.get('s_3_row_8_1'))).save()
-                Cache(city_id=city_id, name='s_3_row_8_2', instance=str(request.POST.get('s_3_row_8_2'))).save()
-                Cache(city_id=city_id, name='s_3_row_8_3', instance=str(request.POST.get('s_3_row_8_3'))).save()
-                Cache(city_id=city_id, name='s_3_row_9_1', instance=str(request.POST.get('s_3_row_9_1'))).save()
-                Cache(city_id=city_id, name='s_3_row_9_2', instance=str(request.POST.get('s_3_row_9_2'))).save()
-                Cache(city_id=city_id, name='s_3_row_9_3', instance=str(request.POST.get('s_3_row_9_3'))).save()
-
-                Cache(city_id=city_id, name='s_4_row_1_1', instance=str(request.POST.get('s_4_row_1_1'))).save()
-                Cache(city_id=city_id, name='s_4_row_1_2', instance=str(request.POST.get('s_4_row_1_2'))).save()
-                Cache(city_id=city_id, name='s_4_row_1_3', instance=str(request.POST.get('s_4_row_1_3'))).save()
-                Cache(city_id=city_id, name='s_4_row_2_1', instance=str(request.POST.get('s_4_row_2_1'))).save()
-                Cache(city_id=city_id, name='s_4_row_2_2', instance=str(request.POST.get('s_4_row_2_2'))).save()
-                Cache(city_id=city_id, name='s_4_row_2_3', instance=str(request.POST.get('s_4_row_2_3'))).save()
-                Cache(city_id=city_id, name='s_4_row_3_1', instance=str(request.POST.get('s_4_row_3_1'))).save()
-                Cache(city_id=city_id, name='s_4_row_3_2', instance=str(request.POST.get('s_4_row_3_2'))).save()
-                Cache(city_id=city_id, name='s_4_row_3_3', instance=str(request.POST.get('s_4_row_3_3'))).save()
-                Cache(city_id=city_id, name='s_4_row_4_1', instance=str(request.POST.get('s_4_row_4_1'))).save()
-                Cache(city_id=city_id, name='s_4_row_4_2', instance=str(request.POST.get('s_4_row_4_2'))).save()
-                Cache(city_id=city_id, name='s_4_row_4_3', instance=str(request.POST.get('s_4_row_4_3'))).save()
-                Cache(city_id=city_id, name='s_4_row_5_1', instance=str(request.POST.get('s_4_row_5_1'))).save()
-                Cache(city_id=city_id, name='s_4_row_5_2', instance=str(request.POST.get('s_4_row_5_2'))).save()
-                Cache(city_id=city_id, name='s_4_row_5_3', instance=str(request.POST.get('s_4_row_5_3'))).save()
-                Cache(city_id=city_id, name='s_4_row_6_1', instance=str(request.POST.get('s_4_row_6_1'))).save()
-                Cache(city_id=city_id, name='s_4_row_6_2', instance=str(request.POST.get('s_4_row_6_2'))).save()
-                Cache(city_id=city_id, name='s_4_row_6_3', instance=str(request.POST.get('s_4_row_6_3'))).save()
-                Cache(city_id=city_id, name='s_4_row_7_1', instance=str(request.POST.get('s_4_row_7_1'))).save()
-                Cache(city_id=city_id, name='s_4_row_7_2', instance=str(request.POST.get('s_4_row_7_2'))).save()
-                Cache(city_id=city_id, name='s_4_row_7_3', instance=str(request.POST.get('s_4_row_7_3'))).save()
-                Cache(city_id=city_id, name='s_4_row_8_1', instance=str(request.POST.get('s_4_row_8_1'))).save()
-                Cache(city_id=city_id, name='s_4_row_8_2', instance=str(request.POST.get('s_4_row_8_2'))).save()
-                Cache(city_id=city_id, name='s_4_row_8_3', instance=str(request.POST.get('s_4_row_8_3'))).save()
-                Cache(city_id=city_id, name='s_4_row_9_1', instance=str(request.POST.get('s_4_row_9_1'))).save()
-                Cache(city_id=city_id, name='s_4_row_9_2', instance=str(request.POST.get('s_4_row_9_2'))).save()
-                Cache(city_id=city_id, name='s_4_row_9_3', instance=str(request.POST.get('s_4_row_9_3'))).save()
-
-                Cache(city_id=city_id, name='s_5_row_1_1', instance=str(request.POST.get('s_5_row_1_1'))).save()
-                Cache(city_id=city_id, name='s_5_row_1_2', instance=str(request.POST.get('s_5_row_1_2'))).save()
-                Cache(city_id=city_id, name='s_5_row_1_3', instance=str(request.POST.get('s_5_row_1_3'))).save()
-                Cache(city_id=city_id, name='s_5_row_2_1', instance=str(request.POST.get('s_5_row_2_1'))).save()
-                Cache(city_id=city_id, name='s_5_row_2_2', instance=str(request.POST.get('s_5_row_2_2'))).save()
-                Cache(city_id=city_id, name='s_5_row_2_3', instance=str(request.POST.get('s_5_row_2_3'))).save()
-                Cache(city_id=city_id, name='s_5_row_3_1', instance=str(request.POST.get('s_5_row_3_1'))).save()
-                Cache(city_id=city_id, name='s_5_row_3_2', instance=str(request.POST.get('s_5_row_3_2'))).save()
-                Cache(city_id=city_id, name='s_5_row_3_3', instance=str(request.POST.get('s_5_row_3_3'))).save()
-                Cache(city_id=city_id, name='s_5_row_4_1', instance=str(request.POST.get('s_5_row_4_1'))).save()
-                Cache(city_id=city_id, name='s_5_row_4_2', instance=str(request.POST.get('s_5_row_4_2'))).save()
-                Cache(city_id=city_id, name='s_5_row_4_3', instance=str(request.POST.get('s_5_row_4_3'))).save()
-                Cache(city_id=city_id, name='s_5_row_5_1', instance=str(request.POST.get('s_5_row_5_1'))).save()
-                Cache(city_id=city_id, name='s_5_row_5_2', instance=str(request.POST.get('s_5_row_5_2'))).save()
-                Cache(city_id=city_id, name='s_5_row_5_3', instance=str(request.POST.get('s_5_row_5_3'))).save()
-                Cache(city_id=city_id, name='s_5_row_6_1', instance=str(request.POST.get('s_5_row_6_1'))).save()
-                Cache(city_id=city_id, name='s_5_row_6_2', instance=str(request.POST.get('s_5_row_6_2'))).save()
-                Cache(city_id=city_id, name='s_5_row_6_3', instance=str(request.POST.get('s_5_row_6_3'))).save()
-
+                Day.objects.get(date=creation_date,  city_id=city_id)
+                return HttpResponse('<h1>Такой день уже существует. Пожалуйста, выберите другую дату или удалите день с выбранной вами датой</h1>')
+            except Day.DoesNotExist:
+                Day(date=creation_date, city_id=city_id).save()
 
             for s in range(1, 6):
-                Sector(date=creation_date, sector_number=s, city_id=city_id).save()
+                    Sector(date=creation_date, sector_number=s, city_id=city_id).save()
 
             for each_sector in Sector.objects.filter(date=creation_date, city_id=city_id):
-                if each_sector.sector_number != 5:
-                    for r in range(1, 10):
-                        Row(sector=each_sector, row_number=r, date=creation_date).save()
-                if each_sector.sector_number == 5:
-                    for r in range(1, 7):
-                        Row(sector=each_sector, row_number=r, date=creation_date).save()
+                    if each_sector.sector_number != 5:
+                        for r in range(1, 10):
+                            Row(sector=each_sector, row_number=r, date=creation_date).save()
+                    if each_sector.sector_number == 5:
+                        for r in range(1, 7):
+                            Row(sector=each_sector, row_number=r, date=creation_date).save()
 
 
             for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=1):
-                if each_row.row_number == 1:
-                    try:
-                        if int(request.POST.get('s_1_row_1_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_1_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_1_row_1_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_1_row_1_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                    if each_row.row_number == 1:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_1_row_1_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_1_row_1_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_1_row_1_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_1_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_1_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_1_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_1_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_1_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_1_row_1_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_1_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_1_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_1_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_1_row_1_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_1_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_1_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_1_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_1_row_1_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_1_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_1_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_1_row_1_2'):
-                            if int(request.POST.get('s_1_row_1_2').split(',')[0]) > int(request.POST.get('s_1_row_1_1').split(',')[0]) and int(request.POST.get('s_1_row_1_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_1_1').split(',')[0])+1, int(request.POST.get('s_1_row_1_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_1_row_1_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_1_row_1_2') and request.POST.get('s_1_row_1_3'):
-                            if int(request.POST.get('s_1_row_1_3').split(',')[0]) > int(request.POST.get('s_1_row_1_2').split(',')[0]) and int(request.POST.get('s_1_row_1_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_1_2').split(',')[0])+1, int(request.POST.get('s_1_row_1_3').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_1_row_1_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
+                    if each_row.row_number == 2:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_1_row_2_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_1_row_2_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_1_row_2_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_2_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_2_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_2_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_2_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_2_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_1_row_2_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_2_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_2_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_2_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_1_row_2_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_2_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_2_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_2_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_1_row_2_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_2_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_2_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                if each_row.row_number == 2:
-                    try:
-                        if int(request.POST.get('s_1_row_2_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_2_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_1_row_2_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_1_row_2_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_1_row_2_2'):
-                            if int(request.POST.get('s_1_row_2_2').split(',')[0]) > int(request.POST.get('s_1_row_2_1').split(',')[0]) and int(request.POST.get('s_1_row_2_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_2_1').split(',')[0])+1, int(request.POST.get('s_1_row_2_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_1_row_2_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_1_row_2_2') and request.POST.get('s_1_row_2_3'):
-                            if int(request.POST.get('s_1_row_2_3').split(',')[0]) > int(request.POST.get('s_1_row_2_2').split(',')[0]) and int(request.POST.get('s_1_row_2_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_2_2').split(',')[0])+1, int(request.POST.get('s_1_row_2_3').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_1_row_2_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ВТОРОЙ!</h1>')
+                    if each_row.row_number == 3:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_1_row_3_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_1_row_3_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_1_row_3_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_3_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_3_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_3_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_3_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_3_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_1_row_3_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_3_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_3_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_3_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_1_row_3_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_3_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_3_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_3_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_1_row_3_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_3_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_3_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                if each_row.row_number == 3:
-                    try:
-                        if int(request.POST.get('s_1_row_3_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_3_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_1_row_3_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_1_row_3_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_1_row_3_2'):
-                            if int(request.POST.get('s_1_row_3_2').split(',')[0]) > int(request.POST.get('s_1_row_3_1').split(',')[0]) and int(request.POST.get('s_1_row_3_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_3_1').split(',')[0])+1, int(request.POST.get('s_1_row_3_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_1_row_3_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_1_row_3_2') and request.POST.get('s_1_row_3_3'):
-                            if int(request.POST.get('s_1_row_3_3').split(',')[0]) > int(request.POST.get('s_1_row_3_2').split(',')[0]) and int(request.POST.get('s_1_row_3_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_3_2').split(',')[0])+1, int(request.POST.get('s_1_row_3_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_1_row_3_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
+                    if each_row.row_number == 4:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_1_row_4_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_1_row_4_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_1_row_4_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_4_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_4_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_4_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_4_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_4_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_1_row_4_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_4_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_4_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_4_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_1_row_4_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_4_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_4_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_4_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_1_row_4_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_4_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_4_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
-
-
-                if each_row.row_number == 4:
-                    try:
-                        if int(request.POST.get('s_1_row_4_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_4_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_1_row_4_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_1_row_4_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_1_row_4_2'):
-                            if int(request.POST.get('s_1_row_4_2').split(',')[0]) > int(request.POST.get('s_1_row_4_1').split(',')[0]) and int(request.POST.get('s_1_row_4_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_4_1').split(',')[0])+1, int(request.POST.get('s_1_row_4_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_1_row_4_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_1_row_4_2') and request.POST.get('s_1_row_4_3'):
-                            if int(request.POST.get('s_1_row_4_3').split(',')[0]) > int(request.POST.get('s_1_row_4_2').split(',')[0]) and int(request.POST.get('s_1_row_4_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_4_2').split(',')[0])+1, int(request.POST.get('s_1_row_4_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_1_row_4_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+                    if each_row.row_number == 5:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_1_row_5_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_1_row_5_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_1_row_5_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_5_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_5_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_5_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_5_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_5_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_1_row_5_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_5_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_5_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_5_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_1_row_5_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_5_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_5_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_5_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_1_row_5_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_5_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_5_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 5:
-                    try:
-                        if int(request.POST.get('s_1_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_5_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_1_row_5_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_1_row_5_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_1_row_5_2'):
-                            if int(request.POST.get('s_1_row_5_2').split(',')[0]) > int(request.POST.get('s_1_row_5_1').split(',')[0]) and int(request.POST.get('s_1_row_5_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_5_1').split(',')[0])+1, int(request.POST.get('s_1_row_5_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_1_row_5_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_1_row_5_2') and request.POST.get('s_1_row_5_3'):
-                            if int(request.POST.get('s_1_row_5_3').split(',')[0]) > int(request.POST.get('s_1_row_5_2').split(',')[0]) and int(request.POST.get('s_1_row_5_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_5_2').split(',')[0])+1, int(request.POST.get('s_1_row_5_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_1_row_5_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 6:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_1_row_6_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_1_row_6_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_1_row_6_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_6_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_6_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_6_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_6_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_6_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_1_row_6_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_6_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_6_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_6_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_1_row_6_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_6_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_6_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_6_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_1_row_6_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_6_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_6_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 6:
-                    try:
-                        if int(request.POST.get('s_1_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_6_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_1_row_6_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_1_row_6_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_1_row_6_2'):
-                            if int(request.POST.get('s_1_row_6_2').split(',')[0]) > int(request.POST.get('s_1_row_6_1').split(',')[0]) and int(request.POST.get('s_1_row_6_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_6_1').split(',')[0])+1, int(request.POST.get('s_1_row_6_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_1_row_6_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_1_row_6_2') and request.POST.get('s_1_row_6_3'):
-                            if int(request.POST.get('s_1_row_6_3').split(',')[0]) > int(request.POST.get('s_1_row_6_2').split(',')[0]) and int(request.POST.get('s_1_row_6_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_6_2').split(',')[0])+1, int(request.POST.get('s_1_row_6_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_1_row_6_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 7:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_1_row_7_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_1_row_7_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_1_row_7_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_7_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_7_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_7_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_7_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_7_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_1_row_7_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_7_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_7_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_7_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_1_row_7_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_7_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_7_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_7_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_1_row_7_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_7_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_7_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-                if each_row.row_number == 7:
-                    try:
-                        if int(request.POST.get('s_1_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_7_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_1_row_7_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_1_row_7_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_1_row_7_2'):
-                            if int(request.POST.get('s_1_row_7_2').split(',')[0]) > int(request.POST.get('s_1_row_7_1').split(',')[0]) and int(request.POST.get('s_1_row_7_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_7_1').split(',')[0])+1, int(request.POST.get('s_1_row_7_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_1_row_7_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_1_row_7_2') and request.POST.get('s_1_row_7_3'):
-                            if int(request.POST.get('s_1_row_7_3').split(',')[0]) > int(request.POST.get('s_1_row_7_2').split(',')[0]) and int(request.POST.get('s_1_row_7_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_7_2').split(',')[0])+1, int(request.POST.get('s_1_row_7_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_1_row_7_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
+                    if each_row.row_number == 8:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_1_row_8_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_1_row_8_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_1_row_8_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_8_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_8_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_8_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_8_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_8_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_1_row_8_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_8_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_8_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_8_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_1_row_8_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_8_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_8_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_8_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_1_row_8_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_8_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_8_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-                if each_row.row_number == 8:
-                    try:
-                        if int(request.POST.get('s_1_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_8_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_1_row_8_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_1_row_8_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_1_row_8_2'):
-                            if int(request.POST.get('s_1_row_8_2').split(',')[0]) > int(request.POST.get('s_1_row_8_1').split(',')[0]) and int(request.POST.get('s_1_row_8_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_8_1').split(',')[0])+1, int(request.POST.get('s_1_row_8_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_1_row_8_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_1_row_8_2') and request.POST.get('s_1_row_8_3'):
-                            if int(request.POST.get('s_1_row_8_3').split(',')[0]) > int(request.POST.get('s_1_row_8_2').split(',')[0]) and int(request.POST.get('s_1_row_8_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_8_2').split(',')[0])+1, int(request.POST.get('s_1_row_8_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_1_row_8_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 9:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_1_row_9_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_1_row_9_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_1_row_9_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_9_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_9_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_9_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_9_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_9_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_1_row_9_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_9_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_9_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_1_row_9_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_1_row_9_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_1_row_9_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_1_row_9_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_1_row_9_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_1_row_9_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_1_row_9_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_1_row_9_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 9:
-                    try:
-                        if int(request.POST.get('s_1_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_9_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_1_row_9_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_1_row_9_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_1_row_9_2'):
-                            if int(request.POST.get('s_1_row_9_2').split(',')[0]) > int(request.POST.get('s_1_row_9_1').split(',')[0]) and int(request.POST.get('s_1_row_9_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_9_1').split(',')[0])+1, int(request.POST.get('s_1_row_9_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_1_row_9_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_1_row_9_2') and request.POST.get('s_1_row_9_3'):
-                            if int(request.POST.get('s_1_row_9_3').split(',')[0]) > int(request.POST.get('s_1_row_9_2').split(',')[0]) and int(request.POST.get('s_1_row_9_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_1_row_9_2').split(',')[0])+1, int(request.POST.get('s_1_row_9_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_1_row_9_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
 
-        for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=2):
-                if each_row.row_number == 1:
-                    try:
-                        if int(request.POST.get('s_2_row_1_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_1_1').split(',')[1]) > 0:
-                            for s in range(14, int(request.POST.get('s_2_row_1_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_2_row_1_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+
+            for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=2):
+                    if each_row.row_number == 1:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_2_row_1_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_2_row_1_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_2_row_1_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_1_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_1_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_1_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_1_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_1_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_2_row_1_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_1_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_1_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_1_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_2_row_1_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_1_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_1_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_1_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_2_row_1_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_1_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_1_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_2_row_1_2'):
-                            if int(request.POST.get('s_2_row_1_2').split(',')[0]) > int(request.POST.get('s_2_row_1_1').split(',')[0]) and int(request.POST.get('s_2_row_1_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_1_1').split(',')[0])+1, int(request.POST.get('s_2_row_1_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_2_row_1_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_2_row_1_2') and request.POST.get('s_2_row_1_3'):
-                            if int(request.POST.get('s_2_row_1_3').split(',')[0]) > int(request.POST.get('s_2_row_1_2').split(',')[0]) and int(request.POST.get('s_2_row_1_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_1_2').split(',')[0])+1, int(request.POST.get('s_2_row_1_3').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_2_row_1_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ 2222!</h1>' + str(request.POST.get('s_2_row_1_3')) + str(request.POST.get('s_2_row_1_3')) + str(request.POST.get('s_2_row_1_3')))
+                    if each_row.row_number == 2:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_2_row_2_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_2_row_2_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_2_row_2_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_2_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_2_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_2_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_2_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_2_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_2_row_2_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_2_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_2_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_2_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_2_row_2_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_2_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_2_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_2_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_2_row_2_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_2_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_2_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                if each_row.row_number == 2:
-                    try:
-                        if int(request.POST.get('s_2_row_2_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_2_1').split(',')[1]) > 0:
-                            for s in range(16, int(request.POST.get('s_2_row_2_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_2_row_2_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_2_row_2_2'):
-                            if int(request.POST.get('s_2_row_2_2').split(',')[0]) > int(request.POST.get('s_2_row_2_1').split(',')[0]) and int(request.POST.get('s_2_row_2_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_2_1').split(',')[0])+1, int(request.POST.get('s_2_row_2_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_2_row_2_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_2_row_2_2') and request.POST.get('s_2_row_2_3'):
-                            if int(request.POST.get('s_2_row_2_3').split(',')[0]) > int(request.POST.get('s_2_row_2_2').split(',')[0]) and int(request.POST.get('s_2_row_2_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_2_2').split(',')[0])+1, int(request.POST.get('s_2_row_2_3').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_2_row_2_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ВТОРОЙ!</h1>')
+                    if each_row.row_number == 3:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_2_row_3_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_2_row_3_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_2_row_3_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_3_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_3_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_3_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_3_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_3_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_2_row_3_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_3_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_3_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_3_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_2_row_3_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_3_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_3_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_3_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_2_row_3_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_3_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_3_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                if each_row.row_number == 3:
-                    try:
-                        if int(request.POST.get('s_2_row_3_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_3_1').split(',')[1]) > 0:
-                            for s in range(17, int(request.POST.get('s_2_row_3_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_2_row_3_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_2_row_3_2'):
-                            if int(request.POST.get('s_2_row_3_2').split(',')[0]) > int(request.POST.get('s_2_row_3_1').split(',')[0]) and int(request.POST.get('s_2_row_3_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_3_1').split(',')[0])+1, int(request.POST.get('s_2_row_3_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_2_row_3_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_2_row_3_2') and request.POST.get('s_2_row_3_3'):
-                            if int(request.POST.get('s_2_row_3_3').split(',')[0]) > int(request.POST.get('s_2_row_3_2').split(',')[0]) and int(request.POST.get('s_2_row_3_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_3_2').split(',')[0])+1, int(request.POST.get('s_2_row_3_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_2_row_3_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
+                    if each_row.row_number == 4:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_2_row_4_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_2_row_4_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_2_row_4_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_4_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_4_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_4_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_4_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_4_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_2_row_4_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_4_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_4_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_4_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_2_row_4_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_4_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_4_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_4_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_2_row_4_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_4_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_4_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
-
-
-                if each_row.row_number == 4:
-                    try:
-                        if int(request.POST.get('s_2_row_4_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_4_1').split(',')[1]) > 0:
-                            for s in range(19, int(request.POST.get('s_2_row_4_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_2_row_4_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_2_row_4_2'):
-                            if int(request.POST.get('s_2_row_4_2').split(',')[0]) > int(request.POST.get('s_2_row_4_1').split(',')[0]) and int(request.POST.get('s_2_row_4_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_4_1').split(',')[0])+1, int(request.POST.get('s_2_row_4_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_2_row_4_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_2_row_4_2') and request.POST.get('s_2_row_4_3'):
-                            if int(request.POST.get('s_2_row_4_3').split(',')[0]) > int(request.POST.get('s_2_row_4_2').split(',')[0]) and int(request.POST.get('s_2_row_4_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_4_2').split(',')[0])+1, int(request.POST.get('s_2_row_4_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_2_row_4_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+                    if each_row.row_number == 5:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_2_row_5_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_2_row_5_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_2_row_5_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_5_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_5_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_5_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_5_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_5_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_2_row_5_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_5_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_5_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_5_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_2_row_5_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_5_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_5_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_5_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_2_row_5_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_5_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_5_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 5:
-                    try:
-                        if int(request.POST.get('s_2_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_5_1').split(',')[1]) > 0:
-                            for s in range(21, int(request.POST.get('s_2_row_5_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_2_row_5_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_2_row_5_2'):
-                            if int(request.POST.get('s_2_row_5_2').split(',')[0]) > int(request.POST.get('s_2_row_5_1').split(',')[0]) and int(request.POST.get('s_2_row_5_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_5_1').split(',')[0])+1, int(request.POST.get('s_2_row_5_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_2_row_5_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_2_row_5_2') and request.POST.get('s_2_row_5_3'):
-                            if int(request.POST.get('s_2_row_5_3').split(',')[0]) > int(request.POST.get('s_2_row_5_2').split(',')[0]) and int(request.POST.get('s_2_row_5_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_5_2').split(',')[0])+1, int(request.POST.get('s_2_row_5_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_2_row_5_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 6:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_2_row_6_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_2_row_6_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_2_row_6_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_6_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_6_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_6_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_6_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_6_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_2_row_6_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_6_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_6_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_6_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_2_row_6_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_6_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_6_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_6_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_2_row_6_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_6_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_6_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 6:
-                    try:
-                        if int(request.POST.get('s_2_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_6_1').split(',')[1]) > 0:
-                            for s in range(23, int(request.POST.get('s_2_row_6_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_2_row_6_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_2_row_6_2'):
-                            if int(request.POST.get('s_2_row_6_2').split(',')[0]) > int(request.POST.get('s_2_row_6_1').split(',')[0]) and int(request.POST.get('s_2_row_6_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_6_1').split(',')[0])+1, int(request.POST.get('s_2_row_6_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_2_row_6_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_2_row_6_2') and request.POST.get('s_2_row_6_3'):
-                            if int(request.POST.get('s_2_row_6_3').split(',')[0]) > int(request.POST.get('s_2_row_6_2').split(',')[0]) and int(request.POST.get('s_2_row_6_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_6_2').split(',')[0])+1, int(request.POST.get('s_2_row_6_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_2_row_6_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 7:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_2_row_7_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_2_row_7_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_2_row_7_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_7_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_7_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_7_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_7_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_7_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_2_row_7_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_7_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_7_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_7_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_2_row_7_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_7_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_7_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_7_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_2_row_7_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_7_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_7_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-                if each_row.row_number == 7:
-                    try:
-                        if int(request.POST.get('s_2_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_7_1').split(',')[1]) > 0:
-                            for s in range(24, int(request.POST.get('s_2_row_7_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_2_row_7_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_2_row_7_2'):
-                            if int(request.POST.get('s_2_row_7_2').split(',')[0]) > int(request.POST.get('s_2_row_7_1').split(',')[0]) and int(request.POST.get('s_2_row_7_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_7_1').split(',')[0])+1, int(request.POST.get('s_2_row_7_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_2_row_7_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_2_row_7_2') and request.POST.get('s_2_row_7_3'):
-                            if int(request.POST.get('s_2_row_7_3').split(',')[0]) > int(request.POST.get('s_2_row_7_2').split(',')[0]) and int(request.POST.get('s_2_row_7_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_7_2').split(',')[0])+1, int(request.POST.get('s_2_row_7_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_2_row_7_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
+                    if each_row.row_number == 8:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_2_row_8_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_2_row_8_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_2_row_8_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_8_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_8_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_8_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_8_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_8_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_2_row_8_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_8_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_8_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_8_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_2_row_8_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_8_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_8_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_8_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_2_row_8_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_8_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_8_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-                if each_row.row_number == 8:
-                    try:
-                        if int(request.POST.get('s_2_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_8_1').split(',')[1]) > 0:
-                            for s in range(26, int(request.POST.get('s_2_row_8_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_2_row_8_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_2_row_8_2'):
-                            if int(request.POST.get('s_2_row_8_2').split(',')[0]) > int(request.POST.get('s_2_row_8_1').split(',')[0]) and int(request.POST.get('s_2_row_8_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_8_1').split(',')[0])+1, int(request.POST.get('s_2_row_8_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_2_row_8_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_2_row_8_2') and request.POST.get('s_2_row_8_3'):
-                            if int(request.POST.get('s_2_row_8_3').split(',')[0]) > int(request.POST.get('s_2_row_8_2').split(',')[0]) and int(request.POST.get('s_2_row_8_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_8_2').split(',')[0])+1, int(request.POST.get('s_2_row_8_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_2_row_8_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 9:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_2_row_9_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_2_row_9_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_2_row_9_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_9_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_9_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_9_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_9_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_9_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_2_row_9_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_9_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_9_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_2_row_9_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_2_row_9_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_2_row_9_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_2_row_9_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_2_row_9_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_2_row_9_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_2_row_9_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_2_row_9_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 9:
-                    try:
-                        if int(request.POST.get('s_2_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_9_1').split(',')[1]) > 0:
-                            for s in range(28, int(request.POST.get('s_2_row_9_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_2_row_9_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_2_row_9_2'):
-                            if int(request.POST.get('s_2_row_9_2').split(',')[0]) > int(request.POST.get('s_2_row_9_1').split(',')[0]) and int(request.POST.get('s_2_row_9_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_9_1').split(',')[0])+1, int(request.POST.get('s_2_row_9_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_2_row_9_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_2_row_9_2') and request.POST.get('s_2_row_9_3'):
-                            if int(request.POST.get('s_2_row_9_3').split(',')[0]) > int(request.POST.get('s_2_row_9_2').split(',')[0]) and int(request.POST.get('s_2_row_9_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_2_row_9_2').split(',')[0])+1, int(request.POST.get('s_2_row_9_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_2_row_9_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
 
 
-        for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=3):
-                if each_row.row_number == 1:
-                    try:
-                        if int(request.POST.get('s_3_row_1_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_1_1').split(',')[1]) > 0:
-                            for s in range(16, int(request.POST.get('s_3_row_1_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_3_row_1_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+
+            for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=3):
+                    if each_row.row_number == 1:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_3_row_1_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_3_row_1_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_3_row_1_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_1_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_1_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_1_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_1_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_1_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_3_row_1_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_1_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_1_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_1_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_3_row_1_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_1_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_1_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_1_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_3_row_1_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_1_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_1_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_3_row_1_2'):
-                            if int(request.POST.get('s_3_row_1_2').split(',')[0]) > int(request.POST.get('s_3_row_1_1').split(',')[0]) and int(request.POST.get('s_3_row_1_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_1_1').split(',')[0])+1, int(request.POST.get('s_3_row_1_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_3_row_1_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_3_row_1_2') and request.POST.get('s_3_row_1_3'):
-                            if int(request.POST.get('s_3_row_1_3').split(',')[0]) > int(request.POST.get('s_3_row_1_2').split(',')[0]) and int(request.POST.get('s_3_row_1_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_1_2').split(',')[0])+1, int(request.POST.get('s_3_row_1_3').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_3_row_1_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ 333333!</h1>')
+                    if each_row.row_number == 2:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_3_row_2_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_3_row_2_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_3_row_2_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_2_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_2_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_2_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_2_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_2_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_3_row_2_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_2_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_2_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_2_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_3_row_2_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_2_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_2_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_2_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_3_row_2_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_2_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_2_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                if each_row.row_number == 2:
-                    try:
-                        if int(request.POST.get('s_3_row_2_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_2_1').split(',')[1]) > 0:
-                            for s in range(18, int(request.POST.get('s_3_row_2_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_3_row_2_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_3_row_2_2'):
-                            if int(request.POST.get('s_3_row_2_2').split(',')[0]) > int(request.POST.get('s_3_row_2_1').split(',')[0]) and int(request.POST.get('s_3_row_2_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_2_1').split(',')[0])+1, int(request.POST.get('s_3_row_2_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_3_row_2_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_3_row_2_2') and request.POST.get('s_3_row_2_3'):
-                            if int(request.POST.get('s_3_row_2_3').split(',')[0]) > int(request.POST.get('s_3_row_2_2').split(',')[0]) and int(request.POST.get('s_3_row_2_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_2_2').split(',')[0])+1, int(request.POST.get('s_3_row_2_3').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_3_row_2_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ВТОРОЙ!</h1>')
+                    if each_row.row_number == 3:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_3_row_3_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_3_row_3_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_3_row_3_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_3_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_3_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_3_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_3_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_3_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_3_row_3_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_3_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_3_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_3_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_3_row_3_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_3_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_3_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_3_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_3_row_3_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_3_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_3_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                if each_row.row_number == 3:
-                    try:
-                        if int(request.POST.get('s_3_row_3_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_3_1').split(',')[1]) > 0:
-                            for s in range(20, int(request.POST.get('s_3_row_3_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_3_row_3_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_3_row_3_2'):
-                            if int(request.POST.get('s_3_row_3_2').split(',')[0]) > int(request.POST.get('s_3_row_3_1').split(',')[0]) and int(request.POST.get('s_3_row_3_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_3_1').split(',')[0])+1, int(request.POST.get('s_3_row_3_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_3_row_3_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_3_row_3_2') and request.POST.get('s_3_row_3_3'):
-                            if int(request.POST.get('s_3_row_3_3').split(',')[0]) > int(request.POST.get('s_3_row_3_2').split(',')[0]) and int(request.POST.get('s_3_row_3_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_3_2').split(',')[0])+1, int(request.POST.get('s_3_row_3_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_3_row_3_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
+                    if each_row.row_number == 4:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_3_row_4_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_3_row_4_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_3_row_4_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_4_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_4_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_4_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_4_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_4_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_3_row_4_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_4_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_4_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_4_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_3_row_4_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_4_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_4_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_4_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_3_row_4_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_4_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_4_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
-
-
-                if each_row.row_number == 4:
-                    try:
-                        if int(request.POST.get('s_3_row_4_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_4_1').split(',')[1]) > 0:
-                            for s in range(22, int(request.POST.get('s_3_row_4_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_3_row_4_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_3_row_4_2'):
-                            if int(request.POST.get('s_3_row_4_2').split(',')[0]) > int(request.POST.get('s_3_row_4_1').split(',')[0]) and int(request.POST.get('s_3_row_4_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_4_1').split(',')[0])+1, int(request.POST.get('s_3_row_4_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_3_row_4_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_3_row_4_2') and request.POST.get('s_3_row_4_3'):
-                            if int(request.POST.get('s_3_row_4_3').split(',')[0]) > int(request.POST.get('s_3_row_4_2').split(',')[0]) and int(request.POST.get('s_3_row_4_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_4_2').split(',')[0])+1, int(request.POST.get('s_3_row_4_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_3_row_4_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+                    if each_row.row_number == 5:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_3_row_5_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_3_row_5_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_3_row_5_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_5_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_5_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_5_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_5_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_5_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_3_row_5_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_5_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_5_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_5_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_3_row_5_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_5_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_5_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_5_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_3_row_5_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_5_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_5_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 5:
-                    try:
-                        if int(request.POST.get('s_3_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_5_1').split(',')[1]) > 0:
-                            for s in range(24, int(request.POST.get('s_3_row_5_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_3_row_5_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_3_row_5_2'):
-                            if int(request.POST.get('s_3_row_5_2').split(',')[0]) > int(request.POST.get('s_3_row_5_1').split(',')[0]) and int(request.POST.get('s_3_row_5_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_5_1').split(',')[0])+1, int(request.POST.get('s_3_row_5_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_3_row_5_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_3_row_5_2') and request.POST.get('s_3_row_5_3'):
-                            if int(request.POST.get('s_3_row_5_3').split(',')[0]) > int(request.POST.get('s_3_row_5_2').split(',')[0]) and int(request.POST.get('s_3_row_5_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_5_2').split(',')[0])+1, int(request.POST.get('s_3_row_5_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_3_row_5_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 6:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_3_row_6_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_3_row_6_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_3_row_6_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_6_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_6_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_6_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_6_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_6_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_3_row_6_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_6_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_6_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_6_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_3_row_6_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_6_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_6_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_6_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_3_row_6_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_6_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_6_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 6:
-                    try:
-                        if int(request.POST.get('s_3_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_6_1').split(',')[1]) > 0:
-                            for s in range(26, int(request.POST.get('s_3_row_6_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_3_row_6_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_3_row_6_2'):
-                            if int(request.POST.get('s_3_row_6_2').split(',')[0]) > int(request.POST.get('s_3_row_6_1').split(',')[0]) and int(request.POST.get('s_3_row_6_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_6_1').split(',')[0])+1, int(request.POST.get('s_3_row_6_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_3_row_6_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_3_row_6_2') and request.POST.get('s_3_row_6_3'):
-                            if int(request.POST.get('s_3_row_6_3').split(',')[0]) > int(request.POST.get('s_3_row_6_2').split(',')[0]) and int(request.POST.get('s_3_row_6_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_6_2').split(',')[0])+1, int(request.POST.get('s_3_row_6_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_3_row_6_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 7:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_3_row_7_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_3_row_7_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_3_row_7_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_7_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_7_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_7_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_7_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_7_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_3_row_7_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_7_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_7_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_7_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_3_row_7_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_7_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_7_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_7_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_3_row_7_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_7_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_7_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-                if each_row.row_number == 7:
-                    try:
-                        if int(request.POST.get('s_3_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_7_1').split(',')[1]) > 0:
-                            for s in range(28, int(request.POST.get('s_3_row_7_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_3_row_7_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_3_row_7_2'):
-                            if int(request.POST.get('s_3_row_7_2').split(',')[0]) > int(request.POST.get('s_3_row_7_1').split(',')[0]) and int(request.POST.get('s_3_row_7_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_7_1').split(',')[0])+1, int(request.POST.get('s_3_row_7_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_3_row_7_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_3_row_7_2') and request.POST.get('s_3_row_7_3'):
-                            if int(request.POST.get('s_3_row_7_3').split(',')[0]) > int(request.POST.get('s_3_row_7_2').split(',')[0]) and int(request.POST.get('s_3_row_7_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_7_2').split(',')[0])+1, int(request.POST.get('s_3_row_7_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_3_row_7_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
+                    if each_row.row_number == 8:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_3_row_8_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_3_row_8_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_3_row_8_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_8_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_8_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_8_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_8_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_8_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_3_row_8_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_8_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_8_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_8_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_3_row_8_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_8_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_8_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_8_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_3_row_8_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_8_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_8_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-                if each_row.row_number == 8:
-                    try:
-                        if int(request.POST.get('s_3_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_8_1').split(',')[1]) > 0:
-                            for s in range(30, int(request.POST.get('s_3_row_8_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_3_row_8_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_3_row_8_2'):
-                            if int(request.POST.get('s_3_row_8_2').split(',')[0]) > int(request.POST.get('s_3_row_8_1').split(',')[0]) and int(request.POST.get('s_3_row_8_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_8_1').split(',')[0])+1, int(request.POST.get('s_3_row_8_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_3_row_8_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_3_row_8_2') and request.POST.get('s_3_row_8_3'):
-                            if int(request.POST.get('s_3_row_8_3').split(',')[0]) > int(request.POST.get('s_3_row_8_2').split(',')[0]) and int(request.POST.get('s_3_row_8_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_8_2').split(',')[0])+1, int(request.POST.get('s_3_row_8_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_3_row_8_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 9:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_3_row_9_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_3_row_9_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_3_row_9_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_9_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_9_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_9_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_9_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_9_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_3_row_9_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_9_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_9_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_3_row_9_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_3_row_9_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_3_row_9_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_3_row_9_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_3_row_9_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_3_row_9_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_3_row_9_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_3_row_9_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 9:
-                    try:
-                        if int(request.POST.get('s_3_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_9_1').split(',')[1]) > 0:
-                            for s in range(32, int(request.POST.get('s_3_row_9_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_3_row_9_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_3_row_9_2'):
-                            if int(request.POST.get('s_3_row_9_2').split(',')[0]) > int(request.POST.get('s_3_row_9_1').split(',')[0]) and int(request.POST.get('s_3_row_9_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_9_1').split(',')[0])+1, int(request.POST.get('s_3_row_9_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_3_row_9_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_3_row_9_2') and request.POST.get('s_3_row_9_3'):
-                            if int(request.POST.get('s_3_row_9_3').split(',')[0]) > int(request.POST.get('s_3_row_9_2').split(',')[0]) and int(request.POST.get('s_3_row_9_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_3_row_9_2').split(',')[0])+1, int(request.POST.get('s_3_row_9_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_3_row_9_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
 
 
-        for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=4):
-                if each_row.row_number == 1:
-                    try:
-                        if int(request.POST.get('s_4_row_1_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_1_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_4_row_1_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_4_row_1_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+
+
+
+            for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=4):
+                    if each_row.row_number == 1:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_4_row_1_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_4_row_1_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_4_row_1_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_1_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_1_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_1_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_1_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_1_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_4_row_1_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_1_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_1_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_1_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_4_row_1_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_1_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_1_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_1_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_4_row_1_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_1_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_1_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_4_row_1_2'):
-                            if int(request.POST.get('s_4_row_1_2').split(',')[0]) > int(request.POST.get('s_4_row_1_1').split(',')[0]) and int(request.POST.get('s_4_row_1_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_1_1').split(',')[0])+1, int(request.POST.get('s_4_row_1_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_4_row_1_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_4_row_1_2') and request.POST.get('s_4_row_1_3'):
-                            if int(request.POST.get('s_4_row_1_3').split(',')[0]) > int(request.POST.get('s_4_row_1_2').split(',')[0]) and int(request.POST.get('s_4_row_1_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_1_2').split(',')[0])+1, int(request.POST.get('s_4_row_1_3').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_4_row_1_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ 444444!</h1>')
+                    if each_row.row_number == 2:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_4_row_2_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_4_row_2_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_4_row_2_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_2_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_2_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_2_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_2_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_2_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_4_row_2_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_2_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_2_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_2_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_4_row_2_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_2_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_2_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_2_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_4_row_2_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_2_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_2_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                if each_row.row_number == 2:
-                    try:
-                        if int(request.POST.get('s_4_row_2_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_2_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_4_row_2_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_4_row_2_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_4_row_2_2'):
-                            if int(request.POST.get('s_4_row_2_2').split(',')[0]) > int(request.POST.get('s_4_row_2_1').split(',')[0]) and int(request.POST.get('s_4_row_2_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_2_1').split(',')[0])+1, int(request.POST.get('s_4_row_2_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_4_row_2_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_4_row_2_2') and request.POST.get('s_4_row_2_3'):
-                            if int(request.POST.get('s_4_row_2_3').split(',')[0]) > int(request.POST.get('s_4_row_2_2').split(',')[0]) and int(request.POST.get('s_4_row_2_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_2_2').split(',')[0])+1, int(request.POST.get('s_4_row_2_3').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_4_row_2_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ВТОРОЙ!</h1>')
+                    if each_row.row_number == 3:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_4_row_3_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_4_row_3_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_4_row_3_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_3_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_3_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_3_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_3_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_3_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_4_row_3_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_3_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_3_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_3_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_4_row_3_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_3_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_3_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_3_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_4_row_3_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_3_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_3_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                if each_row.row_number == 3:
-                    try:
-                        if int(request.POST.get('s_4_row_3_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_3_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_4_row_3_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_4_row_3_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_4_row_3_2'):
-                            if int(request.POST.get('s_4_row_3_2').split(',')[0]) > int(request.POST.get('s_4_row_3_1').split(',')[0]) and int(request.POST.get('s_4_row_3_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_3_1').split(',')[0])+1, int(request.POST.get('s_4_row_3_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_4_row_3_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_4_row_3_2') and request.POST.get('s_4_row_3_3'):
-                            if int(request.POST.get('s_4_row_3_3').split(',')[0]) > int(request.POST.get('s_4_row_3_2').split(',')[0]) and int(request.POST.get('s_4_row_3_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_3_2').split(',')[0])+1, int(request.POST.get('s_4_row_3_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_4_row_3_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
+                    if each_row.row_number == 4:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_4_row_4_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_4_row_4_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_4_row_4_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_4_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_4_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_4_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_4_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_4_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_4_row_4_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_4_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_4_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_4_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_4_row_4_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_4_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_4_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_4_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_4_row_4_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_4_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_4_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
-
-
-                if each_row.row_number == 4:
-                    try:
-                        if int(request.POST.get('s_4_row_4_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_4_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_4_row_4_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_4_row_4_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_4_row_4_2'):
-                            if int(request.POST.get('s_4_row_4_2').split(',')[0]) > int(request.POST.get('s_4_row_4_1').split(',')[0]) and int(request.POST.get('s_4_row_4_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_4_1').split(',')[0])+1, int(request.POST.get('s_4_row_4_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_4_row_4_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_4_row_4_2') and request.POST.get('s_4_row_4_3'):
-                            if int(request.POST.get('s_4_row_4_3').split(',')[0]) > int(request.POST.get('s_4_row_4_2').split(',')[0]) and int(request.POST.get('s_4_row_4_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_4_2').split(',')[0])+1, int(request.POST.get('s_4_row_4_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_4_row_4_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+                    if each_row.row_number == 5:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_4_row_5_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_4_row_5_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_4_row_5_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_5_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_5_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_5_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_5_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_5_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_4_row_5_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_5_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_5_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_5_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_4_row_5_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_5_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_5_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_5_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_4_row_5_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_5_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_5_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 5:
-                    try:
-                        if int(request.POST.get('s_4_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_5_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_4_row_5_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_4_row_5_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_4_row_5_2'):
-                            if int(request.POST.get('s_4_row_5_2').split(',')[0]) > int(request.POST.get('s_4_row_5_1').split(',')[0]) and int(request.POST.get('s_4_row_5_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_5_1').split(',')[0])+1, int(request.POST.get('s_4_row_5_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_4_row_5_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_4_row_5_2') and request.POST.get('s_4_row_5_3'):
-                            if int(request.POST.get('s_4_row_5_3').split(',')[0]) > int(request.POST.get('s_4_row_5_2').split(',')[0]) and int(request.POST.get('s_4_row_5_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_5_2').split(',')[0])+1, int(request.POST.get('s_4_row_5_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_4_row_5_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 6:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_4_row_6_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_4_row_6_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_4_row_6_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_6_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_6_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_6_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_6_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_6_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_4_row_6_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_6_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_6_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_6_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_4_row_6_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_6_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_6_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_6_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_4_row_6_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_6_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_6_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 6:
-                    try:
-                        if int(request.POST.get('s_4_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_6_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_4_row_6_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_4_row_6_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_4_row_6_2'):
-                            if int(request.POST.get('s_4_row_6_2').split(',')[0]) > int(request.POST.get('s_4_row_6_1').split(',')[0]) and int(request.POST.get('s_4_row_6_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_6_1').split(',')[0])+1, int(request.POST.get('s_4_row_6_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_4_row_6_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_4_row_6_2') and request.POST.get('s_4_row_6_3'):
-                            if int(request.POST.get('s_4_row_6_3').split(',')[0]) > int(request.POST.get('s_4_row_6_2').split(',')[0]) and int(request.POST.get('s_4_row_6_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_6_2').split(',')[0])+1, int(request.POST.get('s_4_row_6_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_4_row_6_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 7:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_4_row_7_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_4_row_7_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_4_row_7_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_7_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_7_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_7_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_7_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_7_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_4_row_7_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_7_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_7_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_7_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_4_row_7_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_7_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_7_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_7_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_4_row_7_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_7_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_7_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-                if each_row.row_number == 7:
-                    try:
-                        if int(request.POST.get('s_4_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_7_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_4_row_7_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_4_row_7_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_4_row_7_2'):
-                            if int(request.POST.get('s_4_row_7_2').split(',')[0]) > int(request.POST.get('s_4_row_7_1').split(',')[0]) and int(request.POST.get('s_4_row_7_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_7_1').split(',')[0])+1, int(request.POST.get('s_4_row_7_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_4_row_7_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_4_row_7_2') and request.POST.get('s_4_row_7_3'):
-                            if int(request.POST.get('s_4_row_7_3').split(',')[0]) > int(request.POST.get('s_4_row_7_2').split(',')[0]) and int(request.POST.get('s_4_row_7_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_7_2').split(',')[0])+1, int(request.POST.get('s_4_row_7_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_4_row_7_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
+                    if each_row.row_number == 8:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_4_row_8_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_4_row_8_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_4_row_8_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_8_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_8_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_8_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_8_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_8_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_4_row_8_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_8_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_8_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_8_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_4_row_8_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_8_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_8_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_8_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_4_row_8_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_8_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_8_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-                if each_row.row_number == 8:
-                    try:
-                        if int(request.POST.get('s_4_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_8_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_4_row_8_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_4_row_8_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_4_row_8_2'):
-                            if int(request.POST.get('s_4_row_8_2').split(',')[0]) > int(request.POST.get('s_4_row_8_1').split(',')[0]) and int(request.POST.get('s_4_row_8_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_8_1').split(',')[0])+1, int(request.POST.get('s_4_row_8_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_4_row_8_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_4_row_8_2') and request.POST.get('s_4_row_8_3'):
-                            if int(request.POST.get('s_4_row_8_3').split(',')[0]) > int(request.POST.get('s_4_row_8_2').split(',')[0]) and int(request.POST.get('s_4_row_8_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_8_2').split(',')[0])+1, int(request.POST.get('s_4_row_8_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_4_row_8_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 9:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_4_row_9_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_4_row_9_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_4_row_9_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_9_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_9_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_9_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_9_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_9_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_4_row_9_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_9_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_9_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_4_row_9_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_4_row_9_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_4_row_9_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_4_row_9_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_4_row_9_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_4_row_9_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_4_row_9_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_4_row_9_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 9:
-                    try:
-                        if int(request.POST.get('s_4_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_9_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_4_row_9_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_4_row_9_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_4_row_9_2'):
-                            if int(request.POST.get('s_4_row_9_2').split(',')[0]) > int(request.POST.get('s_4_row_9_1').split(',')[0]) and int(request.POST.get('s_4_row_9_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_9_1').split(',')[0])+1, int(request.POST.get('s_4_row_9_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_4_row_9_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_4_row_9_2') and request.POST.get('s_4_row_9_3'):
-                            if int(request.POST.get('s_4_row_9_3').split(',')[0]) > int(request.POST.get('s_4_row_9_2').split(',')[0]) and int(request.POST.get('s_4_row_9_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_4_row_9_2').split(',')[0])+1, int(request.POST.get('s_4_row_9_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_4_row_9_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
 
 
-        for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=5):
-                if each_row.row_number == 1:
-                    try:
-                        if int(request.POST.get('s_5_row_1_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_1_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_5_row_1_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_5_row_1_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+
+
+            for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=5):
+                    if each_row.row_number == 1:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_5_row_1_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_5_row_1_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_5_row_1_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_1_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_1_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_1_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_1_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_1_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_5_row_1_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_1_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_1_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_1_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_5_row_1_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_1_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_1_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_1_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_5_row_1_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_1_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_1_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_5_row_1_2'):
-                            if int(request.POST.get('s_5_row_1_2').split(',')[0]) > int(request.POST.get('s_5_row_1_1').split(',')[0]) and int(request.POST.get('s_5_row_1_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_1_1').split(',')[0])+1, int(request.POST.get('s_5_row_1_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_5_row_1_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_5_row_1_2') and request.POST.get('s_5_row_1_3'):
-                            if int(request.POST.get('s_5_row_1_3').split(',')[0]) > int(request.POST.get('s_5_row_1_2').split(',')[0]) and int(request.POST.get('s_5_row_1_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_1_2').split(',')[0])+1, int(request.POST.get('s_5_row_1_3').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_5_row_1_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ 5555!</h1>')
+                    if each_row.row_number == 2:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_5_row_2_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_5_row_2_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_5_row_2_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_2_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_2_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_2_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_2_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_2_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_5_row_2_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_2_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_2_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_2_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_5_row_2_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_2_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_2_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_2_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_5_row_2_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_2_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_2_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                if each_row.row_number == 2:
-                    try:
-                        if int(request.POST.get('s_5_row_2_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_2_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_5_row_2_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_5_row_2_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_5_row_2_2'):
-                            if int(request.POST.get('s_5_row_2_2').split(',')[0]) > int(request.POST.get('s_5_row_2_1').split(',')[0]) and int(request.POST.get('s_5_row_2_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_2_1').split(',')[0])+1, int(request.POST.get('s_5_row_2_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_5_row_2_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_5_row_2_2') and request.POST.get('s_5_row_2_3'):
-                            if int(request.POST.get('s_5_row_2_3').split(',')[0]) > int(request.POST.get('s_5_row_2_2').split(',')[0]) and int(request.POST.get('s_5_row_2_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_2_2').split(',')[0])+1, int(request.POST.get('s_5_row_2_3').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_5_row_2_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ВТОРОЙ!</h1>')
+                    if each_row.row_number == 3:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_5_row_3_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_5_row_3_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_5_row_3_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_3_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_3_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_3_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_3_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_3_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_5_row_3_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_3_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_3_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_3_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_5_row_3_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_3_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_3_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_3_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_5_row_3_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_3_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_3_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                if each_row.row_number == 3:
-                    try:
-                        if int(request.POST.get('s_5_row_3_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_3_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_5_row_3_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_5_row_3_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_5_row_3_2'):
-                            if int(request.POST.get('s_5_row_3_2').split(',')[0]) > int(request.POST.get('s_5_row_3_1').split(',')[0]) and int(request.POST.get('s_5_row_3_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_3_1').split(',')[0])+1, int(request.POST.get('s_5_row_3_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_5_row_3_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_5_row_3_2') and request.POST.get('s_5_row_3_3'):
-                            if int(request.POST.get('s_5_row_3_3').split(',')[0]) > int(request.POST.get('s_5_row_3_2').split(',')[0]) and int(request.POST.get('s_5_row_3_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_3_2').split(',')[0])+1, int(request.POST.get('s_5_row_3_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_5_row_3_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
+                    if each_row.row_number == 4:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_5_row_4_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_5_row_4_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_5_row_4_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_4_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_4_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_4_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_4_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_4_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_5_row_4_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_4_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_4_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_4_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_5_row_4_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_4_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_4_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_4_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_5_row_4_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_4_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_4_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
-
-
-                if each_row.row_number == 4:
-                    try:
-                        if int(request.POST.get('s_5_row_4_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_4_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_5_row_4_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_5_row_4_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_5_row_4_2'):
-                            if int(request.POST.get('s_5_row_4_2').split(',')[0]) > int(request.POST.get('s_5_row_4_1').split(',')[0]) and int(request.POST.get('s_5_row_4_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_4_1').split(',')[0])+1, int(request.POST.get('s_5_row_4_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_5_row_4_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_5_row_4_2') and request.POST.get('s_5_row_4_3'):
-                            if int(request.POST.get('s_5_row_4_3').split(',')[0]) > int(request.POST.get('s_5_row_4_2').split(',')[0]) and int(request.POST.get('s_5_row_4_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_4_2').split(',')[0])+1, int(request.POST.get('s_5_row_4_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_5_row_4_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+                    if each_row.row_number == 5:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_5_row_5_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_5_row_5_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_5_row_5_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_5_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_5_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_5_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_5_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_5_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_5_row_5_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_5_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_5_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_5_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_5_row_5_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_5_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_5_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_5_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_5_row_5_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_5_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_5_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 5:
-                    try:
-                        if int(request.POST.get('s_5_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_5_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_5_row_5_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_5_row_5_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_5_row_5_2'):
-                            if int(request.POST.get('s_5_row_5_2').split(',')[0]) > int(request.POST.get('s_5_row_5_1').split(',')[0]) and int(request.POST.get('s_5_row_5_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_5_1').split(',')[0])+1, int(request.POST.get('s_5_row_5_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_5_row_5_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_5_row_5_2') and request.POST.get('s_5_row_5_3'):
-                            if int(request.POST.get('s_5_row_5_3').split(',')[0]) > int(request.POST.get('s_5_row_5_2').split(',')[0]) and int(request.POST.get('s_5_row_5_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_5_2').split(',')[0])+1, int(request.POST.get('s_5_row_5_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_5_row_5_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 6:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_5_row_6_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_5_row_6_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_5_row_6_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_6_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_6_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_6_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_6_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_6_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_5_row_6_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_6_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_6_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_6_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_5_row_6_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_6_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_6_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_6_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_5_row_6_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_6_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_6_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 6:
-                    try:
-                        if int(request.POST.get('s_5_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_6_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_5_row_6_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_5_row_6_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_5_row_6_2'):
-                            if int(request.POST.get('s_5_row_6_2').split(',')[0]) > int(request.POST.get('s_5_row_6_1').split(',')[0]) and int(request.POST.get('s_5_row_6_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_6_1').split(',')[0])+1, int(request.POST.get('s_5_row_6_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_5_row_6_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_5_row_6_2') and request.POST.get('s_5_row_6_3'):
-                            if int(request.POST.get('s_5_row_6_3').split(',')[0]) > int(request.POST.get('s_5_row_6_2').split(',')[0]) and int(request.POST.get('s_5_row_6_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_6_2').split(',')[0])+1, int(request.POST.get('s_5_row_6_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_5_row_6_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 7:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_5_row_7_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_5_row_7_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_5_row_7_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_7_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_7_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_7_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_7_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_7_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_5_row_7_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_7_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_7_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_7_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_5_row_7_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_7_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_7_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_7_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_5_row_7_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_7_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_7_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-                if each_row.row_number == 7:
-                    try:
-                        if int(request.POST.get('s_5_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_7_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_5_row_7_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_5_row_7_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_5_row_7_2'):
-                            if int(request.POST.get('s_5_row_7_2').split(',')[0]) > int(request.POST.get('s_5_row_7_1').split(',')[0]) and int(request.POST.get('s_5_row_7_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_7_1').split(',')[0])+1, int(request.POST.get('s_5_row_7_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_5_row_7_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_5_row_7_2') and request.POST.get('s_5_row_7_3'):
-                            if int(request.POST.get('s_5_row_7_3').split(',')[0]) > int(request.POST.get('s_5_row_7_2').split(',')[0]) and int(request.POST.get('s_5_row_7_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_7_2').split(',')[0])+1, int(request.POST.get('s_5_row_7_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_5_row_7_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
+                    if each_row.row_number == 8:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_5_row_8_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_5_row_8_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_5_row_8_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_8_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_8_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_8_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_8_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_8_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_5_row_8_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_8_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_8_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_8_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_5_row_8_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_8_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_8_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_8_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_5_row_8_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_8_3').instance.split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_8_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-                if each_row.row_number == 8:
-                    try:
-                        if int(request.POST.get('s_5_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_8_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_5_row_8_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_5_row_8_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_5_row_8_2'):
-                            if int(request.POST.get('s_5_row_8_2').split(',')[0]) > int(request.POST.get('s_5_row_8_1').split(',')[0]) and int(request.POST.get('s_5_row_8_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_8_1').split(',')[0])+1, int(request.POST.get('s_5_row_8_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_5_row_8_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_5_row_8_2') and request.POST.get('s_5_row_8_3'):
-                            if int(request.POST.get('s_5_row_8_3').split(',')[0]) > int(request.POST.get('s_5_row_8_2').split(',')[0]) and int(request.POST.get('s_5_row_8_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_8_2').split(',')[0])+1, int(request.POST.get('s_5_row_8_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_5_row_8_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+                    if each_row.row_number == 9:
+                        try:
+                            if int(Cache.objects.get( city_id=city_id, name='s_5_row_9_1').instance.split(',')[0]) > 0 and int(Cache.objects.get(city_id=city_id, name='s_5_row_9_1').instance.split(',')[1]) > 0:
+                                for s in range(1, int(Cache.objects.get(city_id=city_id, name='s_5_row_9_1').instance.split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_9_1').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_9_2').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_9_2').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_9_1').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_9_2').instance.split(',')[1]) > 0:
+                                    for k in range(Cache.objects.get(city_id=city_id, name='s_5_row_9_1').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_9_2').instance.split(',')[0])+1:
+                                        Seat( seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_9_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if Cache.objects.get(city_id=city_id, name='s_5_row_9_2').instance.split(',')[0] != '' and Cache.objects.get(city_id=city_id, name='s_5_row_9_3').instance.split(',')[0] != '':
+                                if int(Cache.objects.get(city_id=city_id, name='s_5_row_9_3').instance.split(',')[0]) > int(Cache.objects.get(city_id=city_id, name='s_5_row_9_2').instance.split(',')[0]) and int(Cache.objects.get(city_id=city_id, name='s_5_row_9_3').instance.split(',')[1]) > 0:
+                                    for k in range(int(Cache.objects.get(city_id=city_id, name='s_5_row_9_2').instance.split(',')[0])+1, int(Cache.objects.get(city_id=city_id, name='s_5_row_9_3').instance.split(',')[0])+1):
+                                        Seat(seat_number =k, price = int(Cache.objects.get(city_id=city_id, name='s_5_row_9_2').instance.split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
 
-
-
-                if each_row.row_number == 9:
-                    try:
-                        if int(request.POST.get('s_5_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_9_1').split(',')[1]) > 0:
-                            for s in range(1, int(request.POST.get('s_5_row_9_1').split(',')[0])+1):
-                                Seat( seat_number = s, price = int(request.POST.get('s_5_row_9_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        else:
+                        except ValueError:
                             err_()
-                            return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
-                        if request.POST.get('s_5_row_9_2'):
-                            if int(request.POST.get('s_5_row_9_2').split(',')[0]) > int(request.POST.get('s_5_row_9_1').split(',')[0]) and int(request.POST.get('s_5_row_9_2').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_9_1').split(',')[0])+1, int(request.POST.get('s_5_row_9_2').split(',')[0])+1):
-                                    Seat( seat_number =k, price = int(request.POST.get('s_5_row_9_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
-                        if request.POST.get('s_5_row_9_2') and request.POST.get('s_5_row_9_3'):
-                            if int(request.POST.get('s_5_row_9_3').split(',')[0]) > int(request.POST.get('s_5_row_9_2').split(',')[0]) and int(request.POST.get('s_5_row_9_3').split(',')[1]) > 0:
-                                for k in range(int(request.POST.get('s_5_row_9_2').split(',')[0])+1, int(request.POST.get('s_5_row_9_3').split(',')[0])+1):
-                                    Seat( seat_number=k, price = int(request.POST.get('s_5_row_9_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
 
-                    except ValueError:
-                        err_()
-                        return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+            return HttpResponseRedirect(next)
 
 
 
-        return HttpResponseRedirect(next)
+
+
+        if 'Open' in request.POST:
+            print('OPen')
+            creation_date = request.POST['date'] # get date that user posted in the form
+            try:
+                Day.objects.get(date=creation_date,  city_id=city_id)
+                return HttpResponse('<h1>Такой день уже существует. Пожалуйста, выберите другую дату или удалите день с выбранной вами датой</h1>')
+            except Day.DoesNotExist:
+                Day(date=creation_date, city_id=city_id).save() # create a Day object in the db with posted date
+
+
+                try:
+                    Cache.objects.get(city_id=city_id)
+
+                except Cache.MultipleObjectsReturned:
+                    pass
+
+                except Cache.DoesNotExist:
+                    Cache(city_id=city_id, name='s_1_row_1_1', instance=str(request.POST.get('s_1_row_1_1'))).save()
+                    Cache(city_id=city_id, name='s_1_row_1_2', instance=str(request.POST.get('s_1_row_1_2'))).save()
+                    Cache(city_id=city_id, name='s_1_row_1_3', instance=str(request.POST.get('s_1_row_1_3'))).save()
+                    Cache(city_id=city_id, name='s_1_row_2_1', instance=str(request.POST.get('s_1_row_2_1'))).save()
+                    Cache(city_id=city_id, name='s_1_row_2_2', instance=str(request.POST.get('s_1_row_2_2'))).save()
+                    Cache(city_id=city_id, name='s_1_row_2_3', instance=str(request.POST.get('s_1_row_2_3'))).save()
+                    Cache(city_id=city_id, name='s_1_row_3_1', instance=str(request.POST.get('s_1_row_3_1'))).save()
+                    Cache(city_id=city_id, name='s_1_row_3_2', instance=str(request.POST.get('s_1_row_3_2'))).save()
+                    Cache(city_id=city_id, name='s_1_row_3_3', instance=str(request.POST.get('s_1_row_3_3'))).save()
+                    Cache(city_id=city_id, name='s_1_row_4_1', instance=str(request.POST.get('s_1_row_4_1'))).save()
+                    Cache(city_id=city_id, name='s_1_row_4_2', instance=str(request.POST.get('s_1_row_4_2'))).save()
+                    Cache(city_id=city_id, name='s_1_row_4_3', instance=str(request.POST.get('s_1_row_4_3'))).save()
+                    Cache(city_id=city_id, name='s_1_row_5_1', instance=str(request.POST.get('s_1_row_5_1'))).save()
+                    Cache(city_id=city_id, name='s_1_row_5_2', instance=str(request.POST.get('s_1_row_5_2'))).save()
+                    Cache(city_id=city_id, name='s_1_row_5_3', instance=str(request.POST.get('s_1_row_5_3'))).save()
+                    Cache(city_id=city_id, name='s_1_row_6_1', instance=str(request.POST.get('s_1_row_6_1'))).save()
+                    Cache(city_id=city_id, name='s_1_row_6_2', instance=str(request.POST.get('s_1_row_6_2'))).save()
+                    Cache(city_id=city_id, name='s_1_row_6_3', instance=str(request.POST.get('s_1_row_6_3'))).save()
+                    Cache(city_id=city_id, name='s_1_row_7_1', instance=str(request.POST.get('s_1_row_7_1'))).save()
+                    Cache(city_id=city_id, name='s_1_row_7_2', instance=str(request.POST.get('s_1_row_7_2'))).save()
+                    Cache(city_id=city_id, name='s_1_row_7_3', instance=str(request.POST.get('s_1_row_7_3'))).save()
+                    Cache(city_id=city_id, name='s_1_row_8_1', instance=str(request.POST.get('s_1_row_8_1'))).save()
+                    Cache(city_id=city_id, name='s_1_row_8_2', instance=str(request.POST.get('s_1_row_8_2'))).save()
+                    Cache(city_id=city_id, name='s_1_row_8_3', instance=str(request.POST.get('s_1_row_8_3'))).save()
+                    Cache(city_id=city_id, name='s_1_row_9_1', instance=str(request.POST.get('s_1_row_9_1'))).save()
+                    Cache(city_id=city_id, name='s_1_row_9_2', instance=str(request.POST.get('s_1_row_9_2'))).save()
+                    Cache(city_id=city_id, name='s_1_row_9_3', instance=str(request.POST.get('s_1_row_9_3'))).save()
+
+                    
+                    Cache(city_id=city_id, name='s_2_row_1_1', instance=str(request.POST.get('s_2_row_1_1'))).save()
+                    Cache(city_id=city_id, name='s_2_row_1_2', instance=str(request.POST.get('s_2_row_1_2'))).save()
+                    Cache(city_id=city_id, name='s_2_row_1_3', instance=str(request.POST.get('s_2_row_1_3'))).save()
+                    Cache(city_id=city_id, name='s_2_row_2_1', instance=str(request.POST.get('s_2_row_2_1'))).save()
+                    Cache(city_id=city_id, name='s_2_row_2_2', instance=str(request.POST.get('s_2_row_2_2'))).save()
+                    Cache(city_id=city_id, name='s_2_row_2_3', instance=str(request.POST.get('s_2_row_2_3'))).save()
+                    Cache(city_id=city_id, name='s_2_row_3_1', instance=str(request.POST.get('s_2_row_3_1'))).save()
+                    Cache(city_id=city_id, name='s_2_row_3_2', instance=str(request.POST.get('s_2_row_3_2'))).save()
+                    Cache(city_id=city_id, name='s_2_row_3_3', instance=str(request.POST.get('s_2_row_3_3'))).save()
+                    Cache(city_id=city_id, name='s_2_row_4_1', instance=str(request.POST.get('s_2_row_4_1'))).save()
+                    Cache(city_id=city_id, name='s_2_row_4_2', instance=str(request.POST.get('s_2_row_4_2'))).save()
+                    Cache(city_id=city_id, name='s_2_row_4_3', instance=str(request.POST.get('s_2_row_4_3'))).save()
+                    Cache(city_id=city_id, name='s_2_row_5_1', instance=str(request.POST.get('s_2_row_5_1'))).save()
+                    Cache(city_id=city_id, name='s_2_row_5_2', instance=str(request.POST.get('s_2_row_5_2'))).save()
+                    Cache(city_id=city_id, name='s_2_row_5_3', instance=str(request.POST.get('s_2_row_5_3'))).save()
+                    Cache(city_id=city_id, name='s_2_row_6_1', instance=str(request.POST.get('s_2_row_6_1'))).save()
+                    Cache(city_id=city_id, name='s_2_row_6_2', instance=str(request.POST.get('s_2_row_6_2'))).save()
+                    Cache(city_id=city_id, name='s_2_row_6_3', instance=str(request.POST.get('s_2_row_6_3'))).save()
+                    Cache(city_id=city_id, name='s_2_row_7_1', instance=str(request.POST.get('s_2_row_7_1'))).save()
+                    Cache(city_id=city_id, name='s_2_row_7_2', instance=str(request.POST.get('s_2_row_7_2'))).save()
+                    Cache(city_id=city_id, name='s_2_row_7_3', instance=str(request.POST.get('s_2_row_7_3'))).save()
+                    Cache(city_id=city_id, name='s_2_row_8_1', instance=str(request.POST.get('s_2_row_8_1'))).save()
+                    Cache(city_id=city_id, name='s_2_row_8_2', instance=str(request.POST.get('s_2_row_8_2'))).save()
+                    Cache(city_id=city_id, name='s_2_row_8_3', instance=str(request.POST.get('s_2_row_8_3'))).save()
+                    Cache(city_id=city_id, name='s_2_row_9_1', instance=str(request.POST.get('s_2_row_9_1'))).save()
+                    Cache(city_id=city_id, name='s_2_row_9_2', instance=str(request.POST.get('s_2_row_9_2'))).save()
+                    Cache(city_id=city_id, name='s_2_row_9_3', instance=str(request.POST.get('s_2_row_9_3'))).save()
+
+                    Cache(city_id=city_id, name='s_3_row_1_1', instance=str(request.POST.get('s_3_row_1_1'))).save()
+                    Cache(city_id=city_id, name='s_3_row_1_2', instance=str(request.POST.get('s_3_row_1_2'))).save()
+                    Cache(city_id=city_id, name='s_3_row_1_3', instance=str(request.POST.get('s_3_row_1_3'))).save()
+                    Cache(city_id=city_id, name='s_3_row_2_1', instance=str(request.POST.get('s_3_row_2_1'))).save()
+                    Cache(city_id=city_id, name='s_3_row_2_2', instance=str(request.POST.get('s_3_row_2_2'))).save()
+                    Cache(city_id=city_id, name='s_3_row_2_3', instance=str(request.POST.get('s_3_row_2_3'))).save()
+                    Cache(city_id=city_id, name='s_3_row_3_1', instance=str(request.POST.get('s_3_row_3_1'))).save()
+                    Cache(city_id=city_id, name='s_3_row_3_2', instance=str(request.POST.get('s_3_row_3_2'))).save()
+                    Cache(city_id=city_id, name='s_3_row_3_3', instance=str(request.POST.get('s_3_row_3_3'))).save()
+                    Cache(city_id=city_id, name='s_3_row_4_1', instance=str(request.POST.get('s_3_row_4_1'))).save()
+                    Cache(city_id=city_id, name='s_3_row_4_2', instance=str(request.POST.get('s_3_row_4_2'))).save()
+                    Cache(city_id=city_id, name='s_3_row_4_3', instance=str(request.POST.get('s_3_row_4_3'))).save()
+                    Cache(city_id=city_id, name='s_3_row_5_1', instance=str(request.POST.get('s_3_row_5_1'))).save()
+                    Cache(city_id=city_id, name='s_3_row_5_2', instance=str(request.POST.get('s_3_row_5_2'))).save()
+                    Cache(city_id=city_id, name='s_3_row_5_3', instance=str(request.POST.get('s_3_row_5_3'))).save()
+                    Cache(city_id=city_id, name='s_3_row_6_1', instance=str(request.POST.get('s_3_row_6_1'))).save()
+                    Cache(city_id=city_id, name='s_3_row_6_2', instance=str(request.POST.get('s_3_row_6_2'))).save()
+                    Cache(city_id=city_id, name='s_3_row_6_3', instance=str(request.POST.get('s_3_row_6_3'))).save()
+                    Cache(city_id=city_id, name='s_3_row_7_1', instance=str(request.POST.get('s_3_row_7_1'))).save()
+                    Cache(city_id=city_id, name='s_3_row_7_2', instance=str(request.POST.get('s_3_row_7_2'))).save()
+                    Cache(city_id=city_id, name='s_3_row_7_3', instance=str(request.POST.get('s_3_row_7_3'))).save()
+                    Cache(city_id=city_id, name='s_3_row_8_1', instance=str(request.POST.get('s_3_row_8_1'))).save()
+                    Cache(city_id=city_id, name='s_3_row_8_2', instance=str(request.POST.get('s_3_row_8_2'))).save()
+                    Cache(city_id=city_id, name='s_3_row_8_3', instance=str(request.POST.get('s_3_row_8_3'))).save()
+                    Cache(city_id=city_id, name='s_3_row_9_1', instance=str(request.POST.get('s_3_row_9_1'))).save()
+                    Cache(city_id=city_id, name='s_3_row_9_2', instance=str(request.POST.get('s_3_row_9_2'))).save()
+                    Cache(city_id=city_id, name='s_3_row_9_3', instance=str(request.POST.get('s_3_row_9_3'))).save()
+
+                    Cache(city_id=city_id, name='s_4_row_1_1', instance=str(request.POST.get('s_4_row_1_1'))).save()
+                    Cache(city_id=city_id, name='s_4_row_1_2', instance=str(request.POST.get('s_4_row_1_2'))).save()
+                    Cache(city_id=city_id, name='s_4_row_1_3', instance=str(request.POST.get('s_4_row_1_3'))).save()
+                    Cache(city_id=city_id, name='s_4_row_2_1', instance=str(request.POST.get('s_4_row_2_1'))).save()
+                    Cache(city_id=city_id, name='s_4_row_2_2', instance=str(request.POST.get('s_4_row_2_2'))).save()
+                    Cache(city_id=city_id, name='s_4_row_2_3', instance=str(request.POST.get('s_4_row_2_3'))).save()
+                    Cache(city_id=city_id, name='s_4_row_3_1', instance=str(request.POST.get('s_4_row_3_1'))).save()
+                    Cache(city_id=city_id, name='s_4_row_3_2', instance=str(request.POST.get('s_4_row_3_2'))).save()
+                    Cache(city_id=city_id, name='s_4_row_3_3', instance=str(request.POST.get('s_4_row_3_3'))).save()
+                    Cache(city_id=city_id, name='s_4_row_4_1', instance=str(request.POST.get('s_4_row_4_1'))).save()
+                    Cache(city_id=city_id, name='s_4_row_4_2', instance=str(request.POST.get('s_4_row_4_2'))).save()
+                    Cache(city_id=city_id, name='s_4_row_4_3', instance=str(request.POST.get('s_4_row_4_3'))).save()
+                    Cache(city_id=city_id, name='s_4_row_5_1', instance=str(request.POST.get('s_4_row_5_1'))).save()
+                    Cache(city_id=city_id, name='s_4_row_5_2', instance=str(request.POST.get('s_4_row_5_2'))).save()
+                    Cache(city_id=city_id, name='s_4_row_5_3', instance=str(request.POST.get('s_4_row_5_3'))).save()
+                    Cache(city_id=city_id, name='s_4_row_6_1', instance=str(request.POST.get('s_4_row_6_1'))).save()
+                    Cache(city_id=city_id, name='s_4_row_6_2', instance=str(request.POST.get('s_4_row_6_2'))).save()
+                    Cache(city_id=city_id, name='s_4_row_6_3', instance=str(request.POST.get('s_4_row_6_3'))).save()
+                    Cache(city_id=city_id, name='s_4_row_7_1', instance=str(request.POST.get('s_4_row_7_1'))).save()
+                    Cache(city_id=city_id, name='s_4_row_7_2', instance=str(request.POST.get('s_4_row_7_2'))).save()
+                    Cache(city_id=city_id, name='s_4_row_7_3', instance=str(request.POST.get('s_4_row_7_3'))).save()
+                    Cache(city_id=city_id, name='s_4_row_8_1', instance=str(request.POST.get('s_4_row_8_1'))).save()
+                    Cache(city_id=city_id, name='s_4_row_8_2', instance=str(request.POST.get('s_4_row_8_2'))).save()
+                    Cache(city_id=city_id, name='s_4_row_8_3', instance=str(request.POST.get('s_4_row_8_3'))).save()
+                    Cache(city_id=city_id, name='s_4_row_9_1', instance=str(request.POST.get('s_4_row_9_1'))).save()
+                    Cache(city_id=city_id, name='s_4_row_9_2', instance=str(request.POST.get('s_4_row_9_2'))).save()
+                    Cache(city_id=city_id, name='s_4_row_9_3', instance=str(request.POST.get('s_4_row_9_3'))).save()
+
+                    Cache(city_id=city_id, name='s_5_row_1_1', instance=str(request.POST.get('s_5_row_1_1'))).save()
+                    Cache(city_id=city_id, name='s_5_row_1_2', instance=str(request.POST.get('s_5_row_1_2'))).save()
+                    Cache(city_id=city_id, name='s_5_row_1_3', instance=str(request.POST.get('s_5_row_1_3'))).save()
+                    Cache(city_id=city_id, name='s_5_row_2_1', instance=str(request.POST.get('s_5_row_2_1'))).save()
+                    Cache(city_id=city_id, name='s_5_row_2_2', instance=str(request.POST.get('s_5_row_2_2'))).save()
+                    Cache(city_id=city_id, name='s_5_row_2_3', instance=str(request.POST.get('s_5_row_2_3'))).save()
+                    Cache(city_id=city_id, name='s_5_row_3_1', instance=str(request.POST.get('s_5_row_3_1'))).save()
+                    Cache(city_id=city_id, name='s_5_row_3_2', instance=str(request.POST.get('s_5_row_3_2'))).save()
+                    Cache(city_id=city_id, name='s_5_row_3_3', instance=str(request.POST.get('s_5_row_3_3'))).save()
+                    Cache(city_id=city_id, name='s_5_row_4_1', instance=str(request.POST.get('s_5_row_4_1'))).save()
+                    Cache(city_id=city_id, name='s_5_row_4_2', instance=str(request.POST.get('s_5_row_4_2'))).save()
+                    Cache(city_id=city_id, name='s_5_row_4_3', instance=str(request.POST.get('s_5_row_4_3'))).save()
+                    Cache(city_id=city_id, name='s_5_row_5_1', instance=str(request.POST.get('s_5_row_5_1'))).save()
+                    Cache(city_id=city_id, name='s_5_row_5_2', instance=str(request.POST.get('s_5_row_5_2'))).save()
+                    Cache(city_id=city_id, name='s_5_row_5_3', instance=str(request.POST.get('s_5_row_5_3'))).save()
+                    Cache(city_id=city_id, name='s_5_row_6_1', instance=str(request.POST.get('s_5_row_6_1'))).save()
+                    Cache(city_id=city_id, name='s_5_row_6_2', instance=str(request.POST.get('s_5_row_6_2'))).save()
+                    Cache(city_id=city_id, name='s_5_row_6_3', instance=str(request.POST.get('s_5_row_6_3'))).save()
+
+
+                for s in range(1, 6):
+                    Sector(date=creation_date, sector_number=s, city_id=city_id).save()
+
+                for each_sector in Sector.objects.filter(date=creation_date, city_id=city_id):
+                    if each_sector.sector_number != 5:
+                        for r in range(1, 10):
+                            Row(sector=each_sector, row_number=r, date=creation_date).save()
+                    if each_sector.sector_number == 5:
+                        for r in range(1, 7):
+                            Row(sector=each_sector, row_number=r, date=creation_date).save()
+
+
+                for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=1):
+                    if each_row.row_number == 1:
+                        try:
+                            if int(request.POST.get('s_1_row_1_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_1_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_1_row_1_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_1_row_1_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_1_row_1_2'):
+                                if int(request.POST.get('s_1_row_1_2').split(',')[0]) > int(request.POST.get('s_1_row_1_1').split(',')[0]) and int(request.POST.get('s_1_row_1_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_1_1').split(',')[0])+1, int(request.POST.get('s_1_row_1_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_1_row_1_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_1_row_1_2') and request.POST.get('s_1_row_1_3'):
+                                if int(request.POST.get('s_1_row_1_3').split(',')[0]) > int(request.POST.get('s_1_row_1_2').split(',')[0]) and int(request.POST.get('s_1_row_1_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_1_2').split(',')[0])+1, int(request.POST.get('s_1_row_1_3').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_1_row_1_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ!</h1>')
+
+                    if each_row.row_number == 2:
+                        try:
+                            if int(request.POST.get('s_1_row_2_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_2_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_1_row_2_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_1_row_2_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_1_row_2_2'):
+                                if int(request.POST.get('s_1_row_2_2').split(',')[0]) > int(request.POST.get('s_1_row_2_1').split(',')[0]) and int(request.POST.get('s_1_row_2_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_2_1').split(',')[0])+1, int(request.POST.get('s_1_row_2_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_1_row_2_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_1_row_2_2') and request.POST.get('s_1_row_2_3'):
+                                if int(request.POST.get('s_1_row_2_3').split(',')[0]) > int(request.POST.get('s_1_row_2_2').split(',')[0]) and int(request.POST.get('s_1_row_2_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_2_2').split(',')[0])+1, int(request.POST.get('s_1_row_2_3').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_1_row_2_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ВТОРОЙ!</h1>')
+
+                    if each_row.row_number == 3:
+                        try:
+                            if int(request.POST.get('s_1_row_3_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_3_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_1_row_3_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_1_row_3_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_1_row_3_2'):
+                                if int(request.POST.get('s_1_row_3_2').split(',')[0]) > int(request.POST.get('s_1_row_3_1').split(',')[0]) and int(request.POST.get('s_1_row_3_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_3_1').split(',')[0])+1, int(request.POST.get('s_1_row_3_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_1_row_3_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_1_row_3_2') and request.POST.get('s_1_row_3_3'):
+                                if int(request.POST.get('s_1_row_3_3').split(',')[0]) > int(request.POST.get('s_1_row_3_2').split(',')[0]) and int(request.POST.get('s_1_row_3_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_3_2').split(',')[0])+1, int(request.POST.get('s_1_row_3_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_1_row_3_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+
+
+                    if each_row.row_number == 4:
+                        try:
+                            if int(request.POST.get('s_1_row_4_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_4_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_1_row_4_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_1_row_4_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_1_row_4_2'):
+                                if int(request.POST.get('s_1_row_4_2').split(',')[0]) > int(request.POST.get('s_1_row_4_1').split(',')[0]) and int(request.POST.get('s_1_row_4_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_4_1').split(',')[0])+1, int(request.POST.get('s_1_row_4_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_1_row_4_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_1_row_4_2') and request.POST.get('s_1_row_4_3'):
+                                if int(request.POST.get('s_1_row_4_3').split(',')[0]) > int(request.POST.get('s_1_row_4_2').split(',')[0]) and int(request.POST.get('s_1_row_4_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_4_2').split(',')[0])+1, int(request.POST.get('s_1_row_4_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_1_row_4_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+
+
+
+                    if each_row.row_number == 5:
+                        try:
+                            if int(request.POST.get('s_1_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_5_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_1_row_5_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_1_row_5_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_1_row_5_2'):
+                                if int(request.POST.get('s_1_row_5_2').split(',')[0]) > int(request.POST.get('s_1_row_5_1').split(',')[0]) and int(request.POST.get('s_1_row_5_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_5_1').split(',')[0])+1, int(request.POST.get('s_1_row_5_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_1_row_5_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_1_row_5_2') and request.POST.get('s_1_row_5_3'):
+                                if int(request.POST.get('s_1_row_5_3').split(',')[0]) > int(request.POST.get('s_1_row_5_2').split(',')[0]) and int(request.POST.get('s_1_row_5_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_5_2').split(',')[0])+1, int(request.POST.get('s_1_row_5_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_1_row_5_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 6:
+                        try:
+                            if int(request.POST.get('s_1_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_6_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_1_row_6_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_1_row_6_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_1_row_6_2'):
+                                if int(request.POST.get('s_1_row_6_2').split(',')[0]) > int(request.POST.get('s_1_row_6_1').split(',')[0]) and int(request.POST.get('s_1_row_6_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_6_1').split(',')[0])+1, int(request.POST.get('s_1_row_6_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_1_row_6_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_1_row_6_2') and request.POST.get('s_1_row_6_3'):
+                                if int(request.POST.get('s_1_row_6_3').split(',')[0]) > int(request.POST.get('s_1_row_6_2').split(',')[0]) and int(request.POST.get('s_1_row_6_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_6_2').split(',')[0])+1, int(request.POST.get('s_1_row_6_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_1_row_6_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+                    if each_row.row_number == 7:
+                        try:
+                            if int(request.POST.get('s_1_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_7_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_1_row_7_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_1_row_7_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_1_row_7_2'):
+                                if int(request.POST.get('s_1_row_7_2').split(',')[0]) > int(request.POST.get('s_1_row_7_1').split(',')[0]) and int(request.POST.get('s_1_row_7_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_7_1').split(',')[0])+1, int(request.POST.get('s_1_row_7_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_1_row_7_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_1_row_7_2') and request.POST.get('s_1_row_7_3'):
+                                if int(request.POST.get('s_1_row_7_3').split(',')[0]) > int(request.POST.get('s_1_row_7_2').split(',')[0]) and int(request.POST.get('s_1_row_7_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_7_2').split(',')[0])+1, int(request.POST.get('s_1_row_7_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_1_row_7_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 8:
+                        try:
+                            if int(request.POST.get('s_1_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_8_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_1_row_8_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_1_row_8_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_1_row_8_2'):
+                                if int(request.POST.get('s_1_row_8_2').split(',')[0]) > int(request.POST.get('s_1_row_8_1').split(',')[0]) and int(request.POST.get('s_1_row_8_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_8_1').split(',')[0])+1, int(request.POST.get('s_1_row_8_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_1_row_8_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_1_row_8_2') and request.POST.get('s_1_row_8_3'):
+                                if int(request.POST.get('s_1_row_8_3').split(',')[0]) > int(request.POST.get('s_1_row_8_2').split(',')[0]) and int(request.POST.get('s_1_row_8_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_8_2').split(',')[0])+1, int(request.POST.get('s_1_row_8_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_1_row_8_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 9:
+                        try:
+                            if int(request.POST.get('s_1_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_1_row_9_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_1_row_9_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_1_row_9_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_1_row_9_2'):
+                                if int(request.POST.get('s_1_row_9_2').split(',')[0]) > int(request.POST.get('s_1_row_9_1').split(',')[0]) and int(request.POST.get('s_1_row_9_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_9_1').split(',')[0])+1, int(request.POST.get('s_1_row_9_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_1_row_9_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_1_row_9_2') and request.POST.get('s_1_row_9_3'):
+                                if int(request.POST.get('s_1_row_9_3').split(',')[0]) > int(request.POST.get('s_1_row_9_2').split(',')[0]) and int(request.POST.get('s_1_row_9_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_1_row_9_2').split(',')[0])+1, int(request.POST.get('s_1_row_9_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_1_row_9_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+            for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=2):
+                    if each_row.row_number == 1:
+                        try:
+                            if int(request.POST.get('s_2_row_1_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_1_1').split(',')[1]) > 0:
+                                for s in range(14, int(request.POST.get('s_2_row_1_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_2_row_1_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_2_row_1_2'):
+                                if int(request.POST.get('s_2_row_1_2').split(',')[0]) > int(request.POST.get('s_2_row_1_1').split(',')[0]) and int(request.POST.get('s_2_row_1_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_1_1').split(',')[0])+1, int(request.POST.get('s_2_row_1_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_2_row_1_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_2_row_1_2') and request.POST.get('s_2_row_1_3'):
+                                if int(request.POST.get('s_2_row_1_3').split(',')[0]) > int(request.POST.get('s_2_row_1_2').split(',')[0]) and int(request.POST.get('s_2_row_1_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_1_2').split(',')[0])+1, int(request.POST.get('s_2_row_1_3').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_2_row_1_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ 2222!</h1>' + str(request.POST.get('s_2_row_1_3')) + str(request.POST.get('s_2_row_1_3')) + str(request.POST.get('s_2_row_1_3')))
+
+                    if each_row.row_number == 2:
+                        try:
+                            if int(request.POST.get('s_2_row_2_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_2_1').split(',')[1]) > 0:
+                                for s in range(16, int(request.POST.get('s_2_row_2_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_2_row_2_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_2_row_2_2'):
+                                if int(request.POST.get('s_2_row_2_2').split(',')[0]) > int(request.POST.get('s_2_row_2_1').split(',')[0]) and int(request.POST.get('s_2_row_2_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_2_1').split(',')[0])+1, int(request.POST.get('s_2_row_2_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_2_row_2_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_2_row_2_2') and request.POST.get('s_2_row_2_3'):
+                                if int(request.POST.get('s_2_row_2_3').split(',')[0]) > int(request.POST.get('s_2_row_2_2').split(',')[0]) and int(request.POST.get('s_2_row_2_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_2_2').split(',')[0])+1, int(request.POST.get('s_2_row_2_3').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_2_row_2_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ВТОРОЙ!</h1>')
+
+                    if each_row.row_number == 3:
+                        try:
+                            if int(request.POST.get('s_2_row_3_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_3_1').split(',')[1]) > 0:
+                                for s in range(17, int(request.POST.get('s_2_row_3_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_2_row_3_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_2_row_3_2'):
+                                if int(request.POST.get('s_2_row_3_2').split(',')[0]) > int(request.POST.get('s_2_row_3_1').split(',')[0]) and int(request.POST.get('s_2_row_3_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_3_1').split(',')[0])+1, int(request.POST.get('s_2_row_3_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_2_row_3_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_2_row_3_2') and request.POST.get('s_2_row_3_3'):
+                                if int(request.POST.get('s_2_row_3_3').split(',')[0]) > int(request.POST.get('s_2_row_3_2').split(',')[0]) and int(request.POST.get('s_2_row_3_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_3_2').split(',')[0])+1, int(request.POST.get('s_2_row_3_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_2_row_3_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+
+
+                    if each_row.row_number == 4:
+                        try:
+                            if int(request.POST.get('s_2_row_4_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_4_1').split(',')[1]) > 0:
+                                for s in range(19, int(request.POST.get('s_2_row_4_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_2_row_4_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_2_row_4_2'):
+                                if int(request.POST.get('s_2_row_4_2').split(',')[0]) > int(request.POST.get('s_2_row_4_1').split(',')[0]) and int(request.POST.get('s_2_row_4_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_4_1').split(',')[0])+1, int(request.POST.get('s_2_row_4_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_2_row_4_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_2_row_4_2') and request.POST.get('s_2_row_4_3'):
+                                if int(request.POST.get('s_2_row_4_3').split(',')[0]) > int(request.POST.get('s_2_row_4_2').split(',')[0]) and int(request.POST.get('s_2_row_4_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_4_2').split(',')[0])+1, int(request.POST.get('s_2_row_4_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_2_row_4_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+
+
+
+                    if each_row.row_number == 5:
+                        try:
+                            if int(request.POST.get('s_2_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_5_1').split(',')[1]) > 0:
+                                for s in range(21, int(request.POST.get('s_2_row_5_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_2_row_5_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_2_row_5_2'):
+                                if int(request.POST.get('s_2_row_5_2').split(',')[0]) > int(request.POST.get('s_2_row_5_1').split(',')[0]) and int(request.POST.get('s_2_row_5_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_5_1').split(',')[0])+1, int(request.POST.get('s_2_row_5_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_2_row_5_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_2_row_5_2') and request.POST.get('s_2_row_5_3'):
+                                if int(request.POST.get('s_2_row_5_3').split(',')[0]) > int(request.POST.get('s_2_row_5_2').split(',')[0]) and int(request.POST.get('s_2_row_5_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_5_2').split(',')[0])+1, int(request.POST.get('s_2_row_5_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_2_row_5_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 6:
+                        try:
+                            if int(request.POST.get('s_2_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_6_1').split(',')[1]) > 0:
+                                for s in range(23, int(request.POST.get('s_2_row_6_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_2_row_6_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_2_row_6_2'):
+                                if int(request.POST.get('s_2_row_6_2').split(',')[0]) > int(request.POST.get('s_2_row_6_1').split(',')[0]) and int(request.POST.get('s_2_row_6_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_6_1').split(',')[0])+1, int(request.POST.get('s_2_row_6_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_2_row_6_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_2_row_6_2') and request.POST.get('s_2_row_6_3'):
+                                if int(request.POST.get('s_2_row_6_3').split(',')[0]) > int(request.POST.get('s_2_row_6_2').split(',')[0]) and int(request.POST.get('s_2_row_6_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_6_2').split(',')[0])+1, int(request.POST.get('s_2_row_6_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_2_row_6_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+                    if each_row.row_number == 7:
+                        try:
+                            if int(request.POST.get('s_2_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_7_1').split(',')[1]) > 0:
+                                for s in range(24, int(request.POST.get('s_2_row_7_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_2_row_7_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_2_row_7_2'):
+                                if int(request.POST.get('s_2_row_7_2').split(',')[0]) > int(request.POST.get('s_2_row_7_1').split(',')[0]) and int(request.POST.get('s_2_row_7_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_7_1').split(',')[0])+1, int(request.POST.get('s_2_row_7_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_2_row_7_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_2_row_7_2') and request.POST.get('s_2_row_7_3'):
+                                if int(request.POST.get('s_2_row_7_3').split(',')[0]) > int(request.POST.get('s_2_row_7_2').split(',')[0]) and int(request.POST.get('s_2_row_7_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_7_2').split(',')[0])+1, int(request.POST.get('s_2_row_7_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_2_row_7_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 8:
+                        try:
+                            if int(request.POST.get('s_2_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_8_1').split(',')[1]) > 0:
+                                for s in range(26, int(request.POST.get('s_2_row_8_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_2_row_8_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_2_row_8_2'):
+                                if int(request.POST.get('s_2_row_8_2').split(',')[0]) > int(request.POST.get('s_2_row_8_1').split(',')[0]) and int(request.POST.get('s_2_row_8_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_8_1').split(',')[0])+1, int(request.POST.get('s_2_row_8_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_2_row_8_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_2_row_8_2') and request.POST.get('s_2_row_8_3'):
+                                if int(request.POST.get('s_2_row_8_3').split(',')[0]) > int(request.POST.get('s_2_row_8_2').split(',')[0]) and int(request.POST.get('s_2_row_8_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_8_2').split(',')[0])+1, int(request.POST.get('s_2_row_8_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_2_row_8_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 9:
+                        try:
+                            if int(request.POST.get('s_2_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_2_row_9_1').split(',')[1]) > 0:
+                                for s in range(28, int(request.POST.get('s_2_row_9_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_2_row_9_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_2_row_9_2'):
+                                if int(request.POST.get('s_2_row_9_2').split(',')[0]) > int(request.POST.get('s_2_row_9_1').split(',')[0]) and int(request.POST.get('s_2_row_9_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_9_1').split(',')[0])+1, int(request.POST.get('s_2_row_9_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_2_row_9_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_2_row_9_2') and request.POST.get('s_2_row_9_3'):
+                                if int(request.POST.get('s_2_row_9_3').split(',')[0]) > int(request.POST.get('s_2_row_9_2').split(',')[0]) and int(request.POST.get('s_2_row_9_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_2_row_9_2').split(',')[0])+1, int(request.POST.get('s_2_row_9_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_2_row_9_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+            for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=3):
+                    if each_row.row_number == 1:
+                        try:
+                            if int(request.POST.get('s_3_row_1_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_1_1').split(',')[1]) > 0:
+                                for s in range(16, int(request.POST.get('s_3_row_1_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_3_row_1_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_3_row_1_2'):
+                                if int(request.POST.get('s_3_row_1_2').split(',')[0]) > int(request.POST.get('s_3_row_1_1').split(',')[0]) and int(request.POST.get('s_3_row_1_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_1_1').split(',')[0])+1, int(request.POST.get('s_3_row_1_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_3_row_1_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_3_row_1_2') and request.POST.get('s_3_row_1_3'):
+                                if int(request.POST.get('s_3_row_1_3').split(',')[0]) > int(request.POST.get('s_3_row_1_2').split(',')[0]) and int(request.POST.get('s_3_row_1_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_1_2').split(',')[0])+1, int(request.POST.get('s_3_row_1_3').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_3_row_1_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ 333333!</h1>')
+
+                    if each_row.row_number == 2:
+                        try:
+                            if int(request.POST.get('s_3_row_2_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_2_1').split(',')[1]) > 0:
+                                for s in range(18, int(request.POST.get('s_3_row_2_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_3_row_2_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_3_row_2_2'):
+                                if int(request.POST.get('s_3_row_2_2').split(',')[0]) > int(request.POST.get('s_3_row_2_1').split(',')[0]) and int(request.POST.get('s_3_row_2_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_2_1').split(',')[0])+1, int(request.POST.get('s_3_row_2_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_3_row_2_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_3_row_2_2') and request.POST.get('s_3_row_2_3'):
+                                if int(request.POST.get('s_3_row_2_3').split(',')[0]) > int(request.POST.get('s_3_row_2_2').split(',')[0]) and int(request.POST.get('s_3_row_2_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_2_2').split(',')[0])+1, int(request.POST.get('s_3_row_2_3').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_3_row_2_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ВТОРОЙ!</h1>')
+
+                    if each_row.row_number == 3:
+                        try:
+                            if int(request.POST.get('s_3_row_3_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_3_1').split(',')[1]) > 0:
+                                for s in range(20, int(request.POST.get('s_3_row_3_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_3_row_3_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_3_row_3_2'):
+                                if int(request.POST.get('s_3_row_3_2').split(',')[0]) > int(request.POST.get('s_3_row_3_1').split(',')[0]) and int(request.POST.get('s_3_row_3_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_3_1').split(',')[0])+1, int(request.POST.get('s_3_row_3_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_3_row_3_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_3_row_3_2') and request.POST.get('s_3_row_3_3'):
+                                if int(request.POST.get('s_3_row_3_3').split(',')[0]) > int(request.POST.get('s_3_row_3_2').split(',')[0]) and int(request.POST.get('s_3_row_3_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_3_2').split(',')[0])+1, int(request.POST.get('s_3_row_3_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_3_row_3_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+
+
+                    if each_row.row_number == 4:
+                        try:
+                            if int(request.POST.get('s_3_row_4_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_4_1').split(',')[1]) > 0:
+                                for s in range(22, int(request.POST.get('s_3_row_4_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_3_row_4_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_3_row_4_2'):
+                                if int(request.POST.get('s_3_row_4_2').split(',')[0]) > int(request.POST.get('s_3_row_4_1').split(',')[0]) and int(request.POST.get('s_3_row_4_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_4_1').split(',')[0])+1, int(request.POST.get('s_3_row_4_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_3_row_4_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_3_row_4_2') and request.POST.get('s_3_row_4_3'):
+                                if int(request.POST.get('s_3_row_4_3').split(',')[0]) > int(request.POST.get('s_3_row_4_2').split(',')[0]) and int(request.POST.get('s_3_row_4_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_4_2').split(',')[0])+1, int(request.POST.get('s_3_row_4_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_3_row_4_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+
+
+
+                    if each_row.row_number == 5:
+                        try:
+                            if int(request.POST.get('s_3_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_5_1').split(',')[1]) > 0:
+                                for s in range(24, int(request.POST.get('s_3_row_5_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_3_row_5_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_3_row_5_2'):
+                                if int(request.POST.get('s_3_row_5_2').split(',')[0]) > int(request.POST.get('s_3_row_5_1').split(',')[0]) and int(request.POST.get('s_3_row_5_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_5_1').split(',')[0])+1, int(request.POST.get('s_3_row_5_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_3_row_5_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_3_row_5_2') and request.POST.get('s_3_row_5_3'):
+                                if int(request.POST.get('s_3_row_5_3').split(',')[0]) > int(request.POST.get('s_3_row_5_2').split(',')[0]) and int(request.POST.get('s_3_row_5_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_5_2').split(',')[0])+1, int(request.POST.get('s_3_row_5_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_3_row_5_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 6:
+                        try:
+                            if int(request.POST.get('s_3_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_6_1').split(',')[1]) > 0:
+                                for s in range(26, int(request.POST.get('s_3_row_6_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_3_row_6_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_3_row_6_2'):
+                                if int(request.POST.get('s_3_row_6_2').split(',')[0]) > int(request.POST.get('s_3_row_6_1').split(',')[0]) and int(request.POST.get('s_3_row_6_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_6_1').split(',')[0])+1, int(request.POST.get('s_3_row_6_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_3_row_6_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_3_row_6_2') and request.POST.get('s_3_row_6_3'):
+                                if int(request.POST.get('s_3_row_6_3').split(',')[0]) > int(request.POST.get('s_3_row_6_2').split(',')[0]) and int(request.POST.get('s_3_row_6_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_6_2').split(',')[0])+1, int(request.POST.get('s_3_row_6_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_3_row_6_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+                    if each_row.row_number == 7:
+                        try:
+                            if int(request.POST.get('s_3_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_7_1').split(',')[1]) > 0:
+                                for s in range(28, int(request.POST.get('s_3_row_7_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_3_row_7_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_3_row_7_2'):
+                                if int(request.POST.get('s_3_row_7_2').split(',')[0]) > int(request.POST.get('s_3_row_7_1').split(',')[0]) and int(request.POST.get('s_3_row_7_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_7_1').split(',')[0])+1, int(request.POST.get('s_3_row_7_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_3_row_7_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_3_row_7_2') and request.POST.get('s_3_row_7_3'):
+                                if int(request.POST.get('s_3_row_7_3').split(',')[0]) > int(request.POST.get('s_3_row_7_2').split(',')[0]) and int(request.POST.get('s_3_row_7_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_7_2').split(',')[0])+1, int(request.POST.get('s_3_row_7_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_3_row_7_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 8:
+                        try:
+                            if int(request.POST.get('s_3_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_8_1').split(',')[1]) > 0:
+                                for s in range(30, int(request.POST.get('s_3_row_8_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_3_row_8_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_3_row_8_2'):
+                                if int(request.POST.get('s_3_row_8_2').split(',')[0]) > int(request.POST.get('s_3_row_8_1').split(',')[0]) and int(request.POST.get('s_3_row_8_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_8_1').split(',')[0])+1, int(request.POST.get('s_3_row_8_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_3_row_8_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_3_row_8_2') and request.POST.get('s_3_row_8_3'):
+                                if int(request.POST.get('s_3_row_8_3').split(',')[0]) > int(request.POST.get('s_3_row_8_2').split(',')[0]) and int(request.POST.get('s_3_row_8_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_8_2').split(',')[0])+1, int(request.POST.get('s_3_row_8_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_3_row_8_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 9:
+                        try:
+                            if int(request.POST.get('s_3_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_3_row_9_1').split(',')[1]) > 0:
+                                for s in range(32, int(request.POST.get('s_3_row_9_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_3_row_9_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_3_row_9_2'):
+                                if int(request.POST.get('s_3_row_9_2').split(',')[0]) > int(request.POST.get('s_3_row_9_1').split(',')[0]) and int(request.POST.get('s_3_row_9_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_9_1').split(',')[0])+1, int(request.POST.get('s_3_row_9_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_3_row_9_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_3_row_9_2') and request.POST.get('s_3_row_9_3'):
+                                if int(request.POST.get('s_3_row_9_3').split(',')[0]) > int(request.POST.get('s_3_row_9_2').split(',')[0]) and int(request.POST.get('s_3_row_9_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_3_row_9_2').split(',')[0])+1, int(request.POST.get('s_3_row_9_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_3_row_9_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+            for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=4):
+                    if each_row.row_number == 1:
+                        try:
+                            if int(request.POST.get('s_4_row_1_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_1_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_4_row_1_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_4_row_1_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_4_row_1_2'):
+                                if int(request.POST.get('s_4_row_1_2').split(',')[0]) > int(request.POST.get('s_4_row_1_1').split(',')[0]) and int(request.POST.get('s_4_row_1_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_1_1').split(',')[0])+1, int(request.POST.get('s_4_row_1_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_4_row_1_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_4_row_1_2') and request.POST.get('s_4_row_1_3'):
+                                if int(request.POST.get('s_4_row_1_3').split(',')[0]) > int(request.POST.get('s_4_row_1_2').split(',')[0]) and int(request.POST.get('s_4_row_1_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_1_2').split(',')[0])+1, int(request.POST.get('s_4_row_1_3').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_4_row_1_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ 444444!</h1>')
+
+                    if each_row.row_number == 2:
+                        try:
+                            if int(request.POST.get('s_4_row_2_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_2_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_4_row_2_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_4_row_2_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_4_row_2_2'):
+                                if int(request.POST.get('s_4_row_2_2').split(',')[0]) > int(request.POST.get('s_4_row_2_1').split(',')[0]) and int(request.POST.get('s_4_row_2_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_2_1').split(',')[0])+1, int(request.POST.get('s_4_row_2_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_4_row_2_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_4_row_2_2') and request.POST.get('s_4_row_2_3'):
+                                if int(request.POST.get('s_4_row_2_3').split(',')[0]) > int(request.POST.get('s_4_row_2_2').split(',')[0]) and int(request.POST.get('s_4_row_2_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_2_2').split(',')[0])+1, int(request.POST.get('s_4_row_2_3').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_4_row_2_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ВТОРОЙ!</h1>')
+
+                    if each_row.row_number == 3:
+                        try:
+                            if int(request.POST.get('s_4_row_3_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_3_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_4_row_3_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_4_row_3_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_4_row_3_2'):
+                                if int(request.POST.get('s_4_row_3_2').split(',')[0]) > int(request.POST.get('s_4_row_3_1').split(',')[0]) and int(request.POST.get('s_4_row_3_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_3_1').split(',')[0])+1, int(request.POST.get('s_4_row_3_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_4_row_3_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_4_row_3_2') and request.POST.get('s_4_row_3_3'):
+                                if int(request.POST.get('s_4_row_3_3').split(',')[0]) > int(request.POST.get('s_4_row_3_2').split(',')[0]) and int(request.POST.get('s_4_row_3_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_3_2').split(',')[0])+1, int(request.POST.get('s_4_row_3_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_4_row_3_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+
+
+                    if each_row.row_number == 4:
+                        try:
+                            if int(request.POST.get('s_4_row_4_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_4_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_4_row_4_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_4_row_4_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_4_row_4_2'):
+                                if int(request.POST.get('s_4_row_4_2').split(',')[0]) > int(request.POST.get('s_4_row_4_1').split(',')[0]) and int(request.POST.get('s_4_row_4_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_4_1').split(',')[0])+1, int(request.POST.get('s_4_row_4_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_4_row_4_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_4_row_4_2') and request.POST.get('s_4_row_4_3'):
+                                if int(request.POST.get('s_4_row_4_3').split(',')[0]) > int(request.POST.get('s_4_row_4_2').split(',')[0]) and int(request.POST.get('s_4_row_4_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_4_2').split(',')[0])+1, int(request.POST.get('s_4_row_4_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_4_row_4_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+
+
+
+                    if each_row.row_number == 5:
+                        try:
+                            if int(request.POST.get('s_4_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_5_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_4_row_5_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_4_row_5_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_4_row_5_2'):
+                                if int(request.POST.get('s_4_row_5_2').split(',')[0]) > int(request.POST.get('s_4_row_5_1').split(',')[0]) and int(request.POST.get('s_4_row_5_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_5_1').split(',')[0])+1, int(request.POST.get('s_4_row_5_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_4_row_5_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_4_row_5_2') and request.POST.get('s_4_row_5_3'):
+                                if int(request.POST.get('s_4_row_5_3').split(',')[0]) > int(request.POST.get('s_4_row_5_2').split(',')[0]) and int(request.POST.get('s_4_row_5_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_5_2').split(',')[0])+1, int(request.POST.get('s_4_row_5_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_4_row_5_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 6:
+                        try:
+                            if int(request.POST.get('s_4_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_6_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_4_row_6_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_4_row_6_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_4_row_6_2'):
+                                if int(request.POST.get('s_4_row_6_2').split(',')[0]) > int(request.POST.get('s_4_row_6_1').split(',')[0]) and int(request.POST.get('s_4_row_6_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_6_1').split(',')[0])+1, int(request.POST.get('s_4_row_6_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_4_row_6_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_4_row_6_2') and request.POST.get('s_4_row_6_3'):
+                                if int(request.POST.get('s_4_row_6_3').split(',')[0]) > int(request.POST.get('s_4_row_6_2').split(',')[0]) and int(request.POST.get('s_4_row_6_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_6_2').split(',')[0])+1, int(request.POST.get('s_4_row_6_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_4_row_6_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+                    if each_row.row_number == 7:
+                        try:
+                            if int(request.POST.get('s_4_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_7_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_4_row_7_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_4_row_7_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_4_row_7_2'):
+                                if int(request.POST.get('s_4_row_7_2').split(',')[0]) > int(request.POST.get('s_4_row_7_1').split(',')[0]) and int(request.POST.get('s_4_row_7_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_7_1').split(',')[0])+1, int(request.POST.get('s_4_row_7_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_4_row_7_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_4_row_7_2') and request.POST.get('s_4_row_7_3'):
+                                if int(request.POST.get('s_4_row_7_3').split(',')[0]) > int(request.POST.get('s_4_row_7_2').split(',')[0]) and int(request.POST.get('s_4_row_7_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_7_2').split(',')[0])+1, int(request.POST.get('s_4_row_7_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_4_row_7_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 8:
+                        try:
+                            if int(request.POST.get('s_4_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_8_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_4_row_8_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_4_row_8_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_4_row_8_2'):
+                                if int(request.POST.get('s_4_row_8_2').split(',')[0]) > int(request.POST.get('s_4_row_8_1').split(',')[0]) and int(request.POST.get('s_4_row_8_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_8_1').split(',')[0])+1, int(request.POST.get('s_4_row_8_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_4_row_8_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_4_row_8_2') and request.POST.get('s_4_row_8_3'):
+                                if int(request.POST.get('s_4_row_8_3').split(',')[0]) > int(request.POST.get('s_4_row_8_2').split(',')[0]) and int(request.POST.get('s_4_row_8_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_8_2').split(',')[0])+1, int(request.POST.get('s_4_row_8_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_4_row_8_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 9:
+                        try:
+                            if int(request.POST.get('s_4_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_4_row_9_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_4_row_9_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_4_row_9_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_4_row_9_2'):
+                                if int(request.POST.get('s_4_row_9_2').split(',')[0]) > int(request.POST.get('s_4_row_9_1').split(',')[0]) and int(request.POST.get('s_4_row_9_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_9_1').split(',')[0])+1, int(request.POST.get('s_4_row_9_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_4_row_9_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_4_row_9_2') and request.POST.get('s_4_row_9_3'):
+                                if int(request.POST.get('s_4_row_9_3').split(',')[0]) > int(request.POST.get('s_4_row_9_2').split(',')[0]) and int(request.POST.get('s_4_row_9_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_4_row_9_2').split(',')[0])+1, int(request.POST.get('s_4_row_9_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_4_row_9_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+            for each_row in Row.objects.filter(date=creation_date, sector__city_id=city_id, sector__sector_number=5):
+                    if each_row.row_number == 1:
+                        try:
+                            if int(request.POST.get('s_5_row_1_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_1_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_5_row_1_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_5_row_1_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_5_row_1_2'):
+                                if int(request.POST.get('s_5_row_1_2').split(',')[0]) > int(request.POST.get('s_5_row_1_1').split(',')[0]) and int(request.POST.get('s_5_row_1_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_1_1').split(',')[0])+1, int(request.POST.get('s_5_row_1_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_5_row_1_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_5_row_1_2') and request.POST.get('s_5_row_1_3'):
+                                if int(request.POST.get('s_5_row_1_3').split(',')[0]) > int(request.POST.get('s_5_row_1_2').split(',')[0]) and int(request.POST.get('s_5_row_1_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_1_2').split(',')[0])+1, int(request.POST.get('s_5_row_1_3').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_5_row_1_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ПЕРВЫЙ 5555!</h1>')
+
+                    if each_row.row_number == 2:
+                        try:
+                            if int(request.POST.get('s_5_row_2_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_2_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_5_row_2_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_5_row_2_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_5_row_2_2'):
+                                if int(request.POST.get('s_5_row_2_2').split(',')[0]) > int(request.POST.get('s_5_row_2_1').split(',')[0]) and int(request.POST.get('s_5_row_2_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_2_1').split(',')[0])+1, int(request.POST.get('s_5_row_2_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_5_row_2_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_5_row_2_2') and request.POST.get('s_5_row_2_3'):
+                                if int(request.POST.get('s_5_row_2_3').split(',')[0]) > int(request.POST.get('s_5_row_2_2').split(',')[0]) and int(request.POST.get('s_5_row_2_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_2_2').split(',')[0])+1, int(request.POST.get('s_5_row_2_3').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_5_row_2_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ВТОРОЙ!</h1>')
+
+                    if each_row.row_number == 3:
+                        try:
+                            if int(request.POST.get('s_5_row_3_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_3_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_5_row_3_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_5_row_3_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_5_row_3_2'):
+                                if int(request.POST.get('s_5_row_3_2').split(',')[0]) > int(request.POST.get('s_5_row_3_1').split(',')[0]) and int(request.POST.get('s_5_row_3_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_3_1').split(',')[0])+1, int(request.POST.get('s_5_row_3_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_5_row_3_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_5_row_3_2') and request.POST.get('s_5_row_3_3'):
+                                if int(request.POST.get('s_5_row_3_3').split(',')[0]) > int(request.POST.get('s_5_row_3_2').split(',')[0]) and int(request.POST.get('s_5_row_3_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_3_2').split(',')[0])+1, int(request.POST.get('s_5_row_3_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_5_row_3_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+
+
+                    if each_row.row_number == 4:
+                        try:
+                            if int(request.POST.get('s_5_row_4_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_4_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_5_row_4_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_5_row_4_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_5_row_4_2'):
+                                if int(request.POST.get('s_5_row_4_2').split(',')[0]) > int(request.POST.get('s_5_row_4_1').split(',')[0]) and int(request.POST.get('s_5_row_4_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_4_1').split(',')[0])+1, int(request.POST.get('s_5_row_4_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_5_row_4_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_5_row_4_2') and request.POST.get('s_5_row_4_3'):
+                                if int(request.POST.get('s_5_row_4_3').split(',')[0]) > int(request.POST.get('s_5_row_4_2').split(',')[0]) and int(request.POST.get('s_5_row_4_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_4_2').split(',')[0])+1, int(request.POST.get('s_5_row_4_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_5_row_4_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест ТРЕТИЙ!</h1>')
+
+
+
+                    if each_row.row_number == 5:
+                        try:
+                            if int(request.POST.get('s_5_row_5_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_5_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_5_row_5_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_5_row_5_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_5_row_5_2'):
+                                if int(request.POST.get('s_5_row_5_2').split(',')[0]) > int(request.POST.get('s_5_row_5_1').split(',')[0]) and int(request.POST.get('s_5_row_5_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_5_1').split(',')[0])+1, int(request.POST.get('s_5_row_5_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_5_row_5_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_5_row_5_2') and request.POST.get('s_5_row_5_3'):
+                                if int(request.POST.get('s_5_row_5_3').split(',')[0]) > int(request.POST.get('s_5_row_5_2').split(',')[0]) and int(request.POST.get('s_5_row_5_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_5_2').split(',')[0])+1, int(request.POST.get('s_5_row_5_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_5_row_5_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 6:
+                        try:
+                            if int(request.POST.get('s_5_row_6_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_6_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_5_row_6_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_5_row_6_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_5_row_6_2'):
+                                if int(request.POST.get('s_5_row_6_2').split(',')[0]) > int(request.POST.get('s_5_row_6_1').split(',')[0]) and int(request.POST.get('s_5_row_6_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_6_1').split(',')[0])+1, int(request.POST.get('s_5_row_6_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_5_row_6_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_5_row_6_2') and request.POST.get('s_5_row_6_3'):
+                                if int(request.POST.get('s_5_row_6_3').split(',')[0]) > int(request.POST.get('s_5_row_6_2').split(',')[0]) and int(request.POST.get('s_5_row_6_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_6_2').split(',')[0])+1, int(request.POST.get('s_5_row_6_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_5_row_6_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+                    if each_row.row_number == 7:
+                        try:
+                            if int(request.POST.get('s_5_row_7_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_7_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_5_row_7_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_5_row_7_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_5_row_7_2'):
+                                if int(request.POST.get('s_5_row_7_2').split(',')[0]) > int(request.POST.get('s_5_row_7_1').split(',')[0]) and int(request.POST.get('s_5_row_7_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_7_1').split(',')[0])+1, int(request.POST.get('s_5_row_7_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_5_row_7_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_5_row_7_2') and request.POST.get('s_5_row_7_3'):
+                                if int(request.POST.get('s_5_row_7_3').split(',')[0]) > int(request.POST.get('s_5_row_7_2').split(',')[0]) and int(request.POST.get('s_5_row_7_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_7_2').split(',')[0])+1, int(request.POST.get('s_5_row_7_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_5_row_7_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 8:
+                        try:
+                            if int(request.POST.get('s_5_row_8_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_8_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_5_row_8_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_5_row_8_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_5_row_8_2'):
+                                if int(request.POST.get('s_5_row_8_2').split(',')[0]) > int(request.POST.get('s_5_row_8_1').split(',')[0]) and int(request.POST.get('s_5_row_8_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_8_1').split(',')[0])+1, int(request.POST.get('s_5_row_8_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_5_row_8_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_5_row_8_2') and request.POST.get('s_5_row_8_3'):
+                                if int(request.POST.get('s_5_row_8_3').split(',')[0]) > int(request.POST.get('s_5_row_8_2').split(',')[0]) and int(request.POST.get('s_5_row_8_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_8_2').split(',')[0])+1, int(request.POST.get('s_5_row_8_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_5_row_8_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+                    if each_row.row_number == 9:
+                        try:
+                            if int(request.POST.get('s_5_row_9_1').split(',')[0]) > 0 and int(request.POST.get('s_5_row_9_1').split(',')[1]) > 0:
+                                for s in range(1, int(request.POST.get('s_5_row_9_1').split(',')[0])+1):
+                                    Seat( seat_number = s, price = int(request.POST.get('s_5_row_9_1').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            else:
+                                err_()
+                                return HttpResponse('<h1>Ошибка в заполнении мест!</h1>')
+                            if request.POST.get('s_5_row_9_2'):
+                                if int(request.POST.get('s_5_row_9_2').split(',')[0]) > int(request.POST.get('s_5_row_9_1').split(',')[0]) and int(request.POST.get('s_5_row_9_2').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_9_1').split(',')[0])+1, int(request.POST.get('s_5_row_9_2').split(',')[0])+1):
+                                        Seat( seat_number =k, price = int(request.POST.get('s_5_row_9_2').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+                            if request.POST.get('s_5_row_9_2') and request.POST.get('s_5_row_9_3'):
+                                if int(request.POST.get('s_5_row_9_3').split(',')[0]) > int(request.POST.get('s_5_row_9_2').split(',')[0]) and int(request.POST.get('s_5_row_9_3').split(',')[1]) > 0:
+                                    for k in range(int(request.POST.get('s_5_row_9_2').split(',')[0])+1, int(request.POST.get('s_5_row_9_3').split(',')[0])+1):
+                                        Seat( seat_number=k, price = int(request.POST.get('s_5_row_9_3').split(',')[1]), sector = each_row.sector,  row=each_row, date=creation_date ).save()
+
+                        except ValueError:
+                            err_()
+                            return HttpResponse('<h1>Ошибка в заполнении мест 5 !</h1>')
+
+
+
+            return HttpResponseRedirect(next)
 
 
 
