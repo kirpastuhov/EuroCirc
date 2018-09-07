@@ -12,8 +12,6 @@ import pytz
 class Index(LoginRequiredMixin, View):
     template_name = 'desk/index.html'
     def get(self, request, *arg, **kwargs):
-        if Cache.objects.get(name='s_1_row_1_3').instance.split(',')[0] == '':
-            print('You')
         context = City.get_all_cities(self)
         return render(request, self.template_name, context)
 
@@ -1118,7 +1116,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     Cache(city_id=city_id, name='s_1_row_9_2', instance=str(request.POST.get('s_1_row_9_2'))).save()
                     Cache(city_id=city_id, name='s_1_row_9_3', instance=str(request.POST.get('s_1_row_9_3'))).save()
 
-                    
+
                     Cache(city_id=city_id, name='s_2_row_1_1', instance=str(request.POST.get('s_2_row_1_1'))).save()
                     Cache(city_id=city_id, name='s_2_row_1_2', instance=str(request.POST.get('s_2_row_1_2'))).save()
                     Cache(city_id=city_id, name='s_2_row_1_3', instance=str(request.POST.get('s_2_row_1_3'))).save()
@@ -2323,7 +2321,7 @@ class Odeum(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *arg, city_id, **kwargs):
-        next = request.POST.get('next')     
+        next = request.POST.get('next')
         if 'Delete' in request.POST:
             print('YO')
             if User.objects.get(id=request.user.id).staff   == True or User.objects.get(id=request.user.id).admin   == True :
@@ -2554,10 +2552,10 @@ class Box(LoginRequiredMixin, View):
         hour = self.kwargs['hour']
         rows = sector.get_all_rows()
         all_rows = []
-        
+
         if current_user.staff == True:
         	template_name = 'desk/box_admin.html'
-        else: 
+        else:
         	template_name = 'desk/box.html'
 
 
@@ -2622,6 +2620,84 @@ class Box(LoginRequiredMixin, View):
                 return HttpResponseRedirect(next)
             else:
                 return HttpResponseRedirect(next)
+
+        if 'ten' in request.POST:
+            next = request.POST.get('next', '/')
+            #all_seats = Seat.get_all_selected_seats(self, sector__city__id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'], current_user.id)
+            for seat in all_seats:
+                if  seat.sold == 'Vacant' or seat.sold == 'Booked':
+                        seat.user_id = 0
+                        seat.sold = 'Sold'
+                        seat.selected = False
+                        seat.save()
+                        seat.name = ''
+
+                        current_user.sold_ten += 1
+
+                        # current_user.sold_share = current_user.sold_share + 1
+                        seat.save()
+                        current_user.save()
+                elif  seat.sold != 'Vacant':
+                        seat.selected = False
+                        seat.save()
+
+
+            current_user.gain = current_user.gain + current_user.batch * 0.9
+            current_user.batch = 0
+            current_user.save()
+            return HttpResponseRedirect(next)
+
+        if 'fifteen' in request.POST:
+            next = request.POST.get('next', '/')
+            #all_seats = Seat.get_all_selected_seats(self, sector__city__id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'], current_user.id)
+            for seat in all_seats:
+                if  seat.sold == 'Vacant' or seat.sold == 'Booked':
+                        seat.user_id = 0
+                        seat.sold = 'Sold'
+                        seat.selected = False
+                        seat.save()
+                        seat.name = ''
+
+                        current_user.sold_fifteen += 1
+
+                        # current_user.sold_share = current_user.sold_share + 1
+                        seat.save()
+                        current_user.save()
+                elif  seat.sold != 'Vacant':
+                        seat.selected = False
+                        seat.save()
+
+
+            current_user.gain = current_user.gain + current_user.batch * 0.85
+            current_user.batch = 0
+            current_user.save()
+            return HttpResponseRedirect(next)
+
+        if 'twenty' in request.POST:
+            next = request.POST.get('next', '/')
+            #all_seats = Seat.get_all_selected_seats(self, sector__city__id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'], current_user.id)
+            for seat in all_seats:
+                if  seat.sold == 'Vacant' or seat.sold == 'Booked':
+                        seat.user_id = 0
+                        seat.sold = 'Sold'
+                        seat.selected = False
+                        seat.save()
+                        seat.name = ''
+
+                        current_user.sold_twenty += 1
+
+                        # current_user.sold_share = current_user.sold_share + 1
+                        seat.save()
+                        current_user.save()
+                elif  seat.sold != 'Vacant':
+                        seat.selected = False
+                        seat.save()
+
+
+            current_user.gain = current_user.gain + current_user.batch * 0.8
+            current_user.batch = 0
+            current_user.save()
+            return HttpResponseRedirect(next)
 
 
         if 'Book' in request.POST:
@@ -2784,7 +2860,7 @@ class Box(LoginRequiredMixin, View):
                     current_user.save()
                     return HttpResponseRedirect(next)
 
-        if 'Share' in request.POST:
+        if 'three_one' in request.POST:
                 next = request.POST.get('next', '/')
                 #all_seats = Seat.get_all_selected_seats(self, self.kwargs['sector_number'], current_user.id)
                 if len(all_seats) == 4 and all_seats[0].price == all_seats[1].price == all_seats[2].price == all_seats[3].price:
@@ -2894,7 +2970,164 @@ class Box(LoginRequiredMixin, View):
 
                     current_user.save()
                     seat_3.save()
-                    current_user.gain = current_user.gain + current_user.batch
+                    current_user.gain = current_user.gain + current_user.batch - min_seat.price
+                    current_user.batch = 0
+                    current_user.save()
+                    return HttpResponseRedirect(next)
+                else:
+                    return HttpResponseRedirect(next)
+
+        if 'two_one' in request.POST:
+                next = request.POST.get('next', '/')
+                #all_seats = Seat.get_all_selected_seats(self, self.kwargs['sector_number'], current_user.id)
+                if len(all_seats) == 3 and all_seats[0].price == all_seats[1].price == all_seats[2].price:
+                    all_seats = all_seats.order_by('price')
+                    min_seat = all_seats[0]
+                    seat_1 = all_seats[1]
+                    seat_2 = all_seats[2]
+                    min_seat.sold = 'Share'
+                    current_user.sold_share  = current_user.sold_share + 1
+                    if min_seat.price == 500:
+                        current_user.sold_500 += 1
+                    elif min_seat.price == 700:
+                        current_user.sold_700 += 1
+
+                    elif min_seat.price == 800:
+                        current_user.sold_800 += 1
+
+                    elif min_seat.price == 900:
+                        current_user.sold_900 += 1
+
+                    elif min_seat.price == 1000:
+                        current_user.sold_1000 += 1
+
+                    elif min_seat.price == 1200:
+                        current_user.sold_1200 += 1
+
+                    elif min_seat.price == 1500:
+                        current_user.batch = current_user.batch - min_seat.price
+                    current_user.save()
+                    min_seat.selected = False
+                    min_seat.user_id = 0
+                    min_seat.save()
+                    seat_1.sold = 'Sold'
+                    seat_1.user_id = 0
+                    seat_1.selected = False
+                    current_user.sold_normal  = current_user.sold_normal + 1
+                    if seat_1.price == 500:
+                        current_user.sold_500 += 1
+                    elif seat_1.price == 700:
+                        current_user.sold_700 += 1
+
+                    elif seat_1.price == 800:
+                        current_user.sold_800 += 1
+
+                    elif seat_1.price == 900:
+                        current_user.sold_900 += 1
+
+                    elif seat_1.price == 1000:
+                        current_user.sold_1000 += 1
+
+                    elif seat_1.price == 1200:
+                        current_user.sold_1200 += 1
+
+                    elif seat_1.price == 1500:
+                        current_user.sold_1500 += 1
+                    current_user.save()
+                    seat_1.save()
+                    seat_2.sold = 'Sold'
+                    seat_2.user_id = 0
+                    seat_2.selected = False
+                    current_user.sold_normal  = current_user.sold_normal + 1
+                    if seat_2.price == 500:
+                        current_user.sold_500 += 1
+                    elif seat_2.price == 700:
+                        current_user.sold_700 += 1
+
+                    elif seat_2.price == 800:
+                        current_user.sold_800 += 1
+
+                    elif seat_2.price == 900:
+                        current_user.sold_900 += 1
+
+                    elif seat_2.price == 1000:
+                        current_user.sold_1000 += 1
+
+                    elif seat_2.price == 1200:
+                        current_user.sold_1200 += 1
+
+                    elif seat_2.price == 1500:
+                        current_user.sold_1500 += 1
+                    current_user.save()
+                    seat_2.save()
+
+                    current_user.gain = current_user.gain + current_user.batch - min_seat.price
+                    current_user.batch = 0
+                    current_user.save()
+                    return HttpResponseRedirect(next)
+                else:
+                    return HttpResponseRedirect(next)
+
+        if 'one_one' in request.POST:
+                next = request.POST.get('next', '/')
+                #all_seats = Seat.get_all_selected_seats(self, self.kwargs['sector_number'], current_user.id)
+                if len(all_seats) == 2 and all_seats[0].price == all_seats[1].price:
+                    all_seats = all_seats.order_by('price')
+                    min_seat = all_seats[0]
+                    seat_1 = all_seats[1]
+
+                    min_seat.sold = 'Share'
+                    current_user.sold_share  = current_user.sold_share + 1
+                    if min_seat.price == 500:
+                        current_user.sold_500 += 1
+                    elif min_seat.price == 700:
+                        current_user.sold_700 += 1
+
+                    elif min_seat.price == 800:
+                        current_user.sold_800 += 1
+
+                    elif min_seat.price == 900:
+                        current_user.sold_900 += 1
+
+                    elif min_seat.price == 1000:
+                        current_user.sold_1000 += 1
+
+                    elif min_seat.price == 1200:
+                        current_user.sold_1200 += 1
+
+                    elif min_seat.price == 1500:
+                        current_user.batch = current_user.batch - min_seat.price
+                    current_user.save()
+                    min_seat.selected = False
+                    min_seat.user_id = 0
+                    min_seat.save()
+                    seat_1.sold = 'Sold'
+                    seat_1.user_id = 0
+                    seat_1.selected = False
+                    current_user.sold_normal  = current_user.sold_normal + 1
+                    if seat_1.price == 500:
+                        current_user.sold_500 += 1
+                    elif seat_1.price == 700:
+                        current_user.sold_700 += 1
+
+                    elif seat_1.price == 800:
+                        current_user.sold_800 += 1
+
+                    elif seat_1.price == 900:
+                        current_user.sold_900 += 1
+
+                    elif seat_1.price == 1000:
+                        current_user.sold_1000 += 1
+
+                    elif seat_1.price == 1200:
+                        current_user.sold_1200 += 1
+
+                    elif seat_1.price == 1500:
+                        current_user.sold_1500 += 1
+                    current_user.save()
+                    seat_1.save()
+
+                    current_user.gain = current_user.gain + current_user.batch - min_seat.price
                     current_user.batch = 0
                     current_user.save()
                     return HttpResponseRedirect(next)

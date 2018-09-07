@@ -22,7 +22,7 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password', 'full_name')}),
         ('Stats', {'fields': ('gain', 'sold_normal', 'sold_share', 'sold_vacant', 'batch')}),
-        ('Tickets', {'fields': ('sold_500', 'sold_700', 'sold_800', 'sold_900', 'sold_1000', 'sold_1200', 'sold_1500')}),
+        ('Tickets', {'fields': ('sold_ten','sold_fifteen','sold_twenty','sold_500', 'sold_700', 'sold_800', 'sold_900', 'sold_1000', 'sold_1200', 'sold_1500')}),
         ('Permissions', {'fields': ('active', 'staff', 'admin')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -50,5 +50,3 @@ admin.site.register(Seat)
 admin.site.register(Cache)
 # Remove Group Model from admin. We're not using it.
 admin.site.unregister(Group)
-
-

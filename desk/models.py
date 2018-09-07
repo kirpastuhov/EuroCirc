@@ -59,6 +59,10 @@ class User(AbstractBaseUser):
 	sold_1200 = models.IntegerField(default=0)
 	sold_1500 = models.IntegerField(default=0)
 
+	sold_ten = models.IntegerField(default=0)
+	sold_fifteen = models.IntegerField(default=0)
+	sold_twenty = models.IntegerField(default=0)
+
 
 
 
@@ -163,7 +167,7 @@ class Seat(models.Model):
     user_id = models.IntegerField(default=0)
     date = models.DateTimeField()
     name = models.CharField(max_length=1000, default=' ')
-    
+
     def __str__(self):
         return str(self.row.sector.sector_number) + ' СЕКТОР, ' + str(self.row.row_number) + ' РЯД, ' + str(self.seat_number) + ' МЕСТО ' +  str(self.date)
 
