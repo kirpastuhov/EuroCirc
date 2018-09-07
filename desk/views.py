@@ -79,7 +79,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
         if 'Cache' in request.POST:
             creation_date = request.POST['date'] # get date that user posted in the form
             try:
-            Cache.objects.get(city_id=city_id)
+                Cache.objects.get(city_id=city_id)
             except Cache.DoesNotExist:
                 return HttpResponse("<h1>В памяти нет открытых дней<h1>")
             except Cache.MultipleObjectsReturned:
