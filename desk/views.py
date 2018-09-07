@@ -72,11 +72,18 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
             for each_sector in Sector.objects.filter(date=creation_date, city_id=city_id):
                 each_sector.delete()
 
-
+        if 'Delete_Cache' in request.POST:
+            Cache.objects.filter(city_id=city_id).delete()
+            return HttpResponseRedirect(next)
 
         if 'Cache' in request.POST:
-            print('COOL')
             creation_date = request.POST['date'] # get date that user posted in the form
+            try:
+            Cache.objects.get(city_id=city_id)
+            except Cache.DoesNotExist:
+                return HttpResponse("<h1>В памяти нет открытых дней<h1>")
+            except Cache.MultipleObjectsReturned:
+                pass
             try:
                 Day.objects.get(date=creation_date,  city_id=city_id)
                 return HttpResponse('<h1>Такой день уже существует. Пожалуйста, выберите другую дату или удалите день с выбранной вами датой</h1>')
