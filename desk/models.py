@@ -97,6 +97,7 @@ class User(AbstractBaseUser):
 
 class City(models.Model):
 	city_name = models.CharField(max_length=255, default=None)
+	timezone = models.IntegerField(default=None)
 
 	def __str__(self):
 		return str(self.city_name)

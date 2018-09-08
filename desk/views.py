@@ -24,11 +24,12 @@ class CreateCity(UserPassesTestMixin, LoginRequiredMixin, View):
         return render(request, self.template_name)
     def post(self, request, *arg, **kwargs):
         city_name = request.POST['city_name']
+        timezone = request.POST['timezone']
         try:
             City.objects.get(city_name=city_name)
             return HttpResponse('<h1>Такой день уже открыт.</>')
         except City.DoesNotExist:
-            City(city_name=city_name).save()
+            City(city_name=city_name, timezone=timezone).save()
             return HttpResponseRedirect('/')
 
 
@@ -2544,6 +2545,8 @@ class CityStats(LoginRequiredMixin, View):
 
 class Box(LoginRequiredMixin, View):
     def get(self, request, city_id, *arg, **kwargs):
+        city = City.objects.get(id=city_id)
+        timezone = city.timezone
         current_user = User.objects.get(id=request.user.id)
         if self.kwargs['name'] != 'Noname':
             seats = Seat.objects.filter(sold = 'Booked', name = str(self.kwargs['name']), sector__city=self.kwargs['city_id'], date__hour=self.kwargs['hour'], date__date=self.kwargs['date'], sector__sector_number=int(self.kwargs['sector_number']))
@@ -2554,9 +2557,16 @@ class Box(LoginRequiredMixin, View):
                 seat.save()
                 current_user.save()
         sector = Sector.get_sector(self, self.kwargs['date'], self.kwargs['hour'], self.kwargs['sector_number'], city_id )
-        city = City.objects.get(id=city_id)
+        current_time = datetime.datetime.now()
+        current_time = current_time.replace(tzinfo=pytz.utc)
+        current_time = current_time + datetime.timedelta(hours=timezone)
+        time_diff = (sector.date - current_time).seconds
+        print(time_diff)
+
+
+
         date = self.kwargs['date']
-        hour = self.kwargs['hour']
+        hour = self.kwargs['hour']  
         rows = sector.get_all_rows()
         all_rows = []
 
@@ -2564,14 +2574,8 @@ class Box(LoginRequiredMixin, View):
         	template_name = 'desk/box_admin.html'
         else:
         	template_name = 'desk/box.html'
-
-
-
         batch = current_user.batch
-        date_ = datetime.datetime.now().replace(second=0, microsecond=0, tzinfo=pytz.timezone('UTC'))
-
-        c = sector.date.replace(second=0, microsecond=0) - date_
-        if c.total_seconds() < 3600:
+        if time_diff < 3600:
         	needed = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'], sold='Booked', sector__city__id=city_id)
         	for seat in needed:
         		seat.sold = 'Vacant'

@@ -34,7 +34,9 @@
  <form action="{% url 'desk:create_city'%}" method="post">
     {% csrf_token%}
     <label for="party">Введите название города: </label>
-    <input type="text" name="city_name">
+	<input type="text" name="city_name"><br>
+	<label for="party">UTC + </label>
+	<input type="number" name="timezone"><br>
   <div class="my_btn_discount">
       <button type="submit" class="btn-primary-backdays btn-lg sharp">Открыть Город   </button>
   </div>
