@@ -92,11 +92,15 @@ li a:hover:not(.active) {
 	padding-left: 100px;
 	padding-right: 100px;
 }
+.cName
+{
+	padding-right: 160px;
+}
 
 .container-fluid-create_day {
 	text-align:center;
 	padding-top: 40px;
-	padding-bottom: 0px;
+	padding-bottom: 10px;
 	background-color: #b4b4b4; /* Whole background	*/
 	border: 0;
 	border-radius: 0;
