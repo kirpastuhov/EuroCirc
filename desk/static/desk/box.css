@@ -62,6 +62,19 @@ button[id=Sold]
 {
 background-color: grey;
 }
+button[id='Sold_10_%']
+{
+background-color: grey;
+}
+button[id='Sold_15_%']
+{
+background-color: grey;
+}
+button[id='Sold_20_%']
+{
+background-color: grey;
+}
+
 button[id=Discount]
 {
 background-color: grey;

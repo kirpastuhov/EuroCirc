@@ -2638,7 +2638,7 @@ class Box(LoginRequiredMixin, View):
             for seat in all_seats:
                 if  seat.sold == 'Vacant' or seat.sold == 'Booked':
                         seat.user_id = 0
-                        seat.sold = 'Sold'
+                        seat.sold = 'Sold_10_%'
                         seat.selected = False
                         seat.save()
                         seat.name = ''
@@ -2652,6 +2652,27 @@ class Box(LoginRequiredMixin, View):
                         seat.selected = False
                         seat.save()
 
+                if seat.price == 500:
+                    current_user.sold_500 += 1
+
+                if seat.price == 700:
+                    current_user.sold_700 += 1
+
+                elif seat.price == 800:
+                    current_user.sold_800 += 1
+
+                elif seat.price == 900:
+                    current_user.sold_900 += 1
+
+                elif seat.price == 1000:
+                    current_user.sold_1000 += 1
+
+                elif seat.price == 1200:
+                    current_user.sold_1200 += 1
+
+                elif seat.price == 1500:
+                    current_user.sold_1500 += 1
+
 
             current_user.gain = current_user.gain + current_user.batch * 0.9
             current_user.batch = 0
@@ -2664,7 +2685,7 @@ class Box(LoginRequiredMixin, View):
             for seat in all_seats:
                 if  seat.sold == 'Vacant' or seat.sold == 'Booked':
                         seat.user_id = 0
-                        seat.sold = 'Sold'
+                        seat.sold = 'Sold_15_%'
                         seat.selected = False
                         seat.save()
                         seat.name = ''
@@ -2678,6 +2699,27 @@ class Box(LoginRequiredMixin, View):
                         seat.selected = False
                         seat.save()
 
+                if seat.price == 500:
+                    current_user.sold_500 += 1
+
+                if seat.price == 700:
+                    current_user.sold_700 += 1
+
+                elif seat.price == 800:
+                    current_user.sold_800 += 1
+
+                elif seat.price == 900:
+                    current_user.sold_900 += 1
+
+                elif seat.price == 1000:
+                    current_user.sold_1000 += 1
+
+                elif seat.price == 1200:
+                    current_user.sold_1200 += 1
+
+                elif seat.price == 1500:
+                    current_user.sold_1500 += 1
+
 
             current_user.gain = current_user.gain + current_user.batch * 0.85
             current_user.batch = 0
@@ -2690,7 +2732,7 @@ class Box(LoginRequiredMixin, View):
             for seat in all_seats:
                 if  seat.sold == 'Vacant' or seat.sold == 'Booked':
                         seat.user_id = 0
-                        seat.sold = 'Sold'
+                        seat.sold = 'Sold_20_%'
                         seat.selected = False
                         seat.save()
                         seat.name = ''
@@ -2703,6 +2745,26 @@ class Box(LoginRequiredMixin, View):
                 elif  seat.sold != 'Vacant':
                         seat.selected = False
                         seat.save()
+                if seat.price == 500:
+                    current_user.sold_500 += 1
+
+                if seat.price == 700:
+                    current_user.sold_700 += 1
+
+                elif seat.price == 800:
+                    current_user.sold_800 += 1
+
+                elif seat.price == 900:
+                    current_user.sold_900 += 1
+
+                elif seat.price == 1000:
+                    current_user.sold_1000 += 1
+
+                elif seat.price == 1200:
+                    current_user.sold_1200 += 1
+
+                elif seat.price == 1500:
+                    current_user.sold_1500 += 1
 
 
             current_user.gain = current_user.gain + current_user.batch * 0.8
@@ -2813,7 +2875,7 @@ class Box(LoginRequiredMixin, View):
                     next = request.POST.get('next', '/')
                     #all_seats = Seat.get_all_selected_seats(self, sector__city__id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'], current_user.id)
                     for seat in all_seats:
-                        if  seat.sold != 'Free' and seat.sold != 'Local_cashdesks'and seat.sold != 'Discount' and seat.sold != 'Share':
+                        if  seat.sold != 'Free' and seat.sold != 'Local_cashdesks'and seat.sold != 'Discount' and seat.sold != 'Share' and seat.sold != 'Sold_10_%' and seat.sold != 'Sold_15_%' and seat.sold != 'Sold_20_%':
                             current_user.sold_vacant = current_user.sold_vacant + 1
                             seat.user_id = 0
                             current_user.gain = current_user.gain - seat.price
@@ -2846,6 +2908,38 @@ class Box(LoginRequiredMixin, View):
                             seat.selected = False
                             seat.name = ' '
                             seat.save()
+                        elif  seat.sold != 'Free' and seat.sold != 'Local_cashdesks'  and seat.sold == 'Sold_10_%':
+                            current_user.sold_vacant = current_user.sold_vacant + 1
+                            seat.user_id = 0
+                            current_user.gain = current_user.gain - (seat.price)*0.9
+                            current_user.sold_ten = current_user.sold_ten - 1
+                            current_user.save()
+                            seat.sold = 'Vacant'
+                            seat.selected = False
+                            seat.name = ' '
+                            seat.save()
+                        elif  seat.sold != 'Free' and seat.sold != 'Local_cashdesks'  and seat.sold == 'Sold_15_%':
+                            current_user.sold_vacant = current_user.sold_vacant + 1
+                            seat.user_id = 0
+                            current_user.gain = current_user.gain - (seat.price)*0.85
+                            current_user.sold_fifteen = current_user.sold_fifteen - 1
+                            current_user.save()
+                            seat.sold = 'Vacant'
+                            seat.selected = False
+                            seat.name = ' '
+                            seat.save()
+                        elif  seat.sold != 'Free' and seat.sold != 'Local_cashdesks'  and seat.sold == 'Sold_20_%':
+                            current_user.sold_vacant = current_user.sold_vacant + 1
+                            seat.user_id = 0
+                            current_user.gain = current_user.gain - (seat.price)*0.80
+                            current_user.sold_twenty = current_user.sold_twenty - 1
+                            current_user.save()
+                            seat.sold = 'Vacant'
+                            seat.selected = False
+                            seat.name = ' '
+                            seat.save()
+
+                            
                         if seat.price == 500 :
                             current_user.sold_500 -= 1
 
