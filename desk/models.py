@@ -58,7 +58,6 @@ class User(AbstractBaseUser):
 	sold_1000 = models.IntegerField(default=0)
 	sold_1200 = models.IntegerField(default=0)
 	sold_1500 = models.IntegerField(default=0)
-
 	sold_ten = models.IntegerField(default=0)
 	sold_fifteen = models.IntegerField(default=0)
 	sold_twenty = models.IntegerField(default=0)
@@ -97,7 +96,7 @@ class User(AbstractBaseUser):
 
 class City(models.Model):
 	city_name = models.CharField(max_length=255, default=None)
-	timezone = models.IntegerField(default=None)
+	timezone = models.IntegerField(null=True, blank=True)
 
 	def __str__(self):
 		return str(self.city_name)
@@ -187,7 +186,6 @@ class Seat(models.Model):
     		lens.append(len(Seat.objects.all().filter(sector__sector_number=s, date__date=date, date__hour=hour, sector__city__id=city_id, sold='Vacant')))
 
     	return lens
-
 
 class Cache(models.Model):
 	instance = models.CharField(max_length=20)

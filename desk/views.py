@@ -1228,7 +1228,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     Cache(city_id=city_id, name='s_5_row_6_2', instance=str(request.POST.get('s_5_row_6_2'))).save()
                     Cache(city_id=city_id, name='s_5_row_6_3', instance=str(request.POST.get('s_5_row_6_3'))).save()
 
-
                 for s in range(1, 6):
                     Sector(date=creation_date, sector_number=s, city_id=city_id).save()
 
@@ -2256,7 +2255,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
             return HttpResponseRedirect(next)
-
 
 
 class Odeum(LoginRequiredMixin, View):
