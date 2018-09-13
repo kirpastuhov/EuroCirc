@@ -173,9 +173,23 @@ div[class="my_btn_share"]{
 	display: inline-block;
 }
 
+
 div[class="my_btn_book"]{
 	display: inline-block;
 }
+
+.btn-primary-action {
+color: #fff;
+background-color: #6666ff;
+border-color: #6666ff;
+}
+.btn-primary-action:hover{
+	background-color: #4d4dff; /* Цвет кнопки при наведении курсора */
+}
+.btn-primary-action:active{
+	background-color: #3333ff; /* Цвет кнопки при нажатии */
+}
+
 .btn-primary-book {
 color: #fff;
 background-color: #6666ff;
@@ -277,7 +291,7 @@ border-color: SeaGreen;
 }
 
 .btn-primary-event{
-color: #fff;
+color: white;
 background-color: LightSalmon;
 border-color: LightSalmon;
 }
@@ -357,6 +371,11 @@ background-color: #ee6206;
 border-color: #ee6206;
 }
 
+.dropup_btn:hover{
+	background-color: rgba(195, 195, 195, 0.7);
+	color: #fff;
+}
+
 h1 {
 	color: Black;
 	padding-top: 50px
@@ -368,5 +387,5 @@ p6 {display:  inline-block;
 
 	font-size: 20px;}
 input{
-	color: #111 
+	color: #111
 }
