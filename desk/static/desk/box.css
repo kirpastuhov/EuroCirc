@@ -1,4 +1,7 @@
 ﻿html,
+
+
+
 body {
 	background-color: #b4b4b4; /* Background */
 	height:100%
@@ -364,3 +367,6 @@ p6 {display:  inline-block;
 	margin-bottom: none;
 
 	font-size: 20px;}
+input{
+	color: #111 
+}
