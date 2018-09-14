@@ -4434,16 +4434,6 @@ class Box(LoginRequiredMixin, View):
                     seat.selected = False
                     seat.name = ' '
                     seat.save()
-                elif seat.sold == 'booked_admin':
-                    user  = User.objects.get(id=seat.user_id)
-                    user.booked_number = user.booked_number - 1
-                    user.save()
-                    print(user.full_name + ' Приглосов : ' + str(user.booked_number))
-                    seat.sold = 'Vacant'
-                    seat.name = ' '
-                    seat.selected = False
-                    seat.user_id = 0
-                    seat.save()
                 elif seat.sold == 'Booked':
                     seat.sold == 'Vacant'
                     seat.name = ' '
@@ -4522,32 +4512,6 @@ class Box(LoginRequiredMixin, View):
             current_user.batch = 0
             current_user.save()
             return HttpResponseRedirect(next)
-
-        if 'booked_admin' in request.POST:
-            next = request.POST.get('next','/')
-            print(current_user.full_name + 'Приглосов: ' + str(current_user.booked_number))
-            if current_user.staff == True and current_user.booked_number<400:
-                for seat in all_seats:
-                    if seat.sold == 'Vacant':
-                        print('a')
-                        seat.user_id = current_user.id
-                        seat.sold = 'booked_admin'
-                        seat.name = current_user.full_name
-                        seat.selected = False
-                        seat.save()
-                        current_user.booked_number = current_user.booked_number + 1
-                        current_user.batch = 0
-                        current_user.save() 
-                    elif seat.sold != 'Vacant':
-                        seat.selected = 'False'
-                        seat.save()
-            return HttpResponseRedirect(next)
-
-
-
-
-
-
 
         if 'three_one' in request.POST:
             next = request.POST.get('next', '/')
