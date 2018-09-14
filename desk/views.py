@@ -4004,7 +4004,101 @@ class CityStats(LoginRequiredMixin, View):
 
 
 class Box(LoginRequiredMixin, View):
+    context = {}
     def get(self, request, city_id, *arg, **kwargs):
+        absolute_gain = 0
+        current_user = User.objects.get(id=request.user.id)
+        all_seats = Seat.get_all_selected_seats(self, current_user.id, city_id=city_id, hour=self.kwargs['hour'],
+                                                date=self.kwargs['date'])
+        if len(all_seats) == 0:
+            pass
+        elif(len(all_seats) == 2 and all_seats[0].price == all_seats[1].price):
+
+                all_seats = all_seats.order_by('price')
+                min_seat = all_seats[0]
+                seat_1 = all_seats[1]
+
+                min_seat.sold = 'Share'
+                current_user.sold_share = current_user.sold_share + 1
+                if min_seat.price == 500:
+                    current_user.sold_500 += 1
+                elif min_seat.price == 700:
+                    current_user.sold_700 += 1
+
+                elif min_seat.price == 800:
+                    current_user.sold_800 += 1
+
+                elif min_seat.price == 900:
+                    current_user.sold_900 += 1
+
+                elif min_seat.price == 1000:
+                    current_user.sold_1000 += 1
+
+                elif min_seat.price == 1200:
+                    current_user.sold_1200 += 1
+
+                elif min_seat.price == 1500:
+                    current_user.batch = current_user.batch - min_seat.price
+                absolute_gain = current_user.batch - min_seat.price
+        elif (len(all_seats) == 3 and all_seats[0].price == all_seats[1].price == all_seats[2].price):
+
+            all_seats = all_seats.order_by('price')
+            min_seat = all_seats[0]
+            seat_1 = all_seats[1]
+            seat_2 = all_seats[2]
+
+            min_seat.sold = 'Share'
+            current_user.sold_share = current_user.sold_share + 1
+            if min_seat.price == 500:
+                current_user.sold_500 += 1
+            elif min_seat.price == 700:
+                current_user.sold_700 += 1
+
+            elif min_seat.price == 800:
+                current_user.sold_800 += 1
+
+            elif min_seat.price == 900:
+                current_user.sold_900 += 1
+
+            elif min_seat.price == 1000:
+                current_user.sold_1000 += 1
+
+            elif min_seat.price == 1200:
+                current_user.sold_1200 += 1
+
+            elif min_seat.price == 1500:
+                current_user.batch = current_user.batch - min_seat.price
+            absolute_gain = current_user.batch - min_seat.price
+        elif (len(all_seats) == 4 and all_seats[0].price == all_seats[1].price == all_seats[2].price == all_seats[3].price):
+
+            all_seats = all_seats.order_by('price')
+            min_seat = all_seats[0]
+            seat_1 = all_seats[1]
+            seat_2 = all_seats[2]
+            seat_3 = all_seats[3]
+
+            min_seat.sold = 'Share'
+            current_user.sold_share = current_user.sold_share + 1
+            if min_seat.price == 500:
+                current_user.sold_500 += 1
+            elif min_seat.price == 700:
+                current_user.sold_700 += 1
+
+            elif min_seat.price == 800:
+                current_user.sold_800 += 1
+
+            elif min_seat.price == 900:
+                current_user.sold_900 += 1
+
+            elif min_seat.price == 1000:
+                current_user.sold_1000 += 1
+
+            elif min_seat.price == 1200:
+                current_user.sold_1200 += 1
+
+            elif min_seat.price == 1500:
+                current_user.batch = current_user.batch - min_seat.price
+            absolute_gain = current_user.batch - min_seat.price
         city = City.objects.get(id=city_id)
         timezone = city.timezone
         current_user = User.objects.get(id=request.user.id)
@@ -4060,15 +4154,17 @@ class Box(LoginRequiredMixin, View):
                 row.sort(key=lambda x: x.seat_number, reverse=True)
 
         all_rows = sorted(all_rows, key=len)
-        context = {'all_rows': all_rows,
+        Box.context = {'all_rows': all_rows,
                    'batch': batch,
                    'sector': self.kwargs['sector_number'],
                    'city': city,
                    'date': date,
                    'hour': hour,
-                   'date_full': sector.date
-                   }
-        return render(request, template_name, context)
+                   'date_full': sector.date,
+                   'absolute_gain':absolute_gain,
+
+           }
+        return render(request, template_name, Box.context)
 
     def post(self, request, *arg, city_id, **kwargs):
         next = request.POST.get('next')
@@ -4095,7 +4191,6 @@ class Box(LoginRequiredMixin, View):
 
         if 'ten' in request.POST:
             next = request.POST.get('next', '/')
-            # all_seats = Seat.get_all_selected_seats(self, sector__city__id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'], current_user.id)
             for seat in all_seats:
                 if seat.sold == 'Vacant' or seat.sold == 'Booked':
                     seat.user_id = 0
@@ -4141,7 +4236,6 @@ class Box(LoginRequiredMixin, View):
 
         if 'fifteen' in request.POST:
             next = request.POST.get('next', '/')
-            # all_seats = Seat.get_all_selected_seats(self, sector__city__id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'], current_user.id)
             for seat in all_seats:
                 if seat.sold == 'Vacant' or seat.sold == 'Booked':
                     seat.user_id = 0
@@ -4187,7 +4281,6 @@ class Box(LoginRequiredMixin, View):
 
         if 'twenty' in request.POST:
             next = request.POST.get('next', '/')
-            # all_seats = Seat.get_all_selected_seats(self, sector__city__id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'], current_user.id)
             for seat in all_seats:
                 if seat.sold == 'Vacant' or seat.sold == 'Booked':
                     seat.user_id = 0
@@ -4686,6 +4779,9 @@ class Box(LoginRequiredMixin, View):
                     current_user.sold_1500 += 1
                 current_user.save()
                 seat_1.save()
+
+                # absolute_gain = current_user.batch - min_seat.price
+                # Box.context[absolute_gain] = absolute_gain
 
                 current_user.gain = current_user.gain + current_user.batch - min_seat.price
                 current_user.batch = 0

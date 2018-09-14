@@ -95,10 +95,34 @@
                     <div class="dropdown-divider"></div>
                     <button class="dropdown-item" name="twenty">20%</button>
                 </form>
-                <!-- <div class="dropdown-divider"></div>
-                <button class="dropdown-item">80%</button> -->
             </div>
-
+            <script>
+                $("button[name='twenty']").click(function() {
+                    let price = {{ batch }} * 0.8;
+                    alert("К оплате: " + price);
+                });
+                $("button[name='fifteen']").click(function() {
+                    let price = {{ batch }} * 0.85;
+                    alert("К оплате: " + price);
+                });
+                $("button[name='ten']").click(function() {
+                    let price = {{ batch }} * 0.9;
+                    alert("К оплате: " + price);
+                });
+                // language=JQuery-CSS
+                $("button[name='one_one']").click(function() {
+                    let price = {{ absolute_gain }};
+                    alert("К оплате: " + price);
+                });
+                $("button[name='two_one']").click(function() {
+                    let price = {{ absolute_gain }};
+                    alert("К оплате: " + price);
+                });
+                $("button[name='three_one']").click(function() {
+                    let price = {{ absolute_gain }};
+                    alert("К оплате: " + price);
+                });
+            </script>
         </div>
 
         <div class="my_btn_book">
@@ -109,7 +133,7 @@
                     Забронировать
                 </button>
                 <label>
-                    <input type="text" name='booked_name'/>
+                    <input type="text" name='booked_name' required/>
                 </label>
             </form>
         </div>
@@ -143,10 +167,10 @@
                     Изменить цену
                 </button>
                 <label>
-                    <input type="number" name='change_price' step="1"/>
+                    <input type="number" name='change_price' step="1" required/>
                 </label>
             </form>
         </div>
 
-        <h1>К оплате : {{ batch }} </h1>
+        <h1>Цена : {{ batch }} </h1>
         </div>
