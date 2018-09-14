@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'eurocircus_new.middleware.RestrictStaffToAdminMiddleware',
 ]
 
 ROOT_URLCONF = 'eurocircus_new.urls'
