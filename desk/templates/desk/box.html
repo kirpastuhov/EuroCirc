@@ -54,6 +54,12 @@
                 <button type="submit" class="btn btn-primary-sell btn-lg round" name="Sell" id="sell_button">Продать
                 </button>
             </form>
+            <script>
+                $("button[name='Sell']").click(function() {
+
+                    alert("К оплате: " + {{ batch }});
+                });
+            </script>
         </div>
 
 
