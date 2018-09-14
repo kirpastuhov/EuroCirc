@@ -1,29 +1,29 @@
- {% load staticfiles %}
+{% load staticfiles %}
 <!DOCTYPE html>
-<title>Days</title>
+<title>Города</title>
 
-<link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type = "text/css"/>
-<meta name="viewport" content = "width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="{% static "desk/index.css" %}" type = "text/css"/>
+<link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type="text/css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{% static "desk/index.css" %}" type="text/css"/>
 <html lang="en">
 <head>
 
-	<title>Pasuhox</title>
-	<meta charset="utf-8" />
-<div class="container-fluid-2 bg-2 text-center">
-  {% if all_cities %}
-      <h3>Выберете город: </h3>
-        <ul>
-          {% for city in all_cities %}
-					<li class="active">
-              <a  href ="{% url 'desk:days' city.id%}">{{city}}</a>
-					</li>
-          {% endfor %}
-          </ul>
-  {% else %}
-      <h3>Нет открытых городов</h3>
-  {% endif %}
-</div>
-		<li>
-		  <a href ="{% url 'desk:create_city'%}">Открыть новый город</a>
-		</li>
+
+    <meta charset="utf-8"/>
+    <div class="container-fluid-2 bg-2 text-center">
+        {% if all_cities %}
+            <h3>Выберете город: </h3>
+            <ul>
+                {% for city in all_cities %}
+                    <li class="active">
+                        <a href="{% url 'desk:days' city.id %}">{{ city }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h3>Нет открытых городов</h3>
+        {% endif %}
+    </div>
+    <li>
+        <a href="{% url 'desk:create_city' %}">Открыть новый город</a>
+    </li>

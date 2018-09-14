@@ -1,123 +1,156 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<title>CreateDay</title>
-
-<link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type = "text/css"/>
-<meta name="viewport" content = "width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-
-<meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
-<meta name="apple-mobile-web-app-title" content="Trape">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#3e396b" />
-<meta name="google" value="notranslate"/>
-<meta name="author" content="Boxug, @boxug"/>
-<meta name="description" content="Learn to track the world, to avoid being traced"/>
-
-<link rel="stylesheet" href="{% static "desk/create_day.css" %}" type = "text/css"/>
-<html lang="en">
+<title>Новый день</title>
 <head>
-	<title>Pasuhox</title>
-	<meta charset="utf-8" />
-</head>
-<div class="back1">
-	<a href="{% url 'desk:days' city_id%}"><button class="btn-primary-create_city"> К выбору дней </button>	</a>
-</div>
 
-<div class="container-fluid-create_day">
+    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type="text/css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
- <form action="{% url 'desk:create_day' city_id %}" method="post">
-    {% csrf_token%}
-    <label for="party">Выберите дату для открытия дня :</label>
-    <input id="date" type="datetime-local" name="date" value="2017-06-01T08:30">
-    <input type="hidden" name="next" value="{%url 'desk:days' city_id%}">
-  <div class="my_btn_discount">
-      <button type="submit" class="btn-primary-create_city" name="Open">Открыть день </button>
-      <button type="submit" class="btn-primary-create_city" name="Cache">Автоматически</button>
-			<button type="submit" class="btn-primary-create_city" name="Delete_Cache">Сбросить память</button>
-	</div>
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="apple-mobile-web-app-title" content="Trape">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#3e396b"/>
+    <meta name="google" value="notranslate"/>
+    <meta name="author" content="Boxug, @boxug"/>
+    <meta name="description" content="Learn to track the world, to avoid being traced"/>
+    <link rel="stylesheet" href="{% static "desk/create_day.css" %}" type="text/css"/>
 
+ </head>
+    <div class="back1">
+        <a href="{% url 'desk:days' city_id %}">
+            <button class="btn-primary-create_city"> К выбору дней</button>
+        </a>
+    </div>
 
+    <div class="container-fluid-create_day">
 
-  <div name="Sector_1">
-    <br><br><h4>СЕКТОР 1</h5>
-    <p>Ряд 1 </p><input name ="s_1_row_1_1" type="text" > <input name ="s_1_row_1_2" type="text"> <input type="text" name ="s_1_row_1_3"><br>
-    <p>Ряд 2 </p><input name ="s_1_row_2_1" type="text" > <input name ="s_1_row_2_2" type="text"> <input type="text" name ="s_1_row_2_3"> <br>
-    <p>Ряд 3 </p><input name ="s_1_row_3_1" type="text" > <input name ="s_1_row_3_2" type="text"> <input type="text" name ="s_1_row_3_3"><br>
-    <p>Ряд 4 </p><input name ="s_1_row_4_1" type="text" > <input name ="s_1_row_4_2" type="text"> <input type="text" name ="s_1_row_4_3"><br>
-    <p>Ряд 5 </p><input name ="s_1_row_5_1" type="text" > <input name ="s_1_row_5_2" type="text"> <input type="text" name ="s_1_row_5_3"><br>
-    <p>Ряд 6 </p><input name ="s_1_row_6_1" type="text" > <input name ="s_1_row_6_2" type="text"> <input type="text" name ="s_1_row_6_3"><br>
-    <p>Ряд 7 </p><input name ="s_1_row_7_1" type="text" > <input name ="s_1_row_7_2" type="text"> <input type="text" name ="s_1_row_7_3"><br>
-    <p>Ряд 8 </p><input name ="s_1_row_8_1" type="text" > <input name ="s_1_row_8_2" type="text"> <input type="text" name ="s_1_row_8_3"><br>
-    <p>Ряд 9 </p><input name ="s_1_row_9_1" type="text" > <input name ="s_1_row_9_2" type="text"> <input type="text" name ="s_1_row_9_3"><br>
-  </div>
-  <div name="Sector_2">
-    <br><br><h4>СЕКТОР 2</h4>
-    <p>Ряд 1 </p><input name ="s_2_row_1_1" type="text" > <input name ="s_2_row_1_2" type="text"> <input type="text" name ="s_2_row_1_3"><br>
-    <p>Ряд 2 </p><input name ="s_2_row_2_1" type="text" > <input name ="s_2_row_2_2" type="text"> <input type="text" name ="s_2_row_2_3"> <br>
-    <p>Ряд 3 </p><input name ="s_2_row_3_1" type="text" > <input name ="s_2_row_3_2" type="text"> <input type="text" name ="s_2_row_3_3"><br>
-    <p>Ряд 4 </p><input name ="s_2_row_4_1" type="text" > <input name ="s_2_row_4_2" type="text"> <input type="text" name ="s_2_row_4_3"><br>
-    <p>Ряд 5 </p><input name ="s_2_row_5_1" type="text" > <input name ="s_2_row_5_2" type="text"> <input type="text" name ="s_2_row_5_3"><br>
-    <p>Ряд 6 </p><input name ="s_2_row_6_1" type="text" > <input name ="s_2_row_6_2" type="text"> <input type="text" name ="s_2_row_6_3"><br>
-    <p>Ряд 7 </p><input name ="s_2_row_7_1" type="text" > <input name ="s_2_row_7_2" type="text"> <input type="text" name ="s_2_row_7_3"><br>
-    <p>Ряд 8 </p><input name ="s_2_row_8_1" type="text" > <input name ="s_2_row_8_2" type="text"> <input type="text" name ="s_2_row_8_3"><br>
-    <p>Ряд 9 </p><input name ="s_2_row_9_1" type="text" > <input name ="s_2_row_9_2" type="text"> <input type="text" name ="s_2_row_9_3"><br>
-  </div>
-
-  <div name="Sector_3">
-    <br><br><h4>СЕКТОР 3</h4>
-    <p>Ряд 1 </p><input name ="s_3_row_1_1" type="text" > <input name ="s_3_row_1_2" type="text"> <input type="text" name ="s_3_row_1_3"><br>
-    <p>Ряд 2 </p><input name ="s_3_row_2_1" type="text" > <input name ="s_3_row_2_2" type="text"> <input type="text" name ="s_3_row_2_3"> <br>
-    <p>Ряд 3 </p><input name ="s_3_row_3_1" type="text" > <input name ="s_3_row_3_2" type="text"> <input type="text" name ="s_3_row_3_3"><br>
-    <p>Ряд 4 </p><input name ="s_3_row_4_1" type="text" > <input name ="s_3_row_4_2" type="text"> <input type="text" name ="s_3_row_4_3"><br>
-    <p>Ряд 5 </p><input name ="s_3_row_5_1" type="text" > <input name ="s_3_row_5_2" type="text"> <input type="text" name ="s_3_row_5_3"><br>
-    <p>Ряд 6 </p><input name ="s_3_row_6_1" type="text" > <input name ="s_3_row_6_2" type="text"> <input type="text" name ="s_3_row_6_3"><br>
-    <p>Ряд 7 </p><input name ="s_3_row_7_1" type="text" > <input name ="s_3_row_7_2" type="text"> <input type="text" name ="s_3_row_7_3"><br>
-    <p>Ряд 8 </p><input name ="s_3_row_8_1" type="text" > <input name ="s_3_row_8_2" type="text"> <input type="text" name ="s_3_row_8_3"><br>
-    <p>Ряд 9 </p><input name ="s_3_row_9_1" type="text" > <input name ="s_3_row_9_2" type="text"> <input type="text" name ="s_3_row_9_3"><br>
-
-  </div>
-
-  <div name="Sector_4">
-    <br><br><h4>СЕКТОР 4</h4>
-    <p>Ряд 1 </p><input name ="s_4_row_1_1" type="text" > <input name ="s_4_row_1_2" type="text"> <input type="text" name ="s_4_row_1_3"><br>
-    <p>Ряд 2 </p><input name ="s_4_row_2_1" type="text" > <input name ="s_4_row_2_2" type="text"> <input type="text" name ="s_4_row_2_3"> <br>
-    <p>Ряд 3 </p><input name ="s_4_row_3_1" type="text" > <input name ="s_4_row_3_2" type="text"> <input type="text" name ="s_4_row_3_3"><br>
-    <p>Ряд 4 </p><input name ="s_4_row_4_1" type="text" > <input name ="s_4_row_4_2" type="text"> <input type="text" name ="s_4_row_4_3"><br>
-    <p>Ряд 5 </p><input name ="s_4_row_5_1" type="text" > <input name ="s_4_row_5_2" type="text"> <input type="text" name ="s_4_row_5_3"><br>
-    <p>Ряд 6 </p><input name ="s_4_row_6_1" type="text" > <input name ="s_4_row_6_2" type="text"> <input type="text" name ="s_4_row_6_3"><br>
-    <p>Ряд 7 </p><input name ="s_4_row_7_1" type="text" > <input name ="s_4_row_7_2" type="text"> <input type="text" name ="s_4_row_7_3"><br>
-    <p>Ряд 8 </p><input name ="s_4_row_8_1" type="text" > <input name ="s_4_row_8_2" type="text"> <input type="text" name ="s_4_row_8_3"><br>
-    <p>Ряд 9 </p><input name ="s_4_row_9_1" type="text" > <input name ="s_4_row_9_2" type="text"> <input type="text" name ="s_4_row_9_3"><br>
-  </div>
-
-  <div name ="Sector_5">
-    <br><br><h4>СЕКТОР VIP</h4>
-    <p>Ряд 1 </p><input name ="s_5_row_1_1" type="text" > <input name ="s_5_row_1_2" type="text"> <input type="text" name ="s_5_row_1_3"><br>
-    <p>Ряд 2 </p><input name ="s_5_row_2_1" type="text" > <input name ="s_5_row_2_2" type="text"> <input type="text" name ="s_5_row_2_3"> <br>
-    <p>Ряд 3 </p><input name ="s_5_row_3_1" type="text" > <input name ="s_5_row_3_2" type="text"> <input type="text" name ="s_5_row_3_3"><br>
-    <p>Ряд 4 </p><input name ="s_5_row_4_1" type="text" > <input name ="s_5_row_4_2" type="text"> <input type="text" name ="s_5_row_4_3"><br>
-    <p>Ряд 5 </p><input name ="s_5_row_5_1" type="text" > <input name ="s_5_row_5_2" type="text"> <input type="text" name ="s_5_row_5_3"><br>
-    <p>Ряд 6 </p><input name ="s_5_row_6_1" type="text" > <input name ="s_5_row_6_2" type="text"> <input type="text" name ="s_5_row_6_3"><br>
-  </div>
+        <form action="{% url 'desk:create_day' city_id %}" method="post">
+            {% csrf_token %}
+            <label for="party">Выберите дату для открытия дня :</label>
+            <input id="date" type="datetime-local" name="date" value="2017-06-01T08:30">
+            <input type="hidden" name="next" value="{% url 'desk:days' city_id %}">
+            <div class="my_btn_discount">
+                <button type="submit" class="btn-primary-create_city" name="Open">Открыть день</button>
+                <button type="submit" class="btn-primary-create_city" name="Cache">Автоматически</button>
+                <button type="submit" class="btn-primary-create_city" name="Delete_Cache">Сбросить память</button>
+            </div>
 
 
+            <div name="Sector_1">
+                <br><br>
+                <h5>СЕКТОР 1</h5>
+                    <p>Ряд 1 </p><input name="s_1_row_1_1" type="text"> <input name="s_1_row_1_2" type="text"> <input
+                            type="text" name="s_1_row_1_3"><br>
+                    <p>Ряд 2 </p><input name="s_1_row_2_1" type="text"> <input name="s_1_row_2_2" type="text"> <input
+                            type="text" name="s_1_row_2_3"> <br>
+                    <p>Ряд 3 </p><input name="s_1_row_3_1" type="text"> <input name="s_1_row_3_2" type="text"> <input
+                            type="text" name="s_1_row_3_3"><br>
+                    <p>Ряд 4 </p><input name="s_1_row_4_1" type="text"> <input name="s_1_row_4_2" type="text"> <input
+                            type="text" name="s_1_row_4_3"><br>
+                    <p>Ряд 5 </p><input name="s_1_row_5_1" type="text"> <input name="s_1_row_5_2" type="text"> <input
+                            type="text" name="s_1_row_5_3"><br>
+                    <p>Ряд 6 </p><input name="s_1_row_6_1" type="text"> <input name="s_1_row_6_2" type="text"> <input
+                            type="text" name="s_1_row_6_3"><br>
+                    <p>Ряд 7 </p><input name="s_1_row_7_1" type="text"> <input name="s_1_row_7_2" type="text"> <input
+                            type="text" name="s_1_row_7_3"><br>
+                    <p>Ряд 8 </p><input name="s_1_row_8_1" type="text"> <input name="s_1_row_8_2" type="text"> <input
+                            type="text" name="s_1_row_8_3"><br>
+                    <p>Ряд 9 </p><input name="s_1_row_9_1" type="text"> <input name="s_1_row_9_2" type="text"> <input
+                            type="text" name="s_1_row_9_3"><br>
+            </div>
+            <div name="Sector_2">
+                <br><br><h4>СЕКТОР 2</h4>
+                <p>Ряд 1 </p><input name="s_2_row_1_1" type="text"> <input name="s_2_row_1_2" type="text"> <input
+                    type="text" name="s_2_row_1_3"><br>
+                <p>Ряд 2 </p><input name="s_2_row_2_1" type="text"> <input name="s_2_row_2_2" type="text"> <input
+                    type="text" name="s_2_row_2_3"> <br>
+                <p>Ряд 3 </p><input name="s_2_row_3_1" type="text"> <input name="s_2_row_3_2" type="text"> <input
+                    type="text" name="s_2_row_3_3"><br>
+                <p>Ряд 4 </p><input name="s_2_row_4_1" type="text"> <input name="s_2_row_4_2" type="text"> <input
+                    type="text" name="s_2_row_4_3"><br>
+                <p>Ряд 5 </p><input name="s_2_row_5_1" type="text"> <input name="s_2_row_5_2" type="text"> <input
+                    type="text" name="s_2_row_5_3"><br>
+                <p>Ряд 6 </p><input name="s_2_row_6_1" type="text"> <input name="s_2_row_6_2" type="text"> <input
+                    type="text" name="s_2_row_6_3"><br>
+                <p>Ряд 7 </p><input name="s_2_row_7_1" type="text"> <input name="s_2_row_7_2" type="text"> <input
+                    type="text" name="s_2_row_7_3"><br>
+                <p>Ряд 8 </p><input name="s_2_row_8_1" type="text"> <input name="s_2_row_8_2" type="text"> <input
+                    type="text" name="s_2_row_8_3"><br>
+                <p>Ряд 9 </p><input name="s_2_row_9_1" type="text"> <input name="s_2_row_9_2" type="text"> <input
+                    type="text" name="s_2_row_9_3"><br>
+            </div>
+
+            <div name="Sector_3">
+                <br><br><h4>СЕКТОР 3</h4>
+                <p>Ряд 1 </p><input name="s_3_row_1_1" type="text"> <input name="s_3_row_1_2" type="text"> <input
+                    type="text" name="s_3_row_1_3"><br>
+                <p>Ряд 2 </p><input name="s_3_row_2_1" type="text"> <input name="s_3_row_2_2" type="text"> <input
+                    type="text" name="s_3_row_2_3"> <br>
+                <p>Ряд 3 </p><input name="s_3_row_3_1" type="text"> <input name="s_3_row_3_2" type="text"> <input
+                    type="text" name="s_3_row_3_3"><br>
+                <p>Ряд 4 </p><input name="s_3_row_4_1" type="text"> <input name="s_3_row_4_2" type="text"> <input
+                    type="text" name="s_3_row_4_3"><br>
+                <p>Ряд 5 </p><input name="s_3_row_5_1" type="text"> <input name="s_3_row_5_2" type="text"> <input
+                    type="text" name="s_3_row_5_3"><br>
+                <p>Ряд 6 </p><input name="s_3_row_6_1" type="text"> <input name="s_3_row_6_2" type="text"> <input
+                    type="text" name="s_3_row_6_3"><br>
+                <p>Ряд 7 </p><input name="s_3_row_7_1" type="text"> <input name="s_3_row_7_2" type="text"> <input
+                    type="text" name="s_3_row_7_3"><br>
+                <p>Ряд 8 </p><input name="s_3_row_8_1" type="text"> <input name="s_3_row_8_2" type="text"> <input
+                    type="text" name="s_3_row_8_3"><br>
+                <p>Ряд 9 </p><input name="s_3_row_9_1" type="text"> <input name="s_3_row_9_2" type="text"> <input
+                    type="text" name="s_3_row_9_3"><br>
+
+            </div>
+
+            <div name="Sector_4">
+                <br><br><h4>СЕКТОР 4</h4>
+                <p>Ряд 1 </p><input name="s_4_row_1_1" type="text"> <input name="s_4_row_1_2" type="text"> <input
+                    type="text" name="s_4_row_1_3"><br>
+                <p>Ряд 2 </p><input name="s_4_row_2_1" type="text"> <input name="s_4_row_2_2" type="text"> <input
+                    type="text" name="s_4_row_2_3"> <br>
+                <p>Ряд 3 </p><input name="s_4_row_3_1" type="text"> <input name="s_4_row_3_2" type="text"> <input
+                    type="text" name="s_4_row_3_3"><br>
+                <p>Ряд 4 </p><input name="s_4_row_4_1" type="text"> <input name="s_4_row_4_2" type="text"> <input
+                    type="text" name="s_4_row_4_3"><br>
+                <p>Ряд 5 </p><input name="s_4_row_5_1" type="text"> <input name="s_4_row_5_2" type="text"> <input
+                    type="text" name="s_4_row_5_3"><br>
+                <p>Ряд 6 </p><input name="s_4_row_6_1" type="text"> <input name="s_4_row_6_2" type="text"> <input
+                    type="text" name="s_4_row_6_3"><br>
+                <p>Ряд 7 </p><input name="s_4_row_7_1" type="text"> <input name="s_4_row_7_2" type="text"> <input
+                    type="text" name="s_4_row_7_3"><br>
+                <p>Ряд 8 </p><input name="s_4_row_8_1" type="text"> <input name="s_4_row_8_2" type="text"> <input
+                    type="text" name="s_4_row_8_3"><br>
+                <p>Ряд 9 </p><input name="s_4_row_9_1" type="text"> <input name="s_4_row_9_2" type="text"> <input
+                    type="text" name="s_4_row_9_3"><br>
+            </div>
+
+            <div name="Sector_5">
+                <br><br><h4>СЕКТОР VIP</h4>
+                <p>Ряд 1 </p><input name="s_5_row_1_1" type="text"> <input name="s_5_row_1_2" type="text"> <input
+                    type="text" name="s_5_row_1_3"><br>
+                <p>Ряд 2 </p><input name="s_5_row_2_1" type="text"> <input name="s_5_row_2_2" type="text"> <input
+                    type="text" name="s_5_row_2_3"> <br>
+                <p>Ряд 3 </p><input name="s_5_row_3_1" type="text"> <input name="s_5_row_3_2" type="text"> <input
+                    type="text" name="s_5_row_3_3"><br>
+                <p>Ряд 4 </p><input name="s_5_row_4_1" type="text"> <input name="s_5_row_4_2" type="text"> <input
+                    type="text" name="s_5_row_4_3"><br>
+                <p>Ряд 5 </p><input name="s_5_row_5_1" type="text"> <input name="s_5_row_5_2" type="text"> <input
+                    type="text" name="s_5_row_5_3"><br>
+                <p>Ряд 6 </p><input name="s_5_row_6_1" type="text"> <input name="s_5_row_6_2" type="text"> <input
+                    type="text" name="s_5_row_6_3"><br>
+            </div>
 
 
-
-  </form>
-</div>
-
+        </form>
+    </div>
 
 
-
-
-
-
-
-
-<div class="back1">
-	<a href="{% url 'desk:days' city_id%}"><button class="btn btn-primary-back1 btn-lg sharp"> К выбору дней </button>	</a>
-</div>
+    <div class="back1">
+        <a href="{% url 'desk:days' city_id %}">
+            <button class="btn btn-primary-back1 btn-lg sharp"> К выбору дней</button>
+        </a>
+    </div>

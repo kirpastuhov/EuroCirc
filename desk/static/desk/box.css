@@ -1,391 +1,427 @@
 ﻿html,
-
-
-
 body {
-	background-color: #b4b4b4; /* Background */
-	height:100%
+    background-color: #b4b4b4; /* Background */
+    height: 100%
 }
 
 body {
-  text-align: center	;
-	line-height: 1.8;
-	color: #eeeeee;
+    text-align: center;
+    line-height: 1.8;
+    color: #eeeeee;
 }
 
-.margin {margin-bottom: 15px;}
+.margin {
+    margin-bottom: 15px;
+}
+
 .bg-1 {
-		background-color: #ff0000; /* Red */
-		color: #ff0000;
+    background-color: #ff0000; /* Red */
+    color: #ff0000;
 }
+
 .bg-2 {
-		background-color: #eeeeee; /* Black Gray */
-		color: #222222; /* font color */
+    background-color: #eeeeee; /* Black Gray */
+    color: #222222; /* font color */
 }
+
 .bg-3 {
-		background-color: #2f2f2f; /* Black Gray */
-		color: #cecece;
+    background-color: #2f2f2f; /* Black Gray */
+    color: #cecece;
 }
+
 .bg-4 {
-		background-color: #2f2f2f; /* Black Gray */
-		color: #f3bebe;
+    background-color: #2f2f2f; /* Black Gray */
+    color: #f3bebe;
 }
 
 .h3 {
-text-align:center;
-margin-top: 40px;
+    text-align: center;
+    margin-top: 40px;
 }
 
-
 button[title="1500, "] {
-background-color: #ba1f61;
+    background-color: #ba1f61;
 }
 
 button[title="1200, "] {
-background-color: #6630ff;
+    background-color: #6630ff;
 }
 
 button[title="1000, "] {
-background-color: #aee062;
+    background-color: #aee062;
 }
+
 button[title="900, "] {
-background-color: #00CED1;
-}
-button[title="800, "]{
-background-color: #edd52c;
+    background-color: #00CED1;
 }
 
-button[title="700, "]{
-background-color: #ff00ff;
-}
-button[title="500, "]{
-background-color: #1c8aff;
-}
-button[id=Sold]
-{
-background-color: grey;
-}
-button[id='Sold_10_%']
-{
-background-color: grey;
-}
-button[id='Sold_15_%']
-{
-background-color: grey;
-}
-button[id='Sold_20_%']
-{
-background-color: grey;
+button[title="800, "] {
+    background-color: #edd52c;
 }
 
-button[id=Discount]
-{
-background-color: grey;
-}
-button[id=Share]
-{
-background-color: grey;
+button[title="700, "] {
+    background-color: #ff00ff;
 }
 
-button[id=Local_cashdesks]{
-	background-color: #4d2800;
-}
-button[id=Booked]{
-	opacity: .4;
-	background-color: #fa8e47;
+button[title="500, "] {
+    background-color: #1c8aff;
 }
 
-button[id=Free]
-{
-background-color: black;
+button[id=Sold] {
+    background-color: grey;
 }
 
-button[selected=True]{
-opacity: .90;
-background-color: Crimson;
+button[id='Sold_10_%'] {
+    background-color: grey;
 }
+
+button[id='Sold_15_%'] {
+    background-color: grey;
+}
+
+button[id='Sold_20_%'] {
+    background-color: grey;
+}
+
+button[id=Discount] {
+    background-color: grey;
+}
+
+button[id=Share] {
+    background-color: grey;
+}
+
+button[id=Local_cashdesks] {
+    background-color: #4d2800;
+}
+
+button[id=Booked] {
+    opacity: .4;
+    background-color: #fa8e47;
+}
+
+button[id=Free] {
+    background-color: black;
+}
+
+button[selected=True] {
+    opacity: .90;
+    background-color: Crimson;
+}
+
 button {
-display: inline-block;
-}
-div[class="seats"] {
-position: relative;
-text-align: center;
-display: inline-block;
-top: 15%;
-}
-div[class="myrow1"] {
-position: relative;
-top: 15%;
+    display: inline-block;
 }
 
+div[class="seats"] {
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    top: 15%;
+}
+
+div[class="myrow1"] {
+    position: relative;
+    top: 15%;
+}
 
 div[class="myrow2"] {
-position: relative;
-top: 15.5%;
+    position: relative;
+    top: 15.5%;
 }
+
 div[class="myrow3"] {
-position: relative;
-top: 16%;
+    position: relative;
+    top: 16%;
 }
 
 div[class="myrow4"] {
-position: relative;
-top: 16.5%;
+    position: relative;
+    top: 16.5%;
 }
-
 
 div[class="myrow5"] {
-position: relative;
-top: 17%;
+    position: relative;
+    top: 17%;
 }
+
 div[class="myrow6"] {
-position: relative;
-top: 17.5%;
+    position: relative;
+    top: 17.5%;
 }
 
 div[class="myrow7"] {
-position: relative;
-top: 18%;
+    position: relative;
+    top: 18%;
 }
+
 div[class="myrow8"] {
-position: relative;
-top: 18.5%;
+    position: relative;
+    top: 18.5%;
 }
+
 div[class="myrow9"] {
-position: relative;
-top: 19%;
+    position: relative;
+    top: 19%;
 }
 
-div[class="all_buttons"]{
-position: relative;
-top: 22.5%;
-}
-div[class="my_btn_sell"]{
-display: inline-block;
-}
-div[class="my_btn_discount"]{
-display: inline-block;
-}
-div[class="my_btn_makefree"]{
-display: inline-block;
-}
-div[class="my_btn_share"]{
-	display: inline-block;
+div[class="all_buttons"] {
+    position: relative;
+    top: 22.5%;
 }
 
+div[class="my_btn_sell"] {
+    display: inline-block;
+}
 
-div[class="my_btn_book"]{
-	display: inline-block;
+div[class="my_btn_discount"] {
+    display: inline-block;
+}
+
+div[class="my_btn_makefree"] {
+    display: inline-block;
+}
+
+div[class="my_btn_share"] {
+    display: inline-block;
+}
+
+div[class="my_btn_book"] {
+    display: inline-block;
 }
 
 .btn-primary-action {
-color: #fff;
-background-color: #6666ff;
-border-color: #6666ff;
+    color: #fff;
+    background-color: #6666ff;
+    border-color: #6666ff;
 }
-.btn-primary-action:hover{
-	background-color: #4d4dff; /* Цвет кнопки при наведении курсора */
+
+.btn-primary-action:hover {
+    background-color: #4d4dff; /* Цвет кнопки при наведении курсора */
 }
-.btn-primary-action:active{
-	background-color: #3333ff; /* Цвет кнопки при нажатии */
+
+.btn-primary-action:active {
+    background-color: #3333ff; /* Цвет кнопки при нажатии */
 }
 
 .btn-primary-book {
-color: #fff;
-background-color: #6666ff;
-border-color: #6666ff;
-}
-.btn-primary-book:hover{
-	background-color: #4d4dff; /* Цвет кнопки при наведении курсора */
-}
-.btn-primary-book:active{
-	background-color: #3333ff; /* Цвет кнопки при нажатии */
+    color: #fff;
+    background-color: #6666ff;
+    border-color: #6666ff;
 }
 
-div [class="free"]{
-	display: inline-block;
-	position: absolute;
-	padding-top: 30px;
-	left: 5%;
-	top: 100%;
+.btn-primary-book:hover {
+    background-color: #4d4dff; /* Цвет кнопки при наведении курсора */
 }
 
-div [class="free2"]{
-	display: inline-block;
-	position: absolute;
-	padding-top: 30px;
-	left: 20%;
-	top: 100%;
-}
-div [class="free3"]{
-	display: inline-block;
-	padding-top: 30px;
-	position: absolute;
-	left: 35%;
-	top: 100%;
+.btn-primary-book:active {
+    background-color: #3333ff; /* Цвет кнопки при нажатии */
 }
 
-div[class="back"]{
-	position: absolute;
-	top: 5%;
-	left:4%;
+div [class="free"] {
+    display: inline-block;
+    position: absolute;
+    padding-top: 30px;
+    left: 5%;
+    top: 100%;
 }
 
+div [class="free2"] {
+    display: inline-block;
+    position: absolute;
+    padding-top: 30px;
+    left: 20%;
+    top: 100%;
+}
 
+div [class="free3"] {
+    display: inline-block;
+    padding-top: 30px;
+    position: absolute;
+    left: 35%;
+    top: 100%;
+}
+
+div[class="back"] {
+    position: absolute;
+    top: 5%;
+    left: 4%;
+}
 
 .nubex {
-color: #fff;
-padding-top: 100px;
-padding-bottom: 100px;
-border: 0;
-border-radius: 0;
-margin-bottom: 0;
-font-size: 12px;
-letter-spacing: 5px;
-user-select: none; /* Убираем текстовое выделение */
-text-decoration: none;	/* Убираем подчеркивание */
-outline: none; /* Убираем контур вокруг ссылки */
-background-color: #fa8e47; /* Цвет фона */
-padding: 1em 2em; /* Отступ от текста до рамки */
+    color: #fff;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 5px;
+    user-select: none; /* Убираем текстовое выделение */
+    text-decoration: none; /* Убираем подчеркивание */
+    outline: none; /* Убираем контур вокруг ссылки */
+    background-color: #fa8e47; /* Цвет фона */
+    /* Отступ от текста до рамки */
+    padding: 1em 2em;
 }
+
 .nubex:active {
-background-color: #ee6206; /* Цвет кнопки при нажатии */
+    background-color: #ee6206; /* Цвет кнопки при нажатии */
 }
+
 .nubex:hover {
-background-color: #f97f2e; /* Цвет кнопки при наведении курсора */
+    background-color: #f97f2e; /* Цвет кнопки при наведении курсора */
 }
+
 .btn-primary-free {
-color: #fff;
-background-color: #CD853F;
-border-color: #CD853F;
+    color: #fff;
+    background-color: #CD853F;
+    border-color: #CD853F;
 }
-.btn-primary-free:hover{
-	background-color: #f97f2e; /* Цвет кнопки при наведении курсора */
+
+.btn-primary-free:hover {
+    background-color: #f97f2e; /* Цвет кнопки при наведении курсора */
 }
-.btn-primary-free:active{
-	background-color: #ee6206; /* Цвет кнопки при нажатии */
+
+.btn-primary-free:active {
+    background-color: #ee6206; /* Цвет кнопки при нажатии */
 }
 
 .btn-primary-back {
-color: #fff;
-background-color: RosyBrown;
-border-color: RosyBrown;
+    color: #fff;
+    background-color: RosyBrown;
+    border-color: RosyBrown;
 }
-.btn-primary-back:hover{
-	background-color: #f97f2e; /* Цвет кнопки при наведении курсора */
+
+.btn-primary-back:hover {
+    background-color: #f97f2e; /* Цвет кнопки при наведении курсора */
 }
-.btn-primary-back:active{
-	background-color: #ee6206; /* Цвет кнопки при нажатии */
+
+.btn-primary-back:active {
+    background-color: #ee6206; /* Цвет кнопки при нажатии */
 }
 
 .btn-primary-sell {
-color: #fff;
-background-color: SeaGreen;
-border-color: SeaGreen;
-}
-.btn-primary-sell:hover{
-	background-color: ForestGreen; /* Цвет кнопки при наведении курсора */
-}
-.btn-primary-sell:active{
-	background-color: ForestGreen; /* Цвет кнопки при нажатии */
+    color: #fff;
+    background-color: SeaGreen;
+    border-color: SeaGreen;
 }
 
-.btn-primary-event{
-color: white;
-background-color: LightSalmon;
-border-color: LightSalmon;
+.btn-primary-sell:hover {
+    background-color: ForestGreen; /* Цвет кнопки при наведении курсора */
 }
-.btn-primary-event:hover{
-	background-color: Coral; /* Цвет кнопки при наведении курсора */
+
+.btn-primary-sell:active {
+    background-color: ForestGreen; /* Цвет кнопки при нажатии */
 }
-.btn-primary-event:active{
-	background-color: Coral; /* Цвет кнопки при нажатии */
+
+.btn-primary-event {
+    color: white;
+    background-color: LightSalmon;
+    border-color: LightSalmon;
+}
+
+.btn-primary-event:hover {
+    background-color: Coral; /* Цвет кнопки при наведении курсора */
+}
+
+.btn-primary-event:active {
+    background-color: Coral; /* Цвет кнопки при нажатии */
 }
 
 .btn-primary-mkfree {
-color: #fff;
-background-color: Plum;
-border-color: Plum;
+    color: #fff;
+    background-color: Plum;
+    border-color: Plum;
 }
-.btn-primary-mkfree:hover{
-	background-color: Orchid; /* Цвет кнопки при наведении курсора */
+
+.btn-primary-mkfree:hover {
+    background-color: Orchid; /* Цвет кнопки при наведении курсора */
 }
-.btn-primary-mkfree:active{
-	background-color: Orchid; /* Цвет кнопки при нажатии */
+
+.btn-primary-mkfree:active {
+    background-color: Orchid; /* Цвет кнопки при нажатии */
 }
 
 .btn-primary-discount {
-color: #fff;
-background-color: Brown;
-border-color: Brown;
+    color: #fff;
+    background-color: Brown;
+    border-color: Brown;
 }
-.btn-primary-discount:hover{
-	background-color: Maroon; /* Цвет кнопки при наведении курсора */
+
+.btn-primary-discount:hover {
+    background-color: Maroon; /* Цвет кнопки при наведении курсора */
 }
-.btn-primary-discount:active{
-	background-color: Maroon; /* Цвет кнопки при нажатии */
+
+.btn-primary-discount:active {
+    background-color: Maroon; /* Цвет кнопки при нажатии */
 }
 
 .round {
-border-radius: 24px;
+    border-radius: 24px;
 }
+
 .sharp {
-border-radius: 0px;
+    border-radius: 0;
 }
+
 .btn-primary {
-color: #fff;
-background-color: #fa8e47;
-/* opacity: .4; */
-border-color: #357ebd;
+    color: #fff;
+    background-color: #fa8e47;
+    /* opacity: .4; */
+    border-color: #357ebd;
 }
-.btn-primary:hover{
-	background-color: #f97f2e; /* Цвет кнопки при наведении курсора */
+
+.btn-primary:hover {
+    background-color: #f97f2e; /* Цвет кнопки при наведении курсора */
 }
-.btn-primary:active{
-	background-color: #ee6206; /* Цвет кнопки при нажатии */
+
+.btn-primary:active {
+    background-color: #ee6206; /* Цвет кнопки при нажатии */
 }
 
 .btn-primary-backdays {
-  z-index: 2;
-	float: left;
-	/* width: 60px;
-	height: 30px; */
-	margin-right: 10px;
-	border-color: Black;
-	background-color: rgba(180, 180, 180, 0.7);
-	font-family: arial;
-	font-size: 14px;
-	color: #111;
-	cursor: pointer;
+    z-index: 2;
+    float: left;
+    /* width: 60px;
+    height: 30px; */
+    margin-right: 10px;
+    border-color: Black;
+    background-color: rgba(180, 180, 180, 0.7);
+    font-family: arial, serif;
+    font-size: 14px;
+    color: #111;
+    cursor: pointer;
 }
 
 .btn-primary-backdays:hover {
-	background-color: rgba(195, 195, 195, 0.7);
+    background-color: rgba(195, 195, 195, 0.7);
 }
 
 .btn-primary:focus,
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
-color: #fff;
-background-color: #ee6206;
-border-color: #ee6206;
+    color: #fff;
+    background-color: #ee6206;
+    border-color: #ee6206;
 }
 
-.dropup_btn:hover{
-	background-color: rgba(195, 195, 195, 0.7);
-	color: #fff;
+.dropup_btn:hover {
+    background-color: rgba(195, 195, 195, 0.7);
+    color: #fff;
 }
 
 h1 {
-	color: Black;
-	padding-top: 50px
+    color: Black;
+    padding-top: 50px
 }
 
-p6 {display:  inline-block;
-	padding-right: 5px;
-	margin-bottom: none;
+.p6 {
+    display: inline-block;
+    padding-right: 5px;
+    margin-bottom: 0;
 
-	font-size: 20px;}
-input{
-	color: #111
+    font-size: 20px;
+}
+
+input {
+    color: #111
 }

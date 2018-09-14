@@ -1,13 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from .forms import UserAdminCreationForm, UserAdminChangeForm
-from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .forms import UserAdminCreationForm, UserAdminChangeForm
-from .models import User, Day, Sector, Row, Seat, City, Cache
+from django.contrib.auth.models import Group
 
+from .forms import UserAdminCreationForm, UserAdminChangeForm
+from .models import Day, Sector, Row, Seat, City, Cache
 
 User = get_user_model()
+
 
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
@@ -22,7 +22,9 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password', 'full_name')}),
         ('Stats', {'fields': ('gain', 'sold_normal', 'sold_share', 'sold_vacant', 'batch')}),
-        ('Tickets', {'fields': ('sold_ten','sold_fifteen','sold_twenty','sold_500', 'sold_700', 'sold_800', 'sold_900', 'sold_1000', 'sold_1200', 'sold_1500')}),
+        ('Tickets', {'fields': (
+        'sold_ten', 'sold_fifteen', 'sold_twenty', 'sold_500', 'sold_700', 'sold_800', 'sold_900', 'sold_1000',
+        'sold_1200', 'sold_1500')}),
         ('Permissions', {'fields': ('active', 'staff', 'admin')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -31,13 +33,11 @@ class UserAdmin(BaseUserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': ('email', 'password1', 'password2', 'full_name')}
-        ),
+         ),
     )
     search_fields = ('full_name', 'email')
     ordering = ('email',)
     filter_horizontal = ()
-
-
 
 
 # Register your models here.

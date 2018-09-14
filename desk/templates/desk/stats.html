@@ -3,21 +3,19 @@
 
 
 <head>
-  <title>Stats</title>
-  <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type = "text/css"/>
-  <link rel="stylesheet" href="{% static "desk/stats.css" %}" type = "text/css"/>
-  <meta name="viewport" content = "width=device-width, initial-scale=1.0">
-  <html lang="en">
+    <title>Stats</title>
+    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "desk/stats.css" %}" type="text/css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ </head>
 
-</head>
-
-<div class="container-fluid-create_day bg-2">
-  <ul>
-    <li>Загруженность зала : {{stat}} % </li>
-    <li>Общая прибыль : {{gain_total}} рублей</li>
-    <li>Продано : {{count_sold}} билетов : {{gain_sold_pr}} % </li>
-    <li>Продано по акции : {{gaint_share}}</li>
-    <li>По пригласительным {{count_free}} билетов: {{gain_free_pr}} % </li>
-    <li>Не продано {{count_vacant}} билетов</li>
-</ul>
-</div>
+    <div class="container-fluid-create_day bg-2">
+        <ul>
+            <li>Загруженность зала : {{ stat }} %</li>
+            <li>Общая прибыль : {{ gain_total }} рублей</li>
+            <li>Продано : {{ count_sold }} билетов : {{ gain_sold_pr }} %</li>
+            <li>Продано по акции : {{ gaint_share }}</li>
+            <li>По пригласительным {{ count_free }} билетов: {{ gain_free_pr }} %</li>
+            <li>Не продано {{ count_vacant }} билетов</li>
+        </ul>
+    </div>
