@@ -151,16 +151,7 @@
                 <input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
                 <button type="submit" class="btn btn-primary-free btn-lg sharp" name="Sell_Free"  id="sell_button">
                     Бесплатно
-                </button>                    let price = {{ absolute_gain }};
-                alert("К оплате: " + price);
-            });
-            $("button[name='three_one']").click(function() {
-                let price = {{ absolute_gain }};
-                alert("К оплате: " + price);
-            });
-        </script>
-    </div>
-
+                </button>
             </form>
         </div>
 
