@@ -20,7 +20,7 @@ class Index(LoginRequiredMixin, View):
 
 class CreateCity(UserPassesTestMixin, LoginRequiredMixin, View):
     def test_func(self):
-        return self.request.user.staff
+        return self.request.user.admin
 
     template_name = 'desk/create_city.html'
 
@@ -61,7 +61,7 @@ class Days(LoginRequiredMixin, View):
 class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
     def test_func(self):
-        return self.request.user.staff
+        return self.request.user.admin
 
     template_name = 'desk/create_day.html'
 
@@ -3788,7 +3788,7 @@ class Odeum(LoginRequiredMixin, View):
         next = request.POST.get('next')
         if 'Delete' in request.POST:
             print('YO')
-            if User.objects.get(id=request.user.id).staff == True or User.objects.get(id=request.user.id).admin == True:
+            if User.objects.get(id=request.user.id).admin == True:
                 Day.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
                                          city__id=city_id).delete()
                 Sector.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
@@ -4126,7 +4126,7 @@ class Box(LoginRequiredMixin, View):
         rows = sector.get_all_rows()
         all_rows = []
 
-        if current_user.staff == True:
+        if current_user.admin == True:
             template_name = 'desk/box_admin.html'
         else:
             template_name = 'desk/box.html'
@@ -4173,9 +4173,9 @@ class Box(LoginRequiredMixin, View):
                                                 date=self.kwargs['date'])
 
         if 'Change_Price' in request.POST:
-            if current_user.staff == True:
+            if current_user.admin == True:
                 for seat in all_seats:
-                    if seat.sold == 'Vacant':
+                    if seat.sold == 'Vacant' or seat.sold =='booked_admin':
                         seat.user_id = 0
                         current_user.batch = 0
                         current_user.save()
@@ -4376,11 +4376,29 @@ class Box(LoginRequiredMixin, View):
             current_user.save()
             return HttpResponseRedirect(next)
 
+
+
+        if 'booked_admin' in request.POST:
+            next = request.POST.get('next','/')
+            if current_user.staff == True:
+                for seat in all_seats:
+                    if seat.sold == 'Vacant':
+                        seat.user_id = 0
+                        seat.sold = 'booked_admin'
+                        seat.name = current_user.full_name
+                        seat.selected = False
+                        seat.save()
+                        current_user.booked_number = current_user.booked_number + 1
+                        current_user.batch = 0
+                        current_user.save() 
+                    elif seat.sold != 'Vacant':
+                        seat.selected = 'False'
+                        seat.save()
+            return HttpResponseRedirect(next)
         if 'Sell' in request.POST:
             next = request.POST.get('next', '/')
-            # all_seats = Seat.get_all_selected_seats(self, sector__city__id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'], current_user.id)
             for seat in all_seats:
-                if seat.sold == 'Vacant' or seat.sold == 'Booked':
+                if seat.sold == 'Vacant' or seat.sold == 'Booked' or seat.sold == 'booked_admin':
                     seat.user_id = 0
                     seat.sold = 'Sold'
                     seat.selected = False
@@ -4792,7 +4810,7 @@ class Box(LoginRequiredMixin, View):
 
         if 'Sell_Free' in request.POST:
             next = request.POST.get('next', '/')
-            if current_user.staff == True:
+            if current_user.admin == True:
                 # all_seats = Seat.get_all_selected_seats(self, self.kwargs['sector_number'], current_user.id)
                 for seat in all_seats:
                     if seat.sold == 'Vacant':
@@ -4812,7 +4830,7 @@ class Box(LoginRequiredMixin, View):
                 return HttpResponseRedirect(next)
         if 'Local_cashdesks' in request.POST:
             next = request.POST.get('next', '/')
-            if current_user.staff == True:
+            if current_user.admin == True:
                 # all_seats = Seat.get_all_selected_seats(self, self.kwargs['sector_number'], current_user.id)
                 for seat in all_seats:
                     if seat.sold == 'Vacant':

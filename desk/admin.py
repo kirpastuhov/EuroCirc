@@ -24,7 +24,7 @@ class UserAdmin(BaseUserAdmin):
         ('Stats', {'fields': ('gain', 'sold_normal', 'sold_share', 'sold_vacant', 'batch')}),
         ('Tickets', {'fields': (
         'sold_ten', 'sold_fifteen', 'sold_twenty', 'sold_500', 'sold_700', 'sold_800', 'sold_900', 'sold_1000',
-        'sold_1200', 'sold_1500')}),
+        'sold_1200', 'sold_1500', 'booked_number')}),
         ('Permissions', {'fields': ('active', 'staff', 'admin')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin

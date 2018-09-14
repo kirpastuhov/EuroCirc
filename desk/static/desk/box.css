@@ -95,6 +95,11 @@ button[id=Local_cashdesks] {
     background-color: #4d2800;
 }
 
+button[id=booked_admin] {
+    opacity: .4;
+    background-color: #fa8e47;
+}
+
 button[id=Booked] {
     opacity: .4;
     background-color: #fa8e47;

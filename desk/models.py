@@ -61,6 +61,7 @@ class User(AbstractBaseUser):
 	sold_ten = models.IntegerField(default=0)
 	sold_fifteen = models.IntegerField(default=0)
 	sold_twenty = models.IntegerField(default=0)
+	booked_number = models.IntegerField(default=0)
 
 
 
