@@ -147,5 +147,15 @@
             </form>
         </div>
 
+        
+        <div class="free2">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
+                <button type="submit" class="btn btn-primary-free btn-lg sharp" name="Booked_admin"
+                        id="sell_button">Пригласительный
+                </button>
+            </form>
+        </div>
         <h1>Цена: {{ batch }} </h1>
     </div>

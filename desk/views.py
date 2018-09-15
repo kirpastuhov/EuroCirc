@@ -4171,11 +4171,27 @@ class Box(LoginRequiredMixin, View):
         current_user = User.objects.get(id=request.user.id)
         all_seats = Seat.get_all_selected_seats(self, current_user.id, city_id=city_id, hour=self.kwargs['hour'],
                                                 date=self.kwargs['date'])
+        if 'Booked_admin' in request.POST:
+            if current_user.is_staff == True and current_user.booked_number < 400:
+                for seat in all_seats:
+                    if seat.sold == 'Vacant':
+                        seat.user_id = current_user.id
+                        seat.sold = 'Booked_admin'
+                        seat.selected = False
+                        seat.name = current_user.full_name
+                        seat.save()
+                        current_user.batch = 0
+                        current_user.booked_number = current_user.booked_number + 1
+                        current_user.save()
+            else:
+                pass
+            return HttpResponseRedirect(next)
+
 
         if 'Change_Price' in request.POST:
             if current_user.admin == True:
                 for seat in all_seats:
-                    if seat.sold == 'Vacant' or seat.sold =='booked_admin':
+                    if seat.sold == 'Vacant' or seat.sold =='Booked_admin':
                         seat.user_id = 0
                         current_user.batch = 0
                         current_user.save()
@@ -4381,7 +4397,7 @@ class Box(LoginRequiredMixin, View):
         if 'Sell' in request.POST:
             next = request.POST.get('next', '/')
             for seat in all_seats:
-                if seat.sold == 'Vacant' or seat.sold == 'Booked' or seat.sold == 'booked_admin':
+                if seat.sold == 'Vacant' or seat.sold == 'Booked' or seat.sold == 'Booked_admin':
                     seat.user_id = 0
                     seat.sold = 'Sold'
                     seat.selected = False
@@ -4424,7 +4440,8 @@ class Box(LoginRequiredMixin, View):
             next = request.POST.get('next', '/')
             # all_seats = Seat.get_all_selected_seats(self, sector__city__id=city_id, hour=self.kwargs['hour'], date=self.kwargs['date'], current_user.id)
             for seat in all_seats:
-                if seat.sold != 'Free' and seat.sold != 'Local_cashdesks' and seat.sold != 'Discount' and seat.sold != 'Share' and seat.sold != 'Sold_10_%' and seat.sold != 'Sold_15_%' and seat.sold != 'Sold_20_%' and seat.sold != 'booked_admin':
+                user = User.objects.get(id=seat.user_id)
+                if seat.sold != 'Free' and seat.sold != 'Local_cashdesks' and seat.sold != 'Discount' and seat.sold != 'Share' and seat.sold != 'Sold_10_%' and seat.sold != 'Sold_15_%' and seat.sold != 'Sold_20_%' and seat.sold != 'Booked_admin':
                     current_user.sold_vacant = current_user.sold_vacant + 1
                     seat.user_id = 0
                     current_user.gain = current_user.gain - seat.price
@@ -4434,6 +4451,19 @@ class Box(LoginRequiredMixin, View):
                     seat.selected = False
                     seat.name = ' '
                     seat.save()
+                
+                elif seat.sold == 'Booked_admin':
+                    user = User.objects.get(id=seat.user_id)
+                    user.booked_number -= 1
+                    user.save()
+                    print(user.booked_number)
+                    seat.sold = 'Vacant'
+                    seat.name = ' '
+                    seat.user_id = 0
+                    seat.selected = False
+                    seat.save()
+                    user.save()
+
                 elif seat.sold == 'Booked':
                     seat.sold == 'Vacant'
                     seat.name = ' '
@@ -4508,9 +4538,15 @@ class Box(LoginRequiredMixin, View):
 
                 elif seat.price == 1500:
                     current_user.sold_1500 -= 1
+            
+
 
             current_user.batch = 0
             current_user.save()
+            user.save()
+
+
+            
             return HttpResponseRedirect(next)
 
         if 'three_one' in request.POST:
