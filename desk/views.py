@@ -4118,7 +4118,7 @@ class Box(LoginRequiredMixin, View):
         current_time = datetime.datetime.now()
         current_time = current_time.replace(tzinfo=pytz.utc)
         current_time = current_time + datetime.timedelta(hours=timezone)
-        time_diff = (sector.date - current_time).seconds
+        time_diff = (sector.date - current_time).total_seconds()
         print(time_diff)
 
         date = self.kwargs['date']
@@ -4884,3 +4884,10 @@ class BookedList(LoginRequiredMixin, View):
             pass
         context['seats'] = seats
         return render(request, self.template_name, context)
+
+'''
+class BookedAdmin(LoginRequiredMixin, View):
+    template_name = "desk/booked_admin.html"
+
+    def get(self, request, city_id, date, hout, *arg, **kwargs):
+'''
