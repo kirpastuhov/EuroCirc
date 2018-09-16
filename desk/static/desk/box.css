@@ -104,6 +104,10 @@ button[id=Booked] {
     opacity: .4;
     background-color: #fa8e47;
 }
+button[id=Booked_admin] {
+    opacity: .4;
+    background-color: #fa8e47;
+}
 
 button[id=Free] {
     background-color: black;
