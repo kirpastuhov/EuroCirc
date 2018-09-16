@@ -2141,7 +2141,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
             return HttpResponseRedirect(next)
 
         if 'Open' in request.POST:
-            print('OPen')
             creation_date = request.POST['date']  # get date that user posted in the form
             try:
                 Day.objects.get(date=creation_date, city_id=city_id)
@@ -3787,14 +3786,16 @@ class Odeum(LoginRequiredMixin, View):
     def post(self, request, *arg, city_id, **kwargs):
         next = request.POST.get('next')
         if 'Delete' in request.POST:
-            print('YO')
             if User.objects.get(id=request.user.id).admin == True:
+                
                 Day.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
                                          city__id=city_id).delete()
                 Sector.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
                                             city__id=city_id).delete()
+                print(str(User.objects.get(id=request.user.id).full_name) + " Удалил день " + "Дата: " + str(self.kwargs['date'] + " Время: "+ str(self.kwargs['hour'])))
                 return HttpResponseRedirect(next)
             else:
+                print("Пользователь " + str(User.objects.get(id=request.user.id).full_name) + " Пытался удалить день без прав администратора")
                 return HttpResponse('<h1>У вас нет прав удалять дни.</h1>')
 
 
@@ -4118,8 +4119,7 @@ class Box(LoginRequiredMixin, View):
         current_time = datetime.datetime.now()
         current_time = current_time.replace(tzinfo=pytz.utc)
         current_time = current_time + datetime.timedelta(hours=timezone)
-        time_diff = (sector.date - current_time).seconds
-        print(time_diff)
+        time_diff = (sector.date - current_time).total_seconds()
 
         date = self.kwargs['date']
         hour = self.kwargs['hour']
@@ -4172,6 +4172,7 @@ class Box(LoginRequiredMixin, View):
         all_seats = Seat.get_all_selected_seats(self, current_user.id, city_id=city_id, hour=self.kwargs['hour'],
                                                 date=self.kwargs['date'])
         if 'Booked_admin' in request.POST:
+            count = 0
             if current_user.is_staff == True and current_user.booked_number < 400:
                 for seat in all_seats:
                     if seat.sold == 'Vacant':
@@ -4183,6 +4184,8 @@ class Box(LoginRequiredMixin, View):
                         current_user.batch = 0
                         current_user.booked_number = current_user.booked_number + 1
                         current_user.save()
+                        count = count + 1
+                print(current_user.full_name + " Выдал " + str(count) + " пригласительных")
             else:
                 pass
             return HttpResponseRedirect(next)
@@ -4456,7 +4459,6 @@ class Box(LoginRequiredMixin, View):
                     user = User.objects.get(id=seat.user_id)
                     user.booked_number -= 1
                     user.save()
-                    print(user.booked_number)
                     seat.sold = 'Vacant'
                     seat.name = ' '
                     seat.user_id = 0
@@ -4883,4 +4885,4 @@ class BookedList(LoginRequiredMixin, View):
         except IndexError:
             pass
         context['seats'] = seats
-        return render(request, self.template_name, context)
+        return render(request, self.template_name, context) 
