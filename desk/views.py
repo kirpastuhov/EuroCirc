@@ -4131,6 +4131,15 @@ class Box(LoginRequiredMixin, View):
         else:
             template_name = 'desk/box.html'
         batch = current_user.batch
+
+        print('_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n')
+        print("Пользователь: {}\n".format(current_user.full_name))
+        print("Город: {}\n".format(city.city_name))
+        print("Открытый день: {}\n".format(str(sector.date)))
+        print("До начала представления: {} секунд \n".format(time_diff))
+        print("Время на сервере: {}\n".format(str(current_time)))
+        print('_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n')
+
         if time_diff < 3600:
             needed = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
                                                sold='Booked', sector__city__id=city_id)
