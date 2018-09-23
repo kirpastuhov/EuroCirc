@@ -13,6 +13,7 @@ import os
 import sys
 from importlib import import_module
 from django.urls import reverse
+from django.db.models import Max
 
 
 class Index(LoginRequiredMixin, View):
@@ -121,13 +122,25 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     r_range = 7
                 Sector(date=creation_date, sector_number=s, city_id=city_id).save()
                 sector = Sector.objects.get(date=creation_date, sector_number=s, city_id=city_id)
+                sector_2 = [28, 26, 24, 23, 21, 19, 17, 16, 14]
+                sector_3 = [32, 30, 28, 26, 24, 22, 20, 18, 16]
                 for r in range(1, r_range):
                     print(r)
                     Row(sector=sector, row_number=r, date=creation_date).save()
                     row = Row.objects.get(sector=sector, row_number=r, date=creation_date)
+                
                     prev_num = 1
                     info = module['sector_{}'.format(str(s))]['row_{}'.format(str(r))]
+
+                    if s == 2:
+                        prev_num = sector_2.pop()
+                    elif s == 3:
+                        prev_num = sector_3.pop()
                     for data in info:
+                        
+                        if s == 1 or s == 4 or s == 5 :
+                            prev_num = 1
+
                         if data != '':
                             s_number = int(data.split(',')[0]) 
                             s_price = int(data.split(',')[1])
@@ -142,87 +155,77 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
             
 
         if 'Open' in request.POST:
-            creation_date = request.POST['date']  # get date that user posted in the form
             try:
-                Day.objects.get(date=creation_date, city_id=city_id)
-                return HttpResponse(
-                    '<h1>Такой день уже существует. Пожалуйста, выберите другую дату или удалите день с выбранной вами датой</h1>')
-            except Day.DoesNotExist:
-                Day(date=creation_date, city_id=city_id).save()  # create a Day object in the db with posted date
+                module = __import__('cache')
+                attribute  = getattr(module, 'city_{}'.format(str(city_id)))
+                return HttpResponse("<h1>Схема данного города уже есть в памяти.</h1>")
+            except AttributeError as err:
+                cache_dict = {
 
-                try:
-                    module = __import__(str(city_id))
-                    from cache import module
-
-                except ImportError:
-                    
-                    cache_dict = {
-
-                        'sector_1': 
-                        {
-                            'row_1': [request.POST.get('s_1_row_1_1'), request.POST.get('s_1_row_1_2'), request.POST.get('s_1_row_1_3')],
-                            'row_2': [request.POST.get('s_1_row_2_1'), request.POST.get('s_1_row_2_2'), request.POST.get('s_1_row_2_3')],
-                            'row_3': [request.POST.get('s_1_row_3_1'), request.POST.get('s_1_row_3_2'), request.POST.get('s_1_row_3_3')],
-                            'row_4': [request.POST.get('s_1_row_4_1'), request.POST.get('s_1_row_4_2'), request.POST.get('s_1_row_4_3')],
-                            'row_5': [request.POST.get('s_1_row_5_1'), request.POST.get('s_1_row_5_2'), request.POST.get('s_1_row_5_3')],
-                            'row_6': [request.POST.get('s_1_row_6_1'), request.POST.get('s_1_row_6_2'), request.POST.get('s_1_row_6_3')],
-                            'row_7': [request.POST.get('s_1_row_7_1'), request.POST.get('s_1_row_7_2'), request.POST.get('s_1_row_7_3')],
-                            'row_8': [request.POST.get('s_1_row_8_1'), request.POST.get('s_1_row_8_2'), request.POST.get('s_1_row_8_3')],
-                            'row_9': [request.POST.get('s_1_row_9_1'), request.POST.get('s_1_row_9_2'), request.POST.get('s_1_row_9_3')],
-                            },
-                        'sector_2': 
-                        {
-                            'row_1': [request.POST.get('s_2_row_1_1'), request.POST.get('s_2_row_1_2'), request.POST.get('s_2_row_1_3')],
-                            'row_2': [request.POST.get('s_2_row_2_1'), request.POST.get('s_2_row_2_2'), request.POST.get('s_2_row_2_3')],
-                            'row_3': [request.POST.get('s_2_row_3_1'), request.POST.get('s_2_row_3_2'), request.POST.get('s_2_row_3_3')],
-                            'row_4': [request.POST.get('s_2_row_4_1'), request.POST.get('s_2_row_4_2'), request.POST.get('s_2_row_4_3')],
-                            'row_5': [request.POST.get('s_2_row_5_1'), request.POST.get('s_2_row_5_2'), request.POST.get('s_2_row_5_3')],
-                            'row_6': [request.POST.get('s_2_row_6_1'), request.POST.get('s_2_row_6_2'), request.POST.get('s_2_row_6_3')],
-                            'row_7': [request.POST.get('s_2_row_7_1'), request.POST.get('s_2_row_7_2'), request.POST.get('s_2_row_7_3')],
-                            'row_8': [request.POST.get('s_2_row_8_1'), request.POST.get('s_2_row_8_2'), request.POST.get('s_2_row_8_3')],
-                            'row_9': [request.POST.get('s_2_row_9_1'), request.POST.get('s_2_row_9_2'), request.POST.get('s_2_row_9_3')],
-                            },
-                        'sector_3': 
-                        {
-                            'row_1': [request.POST.get('s_3_row_1_1'), request.POST.get('s_3_row_1_2'), request.POST.get('s_3_row_1_3')],
-                            'row_2': [request.POST.get('s_3_row_2_1'), request.POST.get('s_3_row_2_2'), request.POST.get('s_3_row_2_3')],
-                            'row_3': [request.POST.get('s_3_row_3_1'), request.POST.get('s_3_row_3_2'), request.POST.get('s_3_row_3_3')],
-                            'row_4': [request.POST.get('s_3_row_4_1'), request.POST.get('s_3_row_4_2'), request.POST.get('s_3_row_4_3')],
-                            'row_5': [request.POST.get('s_3_row_5_1'), request.POST.get('s_3_row_5_2'), request.POST.get('s_3_row_5_3')],
-                            'row_6': [request.POST.get('s_3_row_6_1'), request.POST.get('s_3_row_6_2'), request.POST.get('s_3_row_6_3')],
-                            'row_7': [request.POST.get('s_3_row_7_1'), request.POST.get('s_3_row_7_2'), request.POST.get('s_3_row_7_3')],
-                            'row_8': [request.POST.get('s_3_row_8_1'), request.POST.get('s_3_row_8_2'), request.POST.get('s_3_row_8_3')],
-                            'row_9': [request.POST.get('s_3_row_9_1'), request.POST.get('s_3_row_9_2'), request.POST.get('s_3_row_9_3')],
-                            },
-                        'sector_4': 
-                        {
-                            'row_1': [request.POST.get('s_4_row_1_1'), request.POST.get('s_4_row_1_2'), request.POST.get('s_4_row_1_3')],
-                            'row_2': [request.POST.get('s_4_row_2_1'), request.POST.get('s_4_row_2_2'), request.POST.get('s_4_row_2_3')],
-                            'row_3': [request.POST.get('s_4_row_3_1'), request.POST.get('s_4_row_3_2'), request.POST.get('s_4_row_3_3')],
-                            'row_4': [request.POST.get('s_4_row_4_1'), request.POST.get('s_4_row_4_2'), request.POST.get('s_4_row_4_3')],
-                            'row_5': [request.POST.get('s_4_row_5_1'), request.POST.get('s_4_row_5_2'), request.POST.get('s_4_row_5_3')],
-                            'row_6': [request.POST.get('s_4_row_6_1'), request.POST.get('s_4_row_6_2'), request.POST.get('s_4_row_6_3')],
-                            'row_7': [request.POST.get('s_4_row_7_1'), request.POST.get('s_4_row_7_2'), request.POST.get('s_4_row_7_3')],
-                            'row_8': [request.POST.get('s_4_row_8_1'), request.POST.get('s_4_row_8_2'), request.POST.get('s_4_row_8_3')],
-                            'row_9': [request.POST.get('s_4_row_9_1'), request.POST.get('s_4_row_9_2'), request.POST.get('s_4_row_9_3')],
-                            },
-                        'sector_5': 
-                        {
-                            'row_1': [request.POST.get('s_5_row_1_1'), request.POST.get('s_5_row_1_2'), request.POST.get('s_5_row_1_3')],
-                            'row_2': [request.POST.get('s_5_row_2_1'), request.POST.get('s_5_row_2_2'), request.POST.get('s_5_row_2_3')],
-                            'row_3': [request.POST.get('s_5_row_3_1'), request.POST.get('s_5_row_3_2'), request.POST.get('s_5_row_3_3')],
-                            'row_4': [request.POST.get('s_5_row_4_1'), request.POST.get('s_5_row_4_2'), request.POST.get('s_5_row_4_3')],
-                            'row_5': [request.POST.get('s_5_row_5_1'), request.POST.get('s_5_row_5_2'), request.POST.get('s_5_row_5_3')],
-                            'row_6': [request.POST.get('s_5_row_6_1'), request.POST.get('s_5_row_6_2'), request.POST.get('s_5_row_6_3')],
-                            
-                            }
+                    'sector_1': 
+                    {
+                        'row_1': [request.POST.get('s_1_row_1_1'), request.POST.get('s_1_row_1_2'), request.POST.get('s_1_row_1_3')],
+                        'row_2': [request.POST.get('s_1_row_2_1'), request.POST.get('s_1_row_2_2'), request.POST.get('s_1_row_2_3')],
+                        'row_3': [request.POST.get('s_1_row_3_1'), request.POST.get('s_1_row_3_2'), request.POST.get('s_1_row_3_3')],
+                        'row_4': [request.POST.get('s_1_row_4_1'), request.POST.get('s_1_row_4_2'), request.POST.get('s_1_row_4_3')],
+                        'row_5': [request.POST.get('s_1_row_5_1'), request.POST.get('s_1_row_5_2'), request.POST.get('s_1_row_5_3')],
+                        'row_6': [request.POST.get('s_1_row_6_1'), request.POST.get('s_1_row_6_2'), request.POST.get('s_1_row_6_3')],
+                        'row_7': [request.POST.get('s_1_row_7_1'), request.POST.get('s_1_row_7_2'), request.POST.get('s_1_row_7_3')],
+                        'row_8': [request.POST.get('s_1_row_8_1'), request.POST.get('s_1_row_8_2'), request.POST.get('s_1_row_8_3')],
+                        'row_9': [request.POST.get('s_1_row_9_1'), request.POST.get('s_1_row_9_2'), request.POST.get('s_1_row_9_3')],
+                        },
+                    'sector_2': 
+                    {
+                        'row_1': [request.POST.get('s_2_row_1_1'), request.POST.get('s_2_row_1_2'), request.POST.get('s_2_row_1_3')],
+                        'row_2': [request.POST.get('s_2_row_2_1'), request.POST.get('s_2_row_2_2'), request.POST.get('s_2_row_2_3')],
+                        'row_3': [request.POST.get('s_2_row_3_1'), request.POST.get('s_2_row_3_2'), request.POST.get('s_2_row_3_3')],
+                        'row_4': [request.POST.get('s_2_row_4_1'), request.POST.get('s_2_row_4_2'), request.POST.get('s_2_row_4_3')],
+                        'row_5': [request.POST.get('s_2_row_5_1'), request.POST.get('s_2_row_5_2'), request.POST.get('s_2_row_5_3')],
+                        'row_6': [request.POST.get('s_2_row_6_1'), request.POST.get('s_2_row_6_2'), request.POST.get('s_2_row_6_3')],
+                        'row_7': [request.POST.get('s_2_row_7_1'), request.POST.get('s_2_row_7_2'), request.POST.get('s_2_row_7_3')],
+                        'row_8': [request.POST.get('s_2_row_8_1'), request.POST.get('s_2_row_8_2'), request.POST.get('s_2_row_8_3')],
+                        'row_9': [request.POST.get('s_2_row_9_1'), request.POST.get('s_2_row_9_2'), request.POST.get('s_2_row_9_3')],
+                        },
+                    'sector_3': 
+                    {
+                        'row_1': [request.POST.get('s_3_row_1_1'), request.POST.get('s_3_row_1_2'), request.POST.get('s_3_row_1_3')],
+                        'row_2': [request.POST.get('s_3_row_2_1'), request.POST.get('s_3_row_2_2'), request.POST.get('s_3_row_2_3')],
+                        'row_3': [request.POST.get('s_3_row_3_1'), request.POST.get('s_3_row_3_2'), request.POST.get('s_3_row_3_3')],
+                        'row_4': [request.POST.get('s_3_row_4_1'), request.POST.get('s_3_row_4_2'), request.POST.get('s_3_row_4_3')],
+                        'row_5': [request.POST.get('s_3_row_5_1'), request.POST.get('s_3_row_5_2'), request.POST.get('s_3_row_5_3')],
+                        'row_6': [request.POST.get('s_3_row_6_1'), request.POST.get('s_3_row_6_2'), request.POST.get('s_3_row_6_3')],
+                        'row_7': [request.POST.get('s_3_row_7_1'), request.POST.get('s_3_row_7_2'), request.POST.get('s_3_row_7_3')],
+                        'row_8': [request.POST.get('s_3_row_8_1'), request.POST.get('s_3_row_8_2'), request.POST.get('s_3_row_8_3')],
+                        'row_9': [request.POST.get('s_3_row_9_1'), request.POST.get('s_3_row_9_2'), request.POST.get('s_3_row_9_3')],
+                        },
+                    'sector_4': 
+                    {
+                        'row_1': [request.POST.get('s_4_row_1_1'), request.POST.get('s_4_row_1_2'), request.POST.get('s_4_row_1_3')],
+                        'row_2': [request.POST.get('s_4_row_2_1'), request.POST.get('s_4_row_2_2'), request.POST.get('s_4_row_2_3')],
+                        'row_3': [request.POST.get('s_4_row_3_1'), request.POST.get('s_4_row_3_2'), request.POST.get('s_4_row_3_3')],
+                        'row_4': [request.POST.get('s_4_row_4_1'), request.POST.get('s_4_row_4_2'), request.POST.get('s_4_row_4_3')],
+                        'row_5': [request.POST.get('s_4_row_5_1'), request.POST.get('s_4_row_5_2'), request.POST.get('s_4_row_5_3')],
+                        'row_6': [request.POST.get('s_4_row_6_1'), request.POST.get('s_4_row_6_2'), request.POST.get('s_4_row_6_3')],
+                        'row_7': [request.POST.get('s_4_row_7_1'), request.POST.get('s_4_row_7_2'), request.POST.get('s_4_row_7_3')],
+                        'row_8': [request.POST.get('s_4_row_8_1'), request.POST.get('s_4_row_8_2'), request.POST.get('s_4_row_8_3')],
+                        'row_9': [request.POST.get('s_4_row_9_1'), request.POST.get('s_4_row_9_2'), request.POST.get('s_4_row_9_3')],
+                        },
+                    'sector_5': 
+                    {
+                        'row_1': [request.POST.get('s_5_row_1_1'), request.POST.get('s_5_row_1_2'), request.POST.get('s_5_row_1_3')],
+                        'row_2': [request.POST.get('s_5_row_2_1'), request.POST.get('s_5_row_2_2'), request.POST.get('s_5_row_2_3')],
+                        'row_3': [request.POST.get('s_5_row_3_1'), request.POST.get('s_5_row_3_2'), request.POST.get('s_5_row_3_3')],
+                        'row_4': [request.POST.get('s_5_row_4_1'), request.POST.get('s_5_row_4_2'), request.POST.get('s_5_row_4_3')],
+                        'row_5': [request.POST.get('s_5_row_5_1'), request.POST.get('s_5_row_5_2'), request.POST.get('s_5_row_5_3')],
+                        'row_6': [request.POST.get('s_5_row_6_1'), request.POST.get('s_5_row_6_2'), request.POST.get('s_5_row_6_3')],
+                        
                         }
-                    with open('cache.py', 'a') as file:
-                        file.write('\n{} = '.format(str(city_id)) + json.dumps(cache_dict))
-                    
-            
+                    }
+                with open('cache.py', 'a') as file:
+                    file.write('city_{}='.format(str(city_id)) + json.dumps(cache_dict) + "\n")
+                    file.close()
+                return HttpResponseRedirect(next)
 
-            return HttpResponseRedirect(next)
 
 
 class Odeum(LoginRequiredMixin, View):
