@@ -115,8 +115,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                 else:
                     try:
                         Day.objects.get(date=creation_date, city_id=city_id)
-                        return HttpResponse(
-                            '<h1>Такой день уже существует. Пожалуйста, выберите другую дату или удалите день с выбранной вами датой</h1>')
+                        return HttpResponse('<h1>Такой день уже существует. Пожалуйста, выберите другую дату или удалите день с выбранной вами датой</h1>')
                     except Day.DoesNotExist:
                         Day(date=creation_date, city_id=city_id).save()
 
@@ -149,8 +148,6 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                                 if data != '':
                                     s_number = int(data.split(',')[0]) 
                                     s_price = int(data.split(',')[1])
-
-                                    print("РЯД {}, ДО {} МЕСТА, ЦЕНА {}".format(str(r), str(s_number), str(s_price)))
                                     for num in range(prev_num, (s_number+1)):
                                         Seat(seat_number=num, price=s_price,
                                                     sector=row.sector, row=row, date=creation_date).save()
@@ -159,7 +156,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     return HttpResponseRedirect(next)
             
 
-        if 'Open' in request.POST:
+        if 'Remember' in request.POST:
 
             with open("cache.txt", 'r') as file:
                 lines = file.readlines()
@@ -644,9 +641,15 @@ class Box(LoginRequiredMixin, View):
         sector = Sector.get_sector(self, self.kwargs['date'], self.kwargs['hour'], self.kwargs['sector_number'],
                                    city_id)
         current_time = datetime.datetime.now()
+        print("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n")
+        print("[ Текущее время на сервере : {} ]".format(str(current_time)))
         current_time = current_time.replace(tzinfo=pytz.utc)
         current_time = current_time + datetime.timedelta(hours=timezone)
+        print("[ Время на сервере UTC + 3  : {} ]".format(str(current_time)))
+        print("[ Начало представления в : {} ]".format(str(sector.date)))
         time_diff = (sector.date - current_time).total_seconds()
+        print("[ До начала представления : {} секнуд ]".format(str(time_diff)))
+        print("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n")
 
         date = self.kwargs['date']
         hour = self.kwargs['hour']
@@ -659,13 +662,6 @@ class Box(LoginRequiredMixin, View):
             template_name = 'desk/box.html'
         batch = current_user.batch
 
-        print('_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n')
-        print("Пользователь: {}\n".format(current_user.full_name))
-        print("Город: {}\n".format(city.city_name))
-        print("Открытый день: {}\n".format(str(sector.date)))
-        print("До начала представления: {} секунд \n".format(time_diff))
-        print("Время на сервере: {}\n".format(str(current_time)))
-        print('_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n')
 
         if time_diff < 3600:
             needed = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
