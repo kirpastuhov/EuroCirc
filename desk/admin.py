@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
 
 from .forms import UserAdminCreationForm, UserAdminChangeForm
-from .models import Day, Sector, Row, Seat, City, Cache
+from .models import Day, Sector, Row, Seat, City
 
 User = get_user_model()
 
@@ -20,7 +20,7 @@ class UserAdmin(BaseUserAdmin):
     list_display = ('full_name', 'email', 'admin')
     list_filter = ('admin', 'staff', 'active')
     fieldsets = (
-        (None, {'fields': ('email', 'password', 'full_name')}),
+        ('User', {'fields': ('email', 'password', 'full_name')}),
         ('Stats', {'fields': ('gain', 'sold_normal', 'sold_share', 'sold_vacant', 'batch')}),
         ('Tickets', {'fields': (
         'sold_ten', 'sold_fifteen', 'sold_twenty', 'sold_500', 'sold_700', 'sold_800', 'sold_900', 'sold_1000',
@@ -36,7 +36,7 @@ class UserAdmin(BaseUserAdmin):
          ),
     )
     search_fields = ('full_name', 'email')
-    ordering = ('email',)
+    ordering = ('full_name',)
     filter_horizontal = ()
 
 
@@ -47,6 +47,4 @@ admin.site.register(Day)
 admin.site.register(Sector)
 admin.site.register(Row)
 admin.site.register(Seat)
-admin.site.register(Cache)
-# Remove Group Model from admin. We're not using it.
 admin.site.unregister(Group)

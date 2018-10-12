@@ -1,7 +1,7 @@
 ﻿from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import View
-from .models import City, Day, Sector, Row, Seat, User, Cache
+from .models import City, Day, Sector, Row, Seat, User
 from django.http import HttpResponseRedirect, HttpResponse
 import xlsxwriter
 from string import ascii_uppercase
@@ -36,11 +36,12 @@ class CreateCity(UserPassesTestMixin, LoginRequiredMixin, View):
     def post(self, request, *arg, **kwargs):
         city_name = request.POST['city_name']
         timezone = request.POST['timezone']
+        limit = request.POST['limit']
         try:
             City.objects.get(city_name=city_name)
             return HttpResponse('<h1>Такой день уже открыт.</>')
         except City.DoesNotExist:
-            City(city_name=city_name, timezone=timezone).save()
+            City(city_name=city_name, timezone=timezone, limit=limit).save()
             return HttpResponseRedirect('/')
 
 
@@ -703,9 +704,10 @@ class Box(LoginRequiredMixin, View):
         current_user = User.objects.get(id=request.user.id)
         all_seats = Seat.get_all_selected_seats(self, current_user.id, city_id=city_id, hour=self.kwargs['hour'],
                                                 date=self.kwargs['date'])
+        city = City.objects.get(id=city_id)
         if 'Booked_admin' in request.POST:
             count = 0
-            if current_user.is_staff == True and current_user.booked_number < 400:
+            if current_user.is_staff == True and current_user.booked_number < city.limit:
                 for seat in all_seats:
                     if seat.sold == 'Vacant':
                         seat.user_id = current_user.id
@@ -717,7 +719,10 @@ class Box(LoginRequiredMixin, View):
                         current_user.booked_number = current_user.booked_number + 1
                         current_user.save()
                         count = count + 1
+                print()
+                print("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n")
                 print(current_user.full_name + " Выдал " + str(count) + " пригласительных")
+                print("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n")
             else:
                 pass
             return HttpResponseRedirect(next)

@@ -98,6 +98,7 @@ class User(AbstractBaseUser):
 class City(models.Model):
 	city_name = models.CharField(max_length=255, default=None)
 	timezone = models.IntegerField(null=True, blank=True)
+	limit = models.IntegerField(default=400)
 
 	def __str__(self):
 		return str(self.city_name)
@@ -187,8 +188,3 @@ class Seat(models.Model):
     		lens.append(len(Seat.objects.all().filter(sector__sector_number=s, date__date=date, date__hour=hour, sector__city__id=city_id, sold='Vacant')))
 
     	return lens
-
-class Cache(models.Model):
-	instance = models.CharField(max_length=20)
-	name = models.CharField(max_length=30)
-	city = models.ForeignKey(City, on_delete=models.CASCADE)
