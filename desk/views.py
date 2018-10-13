@@ -52,7 +52,6 @@ class Days(LoginRequiredMixin, View):
         city_id = city_id
         city = City.objects.get(id=city_id)
         try:
-            # context = Day.get_all_days(self, city_id)['all_days'].order_by(now, date)
             context = {}
 
             all_days = Day.objects.filter(city_id=city_id).order_by('-date')
@@ -79,7 +78,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
     def post(self, request, city_id, *arg, **kwargs):
         next = request.POST.get('next')
-        
+
 
         def my_import(name):
             components = name.split('.')
@@ -110,7 +109,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     if 'city_{}'.format(str(city_id)) in line:
                         target = line.split('=')[1]
                         module = eval(target)
-                
+
                 if module == None:
                     return HttpResponse("<h1>Схемы данного города нет в памяти</h1>")
                 else:
@@ -133,7 +132,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                             print(r)
                             Row(sector=sector, row_number=r, date=creation_date).save()
                             row = Row.objects.get(sector=sector, row_number=r, date=creation_date)
-                        
+
                             prev_num = 1
                             info = module['sector_{}'.format(str(s))]['row_{}'.format(str(r))]
 
@@ -142,12 +141,12 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                             elif s == 3:
                                 prev_num = sector_3.pop()
                             for data in info:
-                                
+
                                 if s == 1 or s == 4 or s == 5 :
                                     prev_num = 1
 
                                 if data != '':
-                                    s_number = int(data.split(',')[0]) 
+                                    s_number = int(data.split(',')[0])
                                     s_price = int(data.split(',')[1])
                                     for num in range(prev_num, (s_number+1)):
                                         Seat(seat_number=num, price=s_price,
@@ -155,7 +154,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                                     prev_num = s_number + 1
 
                     return HttpResponseRedirect(next)
-            
+
 
         if 'Remember' in request.POST:
 
@@ -164,11 +163,11 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                 for line in lines:
                     if 'city_{}'.format(str(city_id)) in line:
                         return HttpResponse("<h1>Схема данного города уже существует в памяти</h1>")
-        
+
 
             cache_dict = {
 
-                'sector_1': 
+                'sector_1':
                 {
                     'row_1': [request.POST.get('s_1_row_1_1'), request.POST.get('s_1_row_1_2'), request.POST.get('s_1_row_1_3')],
                     'row_2': [request.POST.get('s_1_row_2_1'), request.POST.get('s_1_row_2_2'), request.POST.get('s_1_row_2_3')],
@@ -180,7 +179,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     'row_8': [request.POST.get('s_1_row_8_1'), request.POST.get('s_1_row_8_2'), request.POST.get('s_1_row_8_3')],
                     'row_9': [request.POST.get('s_1_row_9_1'), request.POST.get('s_1_row_9_2'), request.POST.get('s_1_row_9_3')],
                     },
-                'sector_2': 
+                'sector_2':
                 {
                     'row_1': [request.POST.get('s_2_row_1_1'), request.POST.get('s_2_row_1_2'), request.POST.get('s_2_row_1_3')],
                     'row_2': [request.POST.get('s_2_row_2_1'), request.POST.get('s_2_row_2_2'), request.POST.get('s_2_row_2_3')],
@@ -192,7 +191,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     'row_8': [request.POST.get('s_2_row_8_1'), request.POST.get('s_2_row_8_2'), request.POST.get('s_2_row_8_3')],
                     'row_9': [request.POST.get('s_2_row_9_1'), request.POST.get('s_2_row_9_2'), request.POST.get('s_2_row_9_3')],
                     },
-                'sector_3': 
+                'sector_3':
                 {
                     'row_1': [request.POST.get('s_3_row_1_1'), request.POST.get('s_3_row_1_2'), request.POST.get('s_3_row_1_3')],
                     'row_2': [request.POST.get('s_3_row_2_1'), request.POST.get('s_3_row_2_2'), request.POST.get('s_3_row_2_3')],
@@ -204,7 +203,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     'row_8': [request.POST.get('s_3_row_8_1'), request.POST.get('s_3_row_8_2'), request.POST.get('s_3_row_8_3')],
                     'row_9': [request.POST.get('s_3_row_9_1'), request.POST.get('s_3_row_9_2'), request.POST.get('s_3_row_9_3')],
                     },
-                'sector_4': 
+                'sector_4':
                 {
                     'row_1': [request.POST.get('s_4_row_1_1'), request.POST.get('s_4_row_1_2'), request.POST.get('s_4_row_1_3')],
                     'row_2': [request.POST.get('s_4_row_2_1'), request.POST.get('s_4_row_2_2'), request.POST.get('s_4_row_2_3')],
@@ -216,7 +215,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     'row_8': [request.POST.get('s_4_row_8_1'), request.POST.get('s_4_row_8_2'), request.POST.get('s_4_row_8_3')],
                     'row_9': [request.POST.get('s_4_row_9_1'), request.POST.get('s_4_row_9_2'), request.POST.get('s_4_row_9_3')],
                     },
-                'sector_5': 
+                'sector_5':
                 {
                     'row_1': [request.POST.get('s_5_row_1_1'), request.POST.get('s_5_row_1_2'), request.POST.get('s_5_row_1_3')],
                     'row_2': [request.POST.get('s_5_row_2_1'), request.POST.get('s_5_row_2_2'), request.POST.get('s_5_row_2_3')],
@@ -224,7 +223,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     'row_4': [request.POST.get('s_5_row_4_1'), request.POST.get('s_5_row_4_2'), request.POST.get('s_5_row_4_3')],
                     'row_5': [request.POST.get('s_5_row_5_1'), request.POST.get('s_5_row_5_2'), request.POST.get('s_5_row_5_3')],
                     'row_6': [request.POST.get('s_5_row_6_1'), request.POST.get('s_5_row_6_2'), request.POST.get('s_5_row_6_3')],
-                    
+
                     }
                 }
             with open('cache.txt', 'a') as file:
@@ -312,7 +311,7 @@ class Odeum(LoginRequiredMixin, View):
         next = request.POST.get('next')
         if 'Delete' in request.POST:
             if User.objects.get(id=request.user.id).admin == True:
-                
+
                 Day.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
                                          city__id=city_id).delete()
                 Sector.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
@@ -991,17 +990,20 @@ class Box(LoginRequiredMixin, View):
                     seat.selected = False
                     seat.name = ' '
                     seat.save()
-                
+
                 elif seat.sold == 'Booked_admin':
-                    user = User.objects.get(id=seat.user_id)
-                    user.booked_number -= 1
-                    user.save()
-                    seat.sold = 'Vacant'
-                    seat.name = ' '
-                    seat.user_id = 0
-                    seat.selected = False
-                    seat.save()
-                    user.save()
+                    if current_user.is_admin or current_user.full_name == seat.name:
+                        user = User.objects.get(full_name=seat.name)
+                        user.booked_number -= 1
+                        user.save()
+                        seat.sold = 'Vacant'
+                        seat.name = ' '
+                        seat.user_id = 0
+                        seat.selected = False
+                        seat.save()
+                        user.save()
+                    else:
+                        pass
 
                 elif seat.sold == 'Booked':
                     seat.sold == 'Vacant'
@@ -1077,7 +1079,7 @@ class Box(LoginRequiredMixin, View):
 
                 elif seat.price == 1500:
                     current_user.sold_1500 -= 1
-            
+
 
 
             current_user.batch = 0
@@ -1085,7 +1087,7 @@ class Box(LoginRequiredMixin, View):
             user.save()
 
 
-            
+
             return HttpResponseRedirect(next)
 
         if 'three_one' in request.POST:
@@ -1422,4 +1424,4 @@ class BookedList(LoginRequiredMixin, View):
         except IndexError:
             pass
         context['seats'] = seats
-        return render(request, self.template_name, context) 
+        return render(request, self.template_name, context)
