@@ -8,7 +8,6 @@ from .models import Day, Sector, Row, Seat, City
 
 User = get_user_model()
 
-
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserAdminChangeForm

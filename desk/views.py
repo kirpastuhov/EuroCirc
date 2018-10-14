@@ -79,24 +79,21 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
     def post(self, request, city_id, *arg, **kwargs):
         next = request.POST.get('next')
 
-
-        def my_import(name):
-            components = name.split('.')
-            mod = __import__(components[0])
-            for comp in components[1:]:
-                mod = getattr(mod, comp)
-            return mod
         if 'Delete_Cache' in request.POST:
-            next = request.POST.get('next')
-            file = open('cache.txt', 'r')
-            lines = file.readlines()
-            file.close()
-            file = open('cache.txt', 'w')
-            for line in lines:
-                if 'city_{}'.format(str(city_id)) not in line:
-                    file.write(line)
-            file.close()
-            return HttpResponseRedirect(next)
+            # Блок исключитпельно из за калининграда. Удалить после конца этого города.
+            if city_id == 2 :
+                return HttpResponse("<h1>Удалить схему данного города невозможно</h1>")
+            else:
+                next = request.POST.get('next')
+                file = open('cache.txt', 'r')
+                lines = file.readlines()
+                file.close()
+                file = open('cache.txt', 'w')
+                for line in lines:
+                    if 'city_{}'.format(str(city_id)) not in line:
+                        file.write(line)
+                file.close()
+                return HttpResponseRedirect(next)
 
         if 'Cache' in request.POST:
             creation_date = request.POST['date']  # get date that user posted in the form
@@ -119,42 +116,59 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     except Day.DoesNotExist:
                         Day(date=creation_date, city_id=city_id).save()
 
-                    for s in range(1, 6):
-                        if s != 5:
-                            r_range = 10
-                        elif s == 5:
-                            r_range = 7
-                        Sector(date=creation_date, sector_number=s, city_id=city_id).save()
-                        sector = Sector.objects.get(date=creation_date, sector_number=s, city_id=city_id)
-                        sector_2 = [28, 26, 24, 23, 21, 19, 17, 16, 14]
-                        sector_3 = [32, 30, 28, 26, 24, 22, 20, 18, 16]
-                        for r in range(1, r_range):
-                            print(r)
-                            Row(sector=sector, row_number=r, date=creation_date).save()
-                            row = Row.objects.get(sector=sector, row_number=r, date=creation_date)
+                    if city_id != 2:
+                        for s in range(1, 6):
+                            if s != 5:
+                                r_range = 10
+                            elif s == 5:
+                                r_range = 7
+                            Sector(date=creation_date, sector_number=s, city_id=city_id).save()
+                            sector = Sector.objects.get(date=creation_date, sector_number=s, city_id=city_id)
+                            sector_2 = [28, 26, 24, 23, 21, 19, 17, 16, 14]
+                            sector_3 = [32, 30, 28, 26, 24, 22, 20, 18, 16]
+                            for r in range(1, r_range):
+                                print(r)
+                                Row(sector=sector, row_number=r, date=creation_date).save()
+                                row = Row.objects.get(sector=sector, row_number=r, date=creation_date)
 
-                            prev_num = 1
-                            info = module['sector_{}'.format(str(s))]['row_{}'.format(str(r))]
+                                prev_num = 1
+                                info = module['sector_{}'.format(str(s))]['row_{}'.format(str(r))]
 
-                            if s == 2:
-                                prev_num = sector_2.pop()
-                            elif s == 3:
-                                prev_num = sector_3.pop()
-                            for data in info:
+                                if s == 2:
+                                    prev_num = sector_2.pop()
+                                elif s == 3:
+                                    prev_num = sector_3.pop()
+                                for data in info:
 
-                                if s == 1 or s == 4 or s == 5 :
-                                    prev_num = 1
+                                    if s == 1 or s == 4 or s == 5 :
+                                        prev_num = 1
 
-                                if data != '':
-                                    s_number = int(data.split(',')[0])
-                                    s_price = int(data.split(',')[1])
-                                    for num in range(prev_num, (s_number+1)):
-                                        Seat(seat_number=num, price=s_price,
-                                                    sector=row.sector, row=row, date=creation_date).save()
-                                    prev_num = s_number + 1
+                                    if data != '':
+                                        s_number = int(data.split(',')[0])
+                                        s_price = int(data.split(',')[1])
+                                        for num in range(prev_num, (s_number+1)):
+                                            Seat(seat_number=num, price=s_price,
+                                                        sector=row.sector, row=row, date=creation_date).save()
+                                        prev_num = s_number + 1
 
-                    return HttpResponseRedirect(next)
-
+                        return HttpResponseRedirect(next)
+                    elif city_id == 2:
+                        r_range = 10
+                        for s in range(1, 7):
+                            Sector(date=creation_date, sector_number=s, city_id=city_id).save()
+                            sector = Sector.objects.get(date=creation_date, sector_number=s, city_id=city_id)
+                            for r in range(1, r_range):
+                                Row(sector=sector, row_number=r, date=creation_date).save()
+                                row = Row.objects.get(sector=sector, row_number=r, date=creation_date)
+                                info = module['sector_{}'.format(str(s))]['row_{}'.format(str(r))]
+                                for data in info:
+                                    if data != '':
+                                        s_number = int(data.split(',')[0])
+                                        s_price = int(data.split(',')[1])
+                                        for num in range(1, (s_number+1)):
+                                            Seat(seat_number=num, price=s_price,
+                                                        sector=row.sector, row=row, date=creation_date).save()
+                        return HttpResponseRedirect(next)
 
         if 'Remember' in request.POST:
 
@@ -234,78 +248,153 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
 class Odeum(LoginRequiredMixin, View):
-    template_name = 'desk/odeum.html'
+
 
     def get(self, request, city_id, *arg, **kwargs):
-        seat_given = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                               sold='Local_cashdesks', sector__city__id=city_id)
-        seat_vacant = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                sold='Vacant', sector__city__id=city_id)
-        seat_sold = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                              sold='Sold', sector__city__id=city_id)
-        seat_share = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                               sold='Share', sector__city__id=city_id)
-        # seat_discount = Seat.objects.all().filter(date__date=date, date__hour=hour, sold='Discount')
-        seat_free = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                              sold='Free', sector__city__id=city_id)
-        gain_total = 0
-        gain_sold = 0
-        gain_share = 0
-        gain_discount = 0
-        for seat in seat_sold:
-            gain_sold = gain_sold + seat.price
-        # for seat in seat_discount:
-        # gain_discount = gain_discount + seat.price*0.8
-        for seat in seat_share:
-            gain_share = gain_share + 1
-        for seat in seat_given:
-            gain_sold = gain_sold + seat.price
-        gain_total = gain_sold
+        if city_id != 2:
+            template_name = 'desk/odeum.html'
+            seat_given = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                   sold='Local_cashdesks', sector__city__id=city_id)
+            seat_vacant = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                    sold='Vacant', sector__city__id=city_id)
+            seat_sold = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                  sold='Sold', sector__city__id=city_id)
+            seat_share = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                   sold='Share', sector__city__id=city_id)
+            # seat_discount = Seat.objects.all().filter(date__date=date, date__hour=hour, sold='Discount')
+            seat_free = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                  sold='Free', sector__city__id=city_id)
+            gain_total = 0
+            gain_sold = 0
+            gain_share = 0
+            gain_discount = 0
+            for seat in seat_sold:
+                gain_sold = gain_sold + seat.price
+            # for seat in seat_discount:
+            # gain_discount = gain_discount + seat.price*0.8
+            for seat in seat_share:
+                gain_share = gain_share + 1
+            for seat in seat_given:
+                gain_sold = gain_sold + seat.price
+            gain_total = gain_sold
 
-        count_share = len(seat_share)
-        count_sold = len(seat_sold)
-        # count_discount = len(seat_discount)
-        count_free = len(seat_free)
-        count_vacant = len(seat_vacant)
-        if len(seat_vacant) != 0:
-            stat = int(((828 - len(seat_vacant)) / 828) * 100)
-        elif len(seat_vacant) == 0:
-            stat = 100
+            count_share = len(seat_share)
+            count_sold = len(seat_sold)
+            # count_discount = len(seat_discount)
+            count_free = len(seat_free)
+            count_vacant = len(seat_vacant)
+            if len(seat_vacant) != 0:
+                stat = int(((828 - len(seat_vacant)) / 828) * 100)
+            elif len(seat_vacant) == 0:
+                stat = 100
 
-        if count_sold != 0:
-            gain_sold_pr = int(((count_sold) / 828) * 100)
+            if count_sold != 0:
+                gain_sold_pr = int(((count_sold) / 828) * 100)
 
-        elif count_sold == 0:
-            gain_sold_pr = 0
+            elif count_sold == 0:
+                gain_sold_pr = 0
 
-        if count_free != 0:
-            gain_free_pr = int(((count_free) / 828) * 100)
-        elif count_free == 0:
-            gain_free_pr = 0
+            if count_free != 0:
+                gain_free_pr = int(((count_free) / 828) * 100)
+            elif count_free == 0:
+                gain_free_pr = 0
 
-        lens = Seat.get_all_free_seats(self, self.kwargs['date'], self.kwargs['hour'], city_id)
-        context = Sector.get_all_sectors(self, self.kwargs['date'], self.kwargs['hour'], city_id)
-        context['len_1'] = lens[0]
-        context['len_2'] = lens[1]
-        context['len_3'] = lens[2]
-        context['len_4'] = lens[3]
-        context['len_5'] = lens[4]
-        sec = Sector.get_all_sectors(self, self.kwargs['date'], self.kwargs['hour'], city_id)
-        context['date'] = self.kwargs['date']
-        context['hour'] = self.kwargs['hour']
-        context['city_id'] = city_id
-        context['time'] = context['all_sectors'][0].date
+            lens = Seat.get_all_free_seats(self, self.kwargs['date'], self.kwargs['hour'], city_id)
+            context = Sector.get_all_sectors(self, self.kwargs['date'], self.kwargs['hour'], city_id)
+            context['len_1'] = lens[0]
+            context['len_2'] = lens[1]
+            context['len_3'] = lens[2]
+            context['len_4'] = lens[3]
+            context['len_5'] = lens[4]
+            sec = Sector.get_all_sectors(self, self.kwargs['date'], self.kwargs['hour'], city_id)
+            context['date'] = self.kwargs['date']
+            context['hour'] = self.kwargs['hour']
+            context['city_id'] = city_id
+            context['time'] = context['all_sectors'][0].date
 
-        context['city_id'] = city_id
-        context['gain_total'] = gain_total
-        context['stat'] = stat
-        context['gain_sold_pr'] = gain_sold_pr
-        context['count_sold'] = count_sold
-        context['count_free'] = count_free
-        context['count_share'] = count_share
-        context['gain_free_pr'] = gain_free_pr
-        context['count_vacant'] = count_vacant
-        return render(request, self.template_name, context)
+            context['city_id'] = city_id
+            context['gain_total'] = gain_total
+            context['stat'] = stat
+            context['gain_sold_pr'] = gain_sold_pr
+            context['count_sold'] = count_sold
+            context['count_free'] = count_free
+            context['count_share'] = count_share
+            context['gain_free_pr'] = gain_free_pr
+            context['count_vacant'] = count_vacant
+            return render(request, template_name, context)
+        elif city_id == 2:
+            template_name = 'desk/odeum_kal.html'
+            seat_given = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                   sold='Local_cashdesks', sector__city__id=city_id)
+            seat_vacant = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                    sold='Vacant', sector__city__id=city_id)
+            seat_sold = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                  sold='Sold', sector__city__id=city_id)
+            seat_share = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                   sold='Share', sector__city__id=city_id)
+            # seat_discount = Seat.objects.all().filter(date__date=date, date__hour=hour, sold='Discount')
+            seat_free = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                  sold='Free', sector__city__id=city_id)
+            gain_total = 0
+            gain_sold = 0
+            gain_share = 0
+            gain_discount = 0
+            for seat in seat_sold:
+                gain_sold = gain_sold + seat.price
+            # for seat in seat_discount:
+            # gain_discount = gain_discount + seat.price*0.8
+            for seat in seat_share:
+                gain_share = gain_share + 1
+            for seat in seat_given:
+                gain_sold = gain_sold + seat.price
+            gain_total = gain_sold
+
+            count_share = len(seat_share)
+            count_sold = len(seat_sold)
+            # count_discount = len(seat_discount)
+            count_free = len(seat_free)
+            count_vacant = len(seat_vacant)
+            if len(seat_vacant) != 0:
+                stat = int(((1059 - len(seat_vacant)) / 1059) * 100)
+            elif len(seat_vacant) == 0:
+                stat = 100
+
+            if count_sold != 0:
+                gain_sold_pr = int(((count_sold) / 1059) * 100)
+
+            elif count_sold == 0:
+                gain_sold_pr = 0
+
+            if count_free != 0:
+                gain_free_pr = int(((count_free) / 1059) * 100)
+            elif count_free == 0:
+                gain_free_pr = 0
+
+            lens = Seat.get_all_free_seats(self, self.kwargs['date'], self.kwargs['hour'], city_id)
+            context = Sector.get_all_sectors(self, self.kwargs['date'], self.kwargs['hour'], city_id)
+            context['len_1'] = lens[0]
+            context['len_2'] = lens[1]
+            context['len_3'] = lens[2]
+            context['len_4'] = lens[3]
+            context['len_5'] = lens[4]
+            context['len_6'] = lens[5]
+            sec = Sector.get_all_sectors(self, self.kwargs['date'], self.kwargs['hour'], city_id)
+            context['date'] = self.kwargs['date']
+            context['hour'] = self.kwargs['hour']
+            context['city_id'] = city_id
+            context['time'] = context['all_sectors'][0].date
+
+            context['city_id'] = city_id
+            context['gain_total'] = gain_total
+            context['stat'] = stat
+            context['gain_sold_pr'] = gain_sold_pr
+            context['count_sold'] = count_sold
+            context['count_free'] = count_free
+            context['count_share'] = count_share
+            context['gain_free_pr'] = gain_free_pr
+            context['count_vacant'] = count_vacant
+            return render(request, template_name, context)
+
 
     def post(self, request, *arg, city_id, **kwargs):
         next = request.POST.get('next')
