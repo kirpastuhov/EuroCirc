@@ -764,7 +764,7 @@ class Box(LoginRequiredMixin, View):
             for i in range(0, 9):
                 all_rows.append(rows[i].seat_set.all()[::1])
         elif self.kwargs['sector_number'] == '5':
-            for i in range(0, 6):
+            for i in range(0, 9):
                 all_rows.append(rows[i].seat_set.all()[::1])
         if self.kwargs['sector_number'] == '3' or self.kwargs['sector_number'] == '4':
             for row in all_rows:
@@ -774,7 +774,10 @@ class Box(LoginRequiredMixin, View):
             for row in all_rows:
                 row.sort(key=lambda x: x.seat_number, reverse=True)
 
-        all_rows = sorted(all_rows, key=len)
+
+        
+        if city_id != 2:
+            all_rows = sorted(all_rows, key=len)
         Box.context = {'all_rows': all_rows,
                    'batch': batch,
                    'sector': self.kwargs['sector_number'],
