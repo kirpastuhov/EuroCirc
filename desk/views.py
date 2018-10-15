@@ -751,7 +751,7 @@ class Box(LoginRequiredMixin, View):
             template_name = 'desk/box.html'
         batch = current_user.batch
 
-
+        '''
         if time_diff < 3600:
             needed = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
                                                sold='Booked', sector__city__id=city_id)
@@ -759,12 +759,17 @@ class Box(LoginRequiredMixin, View):
                 seat.sold = 'Vacant'
                 seat.name = ' '
                 seat.save()
+        '''
 
         if self.kwargs['sector_number'] != '5':
             for i in range(0, 9):
                 all_rows.append(rows[i].seat_set.all()[::1])
         elif self.kwargs['sector_number'] == '5':
-            for i in range(0, 9):
+            if city_id == 2:
+                ran = 9
+            elif city_id !=2:
+                ran=6
+            for i in range(0, ran):
                 all_rows.append(rows[i].seat_set.all()[::1])
         if self.kwargs['sector_number'] == '3' or self.kwargs['sector_number'] == '4':
             for row in all_rows:

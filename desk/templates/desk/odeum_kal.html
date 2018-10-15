@@ -71,48 +71,49 @@
     </ul>
 </div>
 
+               
+
 
 <div name="space">
-
     {% for sector  in all_sectors|slice:":1" %}
-		<ul>
-			<li>
-				<a href="{% url 'desk:box' 1 sector.date.date sector.date.hour city_id 'Noname' %}">
-					  <p name="Sector_1">СЕКТОР 1</p>
-						<p name="1_label">Свободно мест: {{ len_1 }}</p>
-				</a>
-			</li>
-			<li>
-				<a href="{% url 'desk:box' 2 sector.date.date sector.date.hour city_id 'Noname' %}">
-					  <p name="Sector_2">СЕКТОР 2</p>
-						<p name="2_label">Свободно мест: {{ len_2 }}</p>
-				</a>
-			</li>
-			<li>
-				<a href="{% url 'desk:box' 3 sector.date.date sector.date.hour city_id 'Noname' %}">
-						<p name="Sector_3">СЕКТОР 3</p>
-						<p name="3_label">Свободно мест: {{ len_3 }}</p>
-				</a>
-			</li>
-			<li>
-				<a href="{% url 'desk:box' 4 sector.date.date sector.date.hour city_id 'Noname' %}">
-						<p name="Sector_4">СЕКТОР 4</p>
-						<p name="4_label">Свободно мест: {{ len_4 }}</p>
-				</a>
-			</li>
-			<li>
-				<a href="{% url 'desk:box' 5 sector.date.date sector.date.hour city_id 'Noname' %}">
-						<p name="Sector_5">СЕКТОР 5</p>
-						<p name="5_label">Свободно мест: {{ len_5 }}</p>
-				</a>
-			</li>
-			<li>
-				<a href="{% url 'desk:box' 6 sector.date.date sector.date.hour city_id 'Noname' %}">
-						<p name="Sector_6">СЕКТОР 6</p>
-						<p name="6_label">Свободно мест: {{ len_6 }}</p>
-				</a>
-			</li>
-		</ul>
+        <div name="S1">
+            <a href="{% url 'desk:box' 1 sector.date.date sector.date.hour city_id 'Noname' %}">
+                <p name="Sector_1">СЕКТОР 1</p>
+                <p name="1_label">Свободно мест: {{ len_1 }}</p> </a>
+            </a>
+        </div>
+        <div name="S2">
+            <a href="{% url 'desk:box' 2 sector.date.date sector.date.hour city_id 'Noname' %}">
+                <p name="Sector_2">СЕКТОР 2</p>
+                <p name="2_label">Свободно мест: {{ len_2 }}</p> </a>
+            </a>
+        </div>
+
+        <div name="S3">
+            <a href="{% url 'desk:box' 3 sector.date.date sector.date.hour city_id 'Noname' %}">
+                <p name="Sector_3">СЕКТОР 3</p>
+                <p name="3_label">Свободно мест: {{ len_3 }}</p> </a>
+            </a>
+        </div>
+        <div name="S4">
+            <a href="{% url 'desk:box' 4 sector.date.date sector.date.hour city_id 'Noname' %}">
+                <p name="Sector_4">СЕКТОР 4</p>
+                <p name="4_label">Свободно мест: {{ len_4 }}</p> </a>
+            </a>
+        </div>
+        <div name="S5">
+            <a href="{% url 'desk:box' 5 sector.date.date sector.date.hour city_id 'Noname' %}">
+                <p name="Sector_5">СЕКТОР 5</p>
+                <p name="5_label">Свободно мест: {{ len_5 }}</p> </a>
+            </a>
+        </div>
+
+         <div name="S6">
+            <a href="{% url 'desk:box' 6 sector.date.date sector.date.hour city_id 'Noname' %}">
+                <p name="Sector_6">СЕКТОР 6</p>
+                <p name="6_label">Свободно мест: {{ len_6 }}</p> </a>
+            </a>
+        </div>
     {% endfor %}
 </div>
 </body>

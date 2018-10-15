@@ -236,69 +236,137 @@ a{
 	font-weight: bold;
 	color: black;
 }
-p[name=Sector_1]{
-	position: absolute;
-	left:35%
-}
-p[name="1_label"]{
-	position: absolute;
-	top:50%;
-	left:30%;
+
+div[name="space"]{
+    height: 100%;
+    width:100%;
 }
 
-p[name=Sector_2]{
-	position: absolute;
-	top:100%;
-	left:35%;
-}
-p[name="2_label"]{
-	position: absolute;
-	top:130%;
-	left:30%;
+
+
+
+div[name="S3"]{
+    position: absolute;
+    width: 10%;
+    top:35%;
+    left: 30%;
 }
 
-p[name=Sector_3]{
-	position: absolute;
-	top:180%;
-	left:35%;
+p[name="Sector_3"]{
+    position: relative;
+    left: 25%;
 }
+
 p[name="3_label"]{
-	position: absolute;
-	top:210%;
-	left:30%;
+    position: absolute;
+    top:80%;
+    left:0%;
 }
 
-p[name=Sector_4]{
-	position: absolute;
-	top:260%;
-	left:35%;
+
+
+div[name="S5"]{
+    position: absolute;
+    width: 10%;
+    top:20%;
+    left: 0%;
 }
-p[name="4_label"]{
-	position: absolute;
-	top:290%;
-	left:30%;
+
+p[name="Sector_5"]{
+    position: relative;
+    left: 25%;
 }
-p[name=Sector_5]{
-	position: absolute;
-	top:340%;
-	left:35%;
-}
+
 p[name="5_label"]{
-	position: absolute;
-	top:370%;
-	left:30%;
+    position: absolute;
+    top:80%;
+    left:0%;
 }
 
-p[name=Sector_6]{
-	position: absolute;
-	top:420%;
-	left:35%;
+
+
+
+
+
+
+
+div[name="S4"]{
+    position: absolute;
+    width: 10%;
+    top:35%;
+    left: 5%;
 }
+
+p[name="Sector_4"]{
+    position: relative;
+    left: 25%;
+}
+
+p[name="4_label"]{
+    position: absolute;
+    top:80%;
+    left:0%;
+}
+
+
+
+
+
+div[name="S2"]{
+    position: absolute;
+    width: 10%;
+    top:20%;
+    left: 35%;
+}
+
+p[name="Sector_2"]{
+    position: relative;
+    left: 25%;
+}
+
+p[name="2_label"]{
+    position: absolute;
+    top:80%;
+    left:0%;
+}
+
+div[name="S1"]{
+    position: absolute;
+    width: 10%;
+    top:5%;
+    left: 30%;
+}
+
+p[name="Sector_1"]{
+    position: relative;
+    left: 25%;
+}
+
+p[name="1_label"]{
+    position: absolute;
+    top:80%;
+    left:0%;
+}
+
+div[name="S6"]{
+    position: absolute;
+    width: 10%;
+    top:5%;
+    left: 5%;
+}
+
+p[name="Sector_6"]{
+    position: relative;
+    left: 25%;
+}
+
 p[name="6_label"]{
-	position: absolute;
-	top:450%;
-	left:30%;
+    position: absolute;
+    top:80%;
+    left:0%;
 }
+
+
 
 
 .VIP {
