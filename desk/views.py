@@ -1,7 +1,7 @@
 ﻿from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import View
-from .models import City, Day, Sector, Row, Seat, User, Cache
+from .models import City, Day, Sector, Row, Seat, User
 from django.http import HttpResponseRedirect, HttpResponse
 import xlsxwriter
 from string import ascii_uppercase
@@ -36,11 +36,12 @@ class CreateCity(UserPassesTestMixin, LoginRequiredMixin, View):
     def post(self, request, *arg, **kwargs):
         city_name = request.POST['city_name']
         timezone = request.POST['timezone']
+        limit = request.POST['limit']
         try:
             City.objects.get(city_name=city_name)
             return HttpResponse('<h1>Такой день уже открыт.</>')
         except City.DoesNotExist:
-            City(city_name=city_name, timezone=timezone).save()
+            City(city_name=city_name, timezone=timezone, limit=limit).save()
             return HttpResponseRedirect('/')
 
 
@@ -51,7 +52,6 @@ class Days(LoginRequiredMixin, View):
         city_id = city_id
         city = City.objects.get(id=city_id)
         try:
-            # context = Day.get_all_days(self, city_id)['all_days'].order_by(now, date)
             context = {}
 
             all_days = Day.objects.filter(city_id=city_id).order_by('-date')
@@ -78,25 +78,22 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
     def post(self, request, city_id, *arg, **kwargs):
         next = request.POST.get('next')
-        
 
-        def my_import(name):
-            components = name.split('.')
-            mod = __import__(components[0])
-            for comp in components[1:]:
-                mod = getattr(mod, comp)
-            return mod
         if 'Delete_Cache' in request.POST:
-            next = request.POST.get('next')
-            file = open('cache.txt', 'r')
-            lines = file.readlines()
-            file.close()
-            file = open('cache.txt', 'w')
-            for line in lines:
-                if 'city_{}'.format(str(city_id)) not in line:
-                    file.write(line)
-            file.close()
-            return HttpResponseRedirect(next)
+            # Блок исключитпельно из за калининграда. Удалить после конца этого города.
+            if city_id == 2 :
+                return HttpResponse("<h1>Удалить схему данного города невозможно</h1>")
+            else:
+                next = request.POST.get('next')
+                file = open('cache.txt', 'r')
+                lines = file.readlines()
+                file.close()
+                file = open('cache.txt', 'w')
+                for line in lines:
+                    if 'city_{}'.format(str(city_id)) not in line:
+                        file.write(line)
+                file.close()
+                return HttpResponseRedirect(next)
 
         if 'Cache' in request.POST:
             creation_date = request.POST['date']  # get date that user posted in the form
@@ -109,7 +106,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     if 'city_{}'.format(str(city_id)) in line:
                         target = line.split('=')[1]
                         module = eval(target)
-                
+
                 if module == None:
                     return HttpResponse("<h1>Схемы данного города нет в памяти</h1>")
                 else:
@@ -119,42 +116,59 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     except Day.DoesNotExist:
                         Day(date=creation_date, city_id=city_id).save()
 
-                    for s in range(1, 6):
-                        if s != 5:
-                            r_range = 10
-                        elif s == 5:
-                            r_range = 7
-                        Sector(date=creation_date, sector_number=s, city_id=city_id).save()
-                        sector = Sector.objects.get(date=creation_date, sector_number=s, city_id=city_id)
-                        sector_2 = [28, 26, 24, 23, 21, 19, 17, 16, 14]
-                        sector_3 = [32, 30, 28, 26, 24, 22, 20, 18, 16]
-                        for r in range(1, r_range):
-                            print(r)
-                            Row(sector=sector, row_number=r, date=creation_date).save()
-                            row = Row.objects.get(sector=sector, row_number=r, date=creation_date)
-                        
-                            prev_num = 1
-                            info = module['sector_{}'.format(str(s))]['row_{}'.format(str(r))]
+                    if city_id != 2:
+                        for s in range(1, 6):
+                            if s != 5:
+                                r_range = 10
+                            elif s == 5:
+                                r_range = 7
+                            Sector(date=creation_date, sector_number=s, city_id=city_id).save()
+                            sector = Sector.objects.get(date=creation_date, sector_number=s, city_id=city_id)
+                            sector_2 = [28, 26, 24, 23, 21, 19, 17, 16, 14]
+                            sector_3 = [32, 30, 28, 26, 24, 22, 20, 18, 16]
+                            for r in range(1, r_range):
+                                print(r)
+                                Row(sector=sector, row_number=r, date=creation_date).save()
+                                row = Row.objects.get(sector=sector, row_number=r, date=creation_date)
 
-                            if s == 2:
-                                prev_num = sector_2.pop()
-                            elif s == 3:
-                                prev_num = sector_3.pop()
-                            for data in info:
-                                
-                                if s == 1 or s == 4 or s == 5 :
-                                    prev_num = 1
+                                prev_num = 1
+                                info = module['sector_{}'.format(str(s))]['row_{}'.format(str(r))]
 
-                                if data != '':
-                                    s_number = int(data.split(',')[0]) 
-                                    s_price = int(data.split(',')[1])
-                                    for num in range(prev_num, (s_number+1)):
-                                        Seat(seat_number=num, price=s_price,
-                                                    sector=row.sector, row=row, date=creation_date).save()
-                                    prev_num = s_number + 1
+                                if s == 2:
+                                    prev_num = sector_2.pop()
+                                elif s == 3:
+                                    prev_num = sector_3.pop()
+                                for data in info:
 
-                    return HttpResponseRedirect(next)
-            
+                                    if s == 1 or s == 4 or s == 5 :
+                                        prev_num = 1
+
+                                    if data != '':
+                                        s_number = int(data.split(',')[0])
+                                        s_price = int(data.split(',')[1])
+                                        for num in range(prev_num, (s_number+1)):
+                                            Seat(seat_number=num, price=s_price,
+                                                        sector=row.sector, row=row, date=creation_date).save()
+                                        prev_num = s_number + 1
+
+                        return HttpResponseRedirect(next)
+                    elif city_id == 2:
+                        r_range = 10
+                        for s in range(1, 7):
+                            Sector(date=creation_date, sector_number=s, city_id=city_id).save()
+                            sector = Sector.objects.get(date=creation_date, sector_number=s, city_id=city_id)
+                            for r in range(1, r_range):
+                                Row(sector=sector, row_number=r, date=creation_date).save()
+                                row = Row.objects.get(sector=sector, row_number=r, date=creation_date)
+                                info = module['sector_{}'.format(str(s))]['row_{}'.format(str(r))]
+                                for data in info:
+                                    if data != '':
+                                        s_number = int(data.split(',')[0])
+                                        s_price = int(data.split(',')[1])
+                                        for num in range(1, (s_number+1)):
+                                            Seat(seat_number=num, price=s_price,
+                                                        sector=row.sector, row=row, date=creation_date).save()
+                        return HttpResponseRedirect(next)
 
         if 'Remember' in request.POST:
 
@@ -163,11 +177,11 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                 for line in lines:
                     if 'city_{}'.format(str(city_id)) in line:
                         return HttpResponse("<h1>Схема данного города уже существует в памяти</h1>")
-        
+
 
             cache_dict = {
 
-                'sector_1': 
+                'sector_1':
                 {
                     'row_1': [request.POST.get('s_1_row_1_1'), request.POST.get('s_1_row_1_2'), request.POST.get('s_1_row_1_3')],
                     'row_2': [request.POST.get('s_1_row_2_1'), request.POST.get('s_1_row_2_2'), request.POST.get('s_1_row_2_3')],
@@ -179,7 +193,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     'row_8': [request.POST.get('s_1_row_8_1'), request.POST.get('s_1_row_8_2'), request.POST.get('s_1_row_8_3')],
                     'row_9': [request.POST.get('s_1_row_9_1'), request.POST.get('s_1_row_9_2'), request.POST.get('s_1_row_9_3')],
                     },
-                'sector_2': 
+                'sector_2':
                 {
                     'row_1': [request.POST.get('s_2_row_1_1'), request.POST.get('s_2_row_1_2'), request.POST.get('s_2_row_1_3')],
                     'row_2': [request.POST.get('s_2_row_2_1'), request.POST.get('s_2_row_2_2'), request.POST.get('s_2_row_2_3')],
@@ -191,7 +205,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     'row_8': [request.POST.get('s_2_row_8_1'), request.POST.get('s_2_row_8_2'), request.POST.get('s_2_row_8_3')],
                     'row_9': [request.POST.get('s_2_row_9_1'), request.POST.get('s_2_row_9_2'), request.POST.get('s_2_row_9_3')],
                     },
-                'sector_3': 
+                'sector_3':
                 {
                     'row_1': [request.POST.get('s_3_row_1_1'), request.POST.get('s_3_row_1_2'), request.POST.get('s_3_row_1_3')],
                     'row_2': [request.POST.get('s_3_row_2_1'), request.POST.get('s_3_row_2_2'), request.POST.get('s_3_row_2_3')],
@@ -203,7 +217,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     'row_8': [request.POST.get('s_3_row_8_1'), request.POST.get('s_3_row_8_2'), request.POST.get('s_3_row_8_3')],
                     'row_9': [request.POST.get('s_3_row_9_1'), request.POST.get('s_3_row_9_2'), request.POST.get('s_3_row_9_3')],
                     },
-                'sector_4': 
+                'sector_4':
                 {
                     'row_1': [request.POST.get('s_4_row_1_1'), request.POST.get('s_4_row_1_2'), request.POST.get('s_4_row_1_3')],
                     'row_2': [request.POST.get('s_4_row_2_1'), request.POST.get('s_4_row_2_2'), request.POST.get('s_4_row_2_3')],
@@ -215,7 +229,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     'row_8': [request.POST.get('s_4_row_8_1'), request.POST.get('s_4_row_8_2'), request.POST.get('s_4_row_8_3')],
                     'row_9': [request.POST.get('s_4_row_9_1'), request.POST.get('s_4_row_9_2'), request.POST.get('s_4_row_9_3')],
                     },
-                'sector_5': 
+                'sector_5':
                 {
                     'row_1': [request.POST.get('s_5_row_1_1'), request.POST.get('s_5_row_1_2'), request.POST.get('s_5_row_1_3')],
                     'row_2': [request.POST.get('s_5_row_2_1'), request.POST.get('s_5_row_2_2'), request.POST.get('s_5_row_2_3')],
@@ -223,7 +237,7 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                     'row_4': [request.POST.get('s_5_row_4_1'), request.POST.get('s_5_row_4_2'), request.POST.get('s_5_row_4_3')],
                     'row_5': [request.POST.get('s_5_row_5_1'), request.POST.get('s_5_row_5_2'), request.POST.get('s_5_row_5_3')],
                     'row_6': [request.POST.get('s_5_row_6_1'), request.POST.get('s_5_row_6_2'), request.POST.get('s_5_row_6_3')],
-                    
+
                     }
                 }
             with open('cache.txt', 'a') as file:
@@ -234,84 +248,159 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
 
 class Odeum(LoginRequiredMixin, View):
-    template_name = 'desk/odeum.html'
+
 
     def get(self, request, city_id, *arg, **kwargs):
-        seat_given = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                               sold='Local_cashdesks', sector__city__id=city_id)
-        seat_vacant = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                sold='Vacant', sector__city__id=city_id)
-        seat_sold = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                              sold='Sold', sector__city__id=city_id)
-        seat_share = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                               sold='Share', sector__city__id=city_id)
-        # seat_discount = Seat.objects.all().filter(date__date=date, date__hour=hour, sold='Discount')
-        seat_free = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                              sold='Free', sector__city__id=city_id)
-        gain_total = 0
-        gain_sold = 0
-        gain_share = 0
-        gain_discount = 0
-        for seat in seat_sold:
-            gain_sold = gain_sold + seat.price
-        # for seat in seat_discount:
-        # gain_discount = gain_discount + seat.price*0.8
-        for seat in seat_share:
-            gain_share = gain_share + 1
-        for seat in seat_given:
-            gain_sold = gain_sold + seat.price
-        gain_total = gain_sold
+        if city_id != 2:
+            template_name = 'desk/odeum.html'
+            seat_given = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                   sold='Local_cashdesks', sector__city__id=city_id)
+            seat_vacant = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                    sold='Vacant', sector__city__id=city_id)
+            seat_sold = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                  sold='Sold', sector__city__id=city_id)
+            seat_share = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                   sold='Share', sector__city__id=city_id)
+            # seat_discount = Seat.objects.all().filter(date__date=date, date__hour=hour, sold='Discount')
+            seat_free = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                  sold='Free', sector__city__id=city_id)
+            gain_total = 0
+            gain_sold = 0
+            gain_share = 0
+            gain_discount = 0
+            for seat in seat_sold:
+                gain_sold = gain_sold + seat.price
+            # for seat in seat_discount:
+            # gain_discount = gain_discount + seat.price*0.8
+            for seat in seat_share:
+                gain_share = gain_share + 1
+            for seat in seat_given:
+                gain_sold = gain_sold + seat.price
+            gain_total = gain_sold
 
-        count_share = len(seat_share)
-        count_sold = len(seat_sold)
-        # count_discount = len(seat_discount)
-        count_free = len(seat_free)
-        count_vacant = len(seat_vacant)
-        if len(seat_vacant) != 0:
-            stat = int(((828 - len(seat_vacant)) / 828) * 100)
-        elif len(seat_vacant) == 0:
-            stat = 100
+            count_share = len(seat_share)
+            count_sold = len(seat_sold)
+            # count_discount = len(seat_discount)
+            count_free = len(seat_free)
+            count_vacant = len(seat_vacant)
+            if len(seat_vacant) != 0:
+                stat = int(((828 - len(seat_vacant)) / 828) * 100)
+            elif len(seat_vacant) == 0:
+                stat = 100
 
-        if count_sold != 0:
-            gain_sold_pr = int(((count_sold) / 828) * 100)
+            if count_sold != 0:
+                gain_sold_pr = int(((count_sold) / 828) * 100)
 
-        elif count_sold == 0:
-            gain_sold_pr = 0
+            elif count_sold == 0:
+                gain_sold_pr = 0
 
-        if count_free != 0:
-            gain_free_pr = int(((count_free) / 828) * 100)
-        elif count_free == 0:
-            gain_free_pr = 0
+            if count_free != 0:
+                gain_free_pr = int(((count_free) / 828) * 100)
+            elif count_free == 0:
+                gain_free_pr = 0
 
-        lens = Seat.get_all_free_seats(self, self.kwargs['date'], self.kwargs['hour'], city_id)
-        context = Sector.get_all_sectors(self, self.kwargs['date'], self.kwargs['hour'], city_id)
-        context['len_1'] = lens[0]
-        context['len_2'] = lens[1]
-        context['len_3'] = lens[2]
-        context['len_4'] = lens[3]
-        context['len_5'] = lens[4]
-        sec = Sector.get_all_sectors(self, self.kwargs['date'], self.kwargs['hour'], city_id)
-        context['date'] = self.kwargs['date']
-        context['hour'] = self.kwargs['hour']
-        context['city_id'] = city_id
-        context['time'] = context['all_sectors'][0].date
+            lens = Seat.get_all_free_seats(self, self.kwargs['date'], self.kwargs['hour'], city_id)
+            context = Sector.get_all_sectors(self, self.kwargs['date'], self.kwargs['hour'], city_id)
+            context['len_1'] = lens[0]
+            context['len_2'] = lens[1]
+            context['len_3'] = lens[2]
+            context['len_4'] = lens[3]
+            context['len_5'] = lens[4]
+            sec = Sector.get_all_sectors(self, self.kwargs['date'], self.kwargs['hour'], city_id)
+            context['date'] = self.kwargs['date']
+            context['hour'] = self.kwargs['hour']
+            context['city_id'] = city_id
+            context['time'] = context['all_sectors'][0].date
 
-        context['city_id'] = city_id
-        context['gain_total'] = gain_total
-        context['stat'] = stat
-        context['gain_sold_pr'] = gain_sold_pr
-        context['count_sold'] = count_sold
-        context['count_free'] = count_free
-        context['count_share'] = count_share
-        context['gain_free_pr'] = gain_free_pr
-        context['count_vacant'] = count_vacant
-        return render(request, self.template_name, context)
+            context['city_id'] = city_id
+            context['gain_total'] = gain_total
+            context['stat'] = stat
+            context['gain_sold_pr'] = gain_sold_pr
+            context['count_sold'] = count_sold
+            context['count_free'] = count_free
+            context['count_share'] = count_share
+            context['gain_free_pr'] = gain_free_pr
+            context['count_vacant'] = count_vacant
+            return render(request, template_name, context)
+        elif city_id == 2:
+            template_name = 'desk/odeum_kal.html'
+            seat_given = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                   sold='Local_cashdesks', sector__city__id=city_id)
+            seat_vacant = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                    sold='Vacant', sector__city__id=city_id)
+            seat_sold = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                  sold='Sold', sector__city__id=city_id)
+            seat_share = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                   sold='Share', sector__city__id=city_id)
+            # seat_discount = Seat.objects.all().filter(date__date=date, date__hour=hour, sold='Discount')
+            seat_free = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                  sold='Free', sector__city__id=city_id)
+            gain_total = 0
+            gain_sold = 0
+            gain_share = 0
+            gain_discount = 0
+            for seat in seat_sold:
+                gain_sold = gain_sold + seat.price
+            # for seat in seat_discount:
+            # gain_discount = gain_discount + seat.price*0.8
+            for seat in seat_share:
+                gain_share = gain_share + 1
+            for seat in seat_given:
+                gain_sold = gain_sold + seat.price
+            gain_total = gain_sold
+
+            count_share = len(seat_share)
+            count_sold = len(seat_sold)
+            # count_discount = len(seat_discount)
+            count_free = len(seat_free)
+            count_vacant = len(seat_vacant)
+            if len(seat_vacant) != 0:
+                stat = int(((1059 - len(seat_vacant)) / 1059) * 100)
+            elif len(seat_vacant) == 0:
+                stat = 100
+
+            if count_sold != 0:
+                gain_sold_pr = int(((count_sold) / 1059) * 100)
+
+            elif count_sold == 0:
+                gain_sold_pr = 0
+
+            if count_free != 0:
+                gain_free_pr = int(((count_free) / 1059) * 100)
+            elif count_free == 0:
+                gain_free_pr = 0
+
+            lens = Seat.get_all_free_seats(self, self.kwargs['date'], self.kwargs['hour'], city_id)
+            context = Sector.get_all_sectors(self, self.kwargs['date'], self.kwargs['hour'], city_id)
+            context['len_1'] = lens[0]
+            context['len_2'] = lens[1]
+            context['len_3'] = lens[2]
+            context['len_4'] = lens[3]
+            context['len_5'] = lens[4]
+            context['len_6'] = lens[5]
+            sec = Sector.get_all_sectors(self, self.kwargs['date'], self.kwargs['hour'], city_id)
+            context['date'] = self.kwargs['date']
+            context['hour'] = self.kwargs['hour']
+            context['city_id'] = city_id
+            context['time'] = context['all_sectors'][0].date
+
+            context['city_id'] = city_id
+            context['gain_total'] = gain_total
+            context['stat'] = stat
+            context['gain_sold_pr'] = gain_sold_pr
+            context['count_sold'] = count_sold
+            context['count_free'] = count_free
+            context['count_share'] = count_share
+            context['gain_free_pr'] = gain_free_pr
+            context['count_vacant'] = count_vacant
+            return render(request, template_name, context)
+
 
     def post(self, request, *arg, city_id, **kwargs):
         next = request.POST.get('next')
         if 'Delete' in request.POST:
             if User.objects.get(id=request.user.id).admin == True:
-                
+
                 Day.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
                                          city__id=city_id).delete()
                 Sector.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
@@ -662,7 +751,7 @@ class Box(LoginRequiredMixin, View):
             template_name = 'desk/box.html'
         batch = current_user.batch
 
-
+        '''
         if time_diff < 3600:
             needed = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
                                                sold='Booked', sector__city__id=city_id)
@@ -670,12 +759,17 @@ class Box(LoginRequiredMixin, View):
                 seat.sold = 'Vacant'
                 seat.name = ' '
                 seat.save()
+        '''
 
         if self.kwargs['sector_number'] != '5':
             for i in range(0, 9):
                 all_rows.append(rows[i].seat_set.all()[::1])
         elif self.kwargs['sector_number'] == '5':
-            for i in range(0, 6):
+            if city_id == 2:
+                ran = 9
+            elif city_id !=2:
+                ran=6
+            for i in range(0, ran):
                 all_rows.append(rows[i].seat_set.all()[::1])
         if self.kwargs['sector_number'] == '3' or self.kwargs['sector_number'] == '4':
             for row in all_rows:
@@ -685,7 +779,10 @@ class Box(LoginRequiredMixin, View):
             for row in all_rows:
                 row.sort(key=lambda x: x.seat_number, reverse=True)
 
-        all_rows = sorted(all_rows, key=len)
+
+        
+        if city_id != 2:
+            all_rows = sorted(all_rows, key=len)
         Box.context = {'all_rows': all_rows,
                    'batch': batch,
                    'sector': self.kwargs['sector_number'],
@@ -703,9 +800,10 @@ class Box(LoginRequiredMixin, View):
         current_user = User.objects.get(id=request.user.id)
         all_seats = Seat.get_all_selected_seats(self, current_user.id, city_id=city_id, hour=self.kwargs['hour'],
                                                 date=self.kwargs['date'])
+        city = City.objects.get(id=city_id)
         if 'Booked_admin' in request.POST:
             count = 0
-            if current_user.is_staff == True and current_user.booked_number < 400:
+            if current_user.is_staff == True and current_user.booked_number < city.limit:
                 for seat in all_seats:
                     if seat.sold == 'Vacant':
                         seat.user_id = current_user.id
@@ -717,7 +815,10 @@ class Box(LoginRequiredMixin, View):
                         current_user.booked_number = current_user.booked_number + 1
                         current_user.save()
                         count = count + 1
+                print()
+                print("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n")
                 print(current_user.full_name + " Выдал " + str(count) + " пригласительных")
+                print("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n")
             else:
                 pass
             return HttpResponseRedirect(next)
@@ -986,17 +1087,20 @@ class Box(LoginRequiredMixin, View):
                     seat.selected = False
                     seat.name = ' '
                     seat.save()
-                
+
                 elif seat.sold == 'Booked_admin':
-                    user = User.objects.get(id=seat.user_id)
-                    user.booked_number -= 1
-                    user.save()
-                    seat.sold = 'Vacant'
-                    seat.name = ' '
-                    seat.user_id = 0
-                    seat.selected = False
-                    seat.save()
-                    user.save()
+                    if current_user.is_admin or current_user.full_name == seat.name:
+                        user = User.objects.get(full_name=seat.name)
+                        user.booked_number -= 1
+                        user.save()
+                        seat.sold = 'Vacant'
+                        seat.name = ' '
+                        seat.user_id = 0
+                        seat.selected = False
+                        seat.save()
+                        user.save()
+                    else:
+                        pass
 
                 elif seat.sold == 'Booked':
                     seat.sold == 'Vacant'
@@ -1072,7 +1176,7 @@ class Box(LoginRequiredMixin, View):
 
                 elif seat.price == 1500:
                     current_user.sold_1500 -= 1
-            
+
 
 
             current_user.batch = 0
@@ -1080,7 +1184,7 @@ class Box(LoginRequiredMixin, View):
             user.save()
 
 
-            
+
             return HttpResponseRedirect(next)
 
         if 'three_one' in request.POST:
@@ -1417,4 +1521,4 @@ class BookedList(LoginRequiredMixin, View):
         except IndexError:
             pass
         context['seats'] = seats
-        return render(request, self.template_name, context) 
+        return render(request, self.template_name, context)

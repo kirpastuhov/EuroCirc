@@ -2,148 +2,149 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import (
-	AbstractBaseUser, BaseUserManager,
-	)
+    AbstractBaseUser, BaseUserManager,
+    )
 
 class UserManager(BaseUserManager):
-	def create_user(self, full_name, email, password=None, is_staff=False, is_admin=False, is_active=True):
-		if not email:
-			raise ValueError("Users must have an email address")
-		if not password:
-			raise ValueError("Users must have password")
-		user_obj = self.model(email = self.normalize_email(email),)
-		user_obj.set_password(password)
-		user_obj.active = is_active
-		user_obj.staff = is_staff
-		user_obj.admin = is_admin
-		user_obj.full_name = full_name
-		user_obj.save(using=self._db)
+    def create_user(self, full_name, email, password=None, is_staff=False, is_admin=False, is_active=True):
+        if not email:
+            raise ValueError("Users must have an email address")
+        if not password:
+            raise ValueError("Users must have password")
+        user_obj = self.model(email = self.normalize_email(email),)
+        user_obj.set_password(password)
+        user_obj.active = is_active
+        user_obj.staff = is_staff
+        user_obj.admin = is_admin
+        user_obj.full_name = full_name
+        user_obj.save(using=self._db)
 
-		return user_obj
+        return user_obj
 
-	def create_staffuser(self, full_name, email, password=None):
-		user = self.create_user(
-			full_name = full_name,
-			email=email,
-			password = password,
-			is_staff = True
-			)
-		return user
-	def create_superuser(self, full_name, email, password=None):
-		user = self.create_user(
-			full_name = full_name,
-			email=email,
-			password = password,
-			is_staff = True,
-			is_admin = True
-			)
-		return user
+    def create_staffuser(self, full_name, email, password=None):
+        user = self.create_user(
+            full_name = full_name,
+            email=email,
+            password = password,
+            is_staff = True
+            )
+        return user
+    def create_superuser(self, full_name, email, password=None):
+        user = self.create_user(
+            full_name = full_name,
+            email=email,
+            password = password,
+            is_staff = True,
+            is_admin = True
+            )
+        return user
 
 class User(AbstractBaseUser):
 
-	email = models.EmailField(max_length=255, unique=True)
-	full_name = models.CharField(max_length=255, blank=True, null=True)
-	active = models.BooleanField(default=True) # can login
-	staff = models.BooleanField(default=False) # is staff
-	admin = models.BooleanField(default=False) # is admin
-	batch = models.IntegerField(default=0)
-	gain = models.IntegerField(default=0)
-	sold_share = models.IntegerField(default=0)
-	sold_normal = models.IntegerField(default=0)
-	sold_vacant = models.IntegerField(default=0)
-	sold_500 = models.IntegerField(default=0)
-	sold_700 = models.IntegerField(default=0)
-	sold_800 = models.IntegerField(default=0)
-	sold_900 = models.IntegerField(default=0)
-	sold_1000 = models.IntegerField(default=0)
-	sold_1200 = models.IntegerField(default=0)
-	sold_1500 = models.IntegerField(default=0)
-	sold_ten = models.IntegerField(default=0)
-	sold_fifteen = models.IntegerField(default=0)
-	sold_twenty = models.IntegerField(default=0)
-	booked_number = models.IntegerField(default=0)
+    email = models.EmailField(max_length=255, unique=True)
+    full_name = models.CharField(max_length=255, blank=True, null=True)
+    active = models.BooleanField(default=True) # can login
+    staff = models.BooleanField(default=False) # is staff
+    admin = models.BooleanField(default=False) # is admin
+    batch = models.IntegerField(default=0)
+    gain = models.IntegerField(default=0)
+    sold_share = models.IntegerField(default=0)
+    sold_normal = models.IntegerField(default=0)
+    sold_vacant = models.IntegerField(default=0)
+    sold_500 = models.IntegerField(default=0)
+    sold_700 = models.IntegerField(default=0)
+    sold_800 = models.IntegerField(default=0)
+    sold_900 = models.IntegerField(default=0)
+    sold_1000 = models.IntegerField(default=0)
+    sold_1200 = models.IntegerField(default=0)
+    sold_1500 = models.IntegerField(default=0)
+    sold_ten = models.IntegerField(default=0)
+    sold_fifteen = models.IntegerField(default=0)
+    sold_twenty = models.IntegerField(default=0)
+    booked_number = models.IntegerField(default=0)
 
 
 
 
-	timestamp = models.DateTimeField(auto_now_add=True)
-	#sold_discount = models.IntegerField(default=0)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    #sold_discount = models.IntegerField(default=0)
 
 
 
-	USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'email'
 
-	REQUIRED_FIELDS = ['full_name']
+    REQUIRED_FIELDS = ['full_name']
 
-	objects = UserManager()
+    objects = UserManager()
 
-	def has_perm(self, perm, obj=None):
-		return True
-	def has_module_perms(self, app_label):
-		return True
+    def has_perm(self, perm, obj=None):
+        return True
+    def has_module_perms(self, app_label):
+        return True
 
-	@property
-	def is_active(self):
-		return self.active
+    @property
+    def is_active(self):
+        return self.active
 
-	@property
-	def is_staff(self):
-		return self.staff
+    @property
+    def is_staff(self):
+        return self.staff
 
-	@property
-	def is_admin(self):
-		return self.admin
+    @property
+    def is_admin(self):
+        return self.admin
 
 
 class City(models.Model):
-	city_name = models.CharField(max_length=255, default=None)
-	timezone = models.IntegerField(null=True, blank=True)
+    city_name = models.CharField(max_length=255, default=None)
+    timezone = models.IntegerField(null=True, blank=True)
+    limit = models.IntegerField(default=400)
 
-	def __str__(self):
-		return str(self.city_name)
+    def __str__(self):
+        return str(self.city_name)
 
-	def get_all_cities(self):
-		all_cities = City.objects.all()
-		context = {'all_cities': all_cities}
-		return context
+    def get_all_cities(self):
+        all_cities = City.objects.all()
+        context = {'all_cities': all_cities}
+        return context
 
 class Day(models.Model):
 
-	city = models.ForeignKey(City, on_delete=models.CASCADE)
-	date = models.DateTimeField(default=None)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=None)
 
-	def __str__(self):
-	    return 'Открытый день ' + str(self.date) + 'Город    ' + str(self.city)
+    def __str__(self):
+        return 'Открытый день ' + str(self.date) + 'Город    ' + str(self.city)
 
-	def get_all_days(self, city_id):
-	    all_days = (Day.objects.all().filter(city__id=int(city_id)))
-	    print(all_days)
-	    # all_days = all_days.sort(key=lambda r: r.date)
-	    context = {'all_days':all_days}
-	    return context
+    def get_all_days(self, city_id):
+        all_days = (Day.objects.all().filter(city__id=int(city_id)))
+        print(all_days)
+        # all_days = all_days.sort(key=lambda r: r.date)
+        context = {'all_days':all_days}
+        return context
 
 
 
 class Sector(models.Model):
-	city = models.ForeignKey(City, on_delete=models.CASCADE)
-	sector_number = models.IntegerField()
-	date = models.DateTimeField()
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    sector_number = models.IntegerField()
+    date = models.DateTimeField()
 
-	def __str__(self):
-	    return str(self.sector_number) + 'СЕКТОР' + str(self.date)
+    def __str__(self):
+        return str(self.sector_number) + 'СЕКТОР' + str(self.date)
 
-	def get_all_rows(self):
-	    return self.row_set.all()[::1]
+    def get_all_rows(self):
+        return self.row_set.all()[::1]
 
-	def get_sector(self, date, hour, sector_number, city_id):
-		return Sector.objects.get(date__date=date, date__hour=hour, sector_number=sector_number, city__id=city_id)
+    def get_sector(self, date, hour, sector_number, city_id):
+        return Sector.objects.get(date__date=date, date__hour=hour, sector_number=sector_number, city__id=city_id)
 
-	def get_all_sectors(self, date, hour, city_id):
-	    all_sectors = []
-	    for i in range(1, 6):
-	        all_sectors.append(Sector.objects.get(date__date=date, date__hour=hour, sector_number=i, city__id=int(city_id)))
-	    context = {'all_sectors':all_sectors}
-	    return context
+    def get_all_sectors(self, date, hour, city_id):
+        all_sectors = []
+        for i in range(1, 6):
+            all_sectors.append(Sector.objects.get(date__date=date, date__hour=hour, sector_number=i, city__id=int(city_id)))
+        context = {'all_sectors':all_sectors}
+        return context
 
 
 class Row(models.Model):
@@ -182,13 +183,11 @@ class Seat(models.Model):
         return context
 
     def get_all_free_seats(self, date, hour, city_id):
-    	lens = []
-    	for s in range(1, 6):
-    		lens.append(len(Seat.objects.all().filter(sector__sector_number=s, date__date=date, date__hour=hour, sector__city__id=city_id, sold='Vacant')))
-
-    	return lens
-
-class Cache(models.Model):
-	instance = models.CharField(max_length=20)
-	name = models.CharField(max_length=30)
-	city = models.ForeignKey(City, on_delete=models.CASCADE)
+        lens = []
+        if city_id !=2:
+            for s in range(1, 6):
+                lens.append(len(Seat.objects.all().filter(sector__sector_number=s, date__date=date, date__hour=hour, sector__city__id=city_id, sold='Vacant')))
+        elif city_id == 2:
+            for s in range(1, 7):
+                lens.append(len(Seat.objects.all().filter(sector__sector_number=s, date__date=date, date__hour=hour, sector__city__id=city_id, sold='Vacant')))
+        return lens

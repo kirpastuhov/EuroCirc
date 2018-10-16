@@ -1,0 +1,381 @@
+body {
+    background-color: #b4b4b4;
+}
+
+.round {
+    border-radius: 24px;
+}
+
+.sharp {
+    border-radius: 0;
+}
+
+.btn-primary-backdays {
+    z-index: 2;
+    float: left;
+    /* width: 60px;
+    height: 30px; */
+    margin-right: 10px;
+    border-color: Black;
+    background-color: rgba(180, 180, 180, 0.7);
+    font-family: arial, serif;
+    font-size: 14px;
+    color: #111;
+    cursor: pointer;
+}
+
+.btn-primary-backdays:hover {
+    background-color: rgba(195, 195, 195, 0.7);
+}
+
+div[name="my_btn_backdays"] {
+    padding: 100%;
+    display: flex;
+}
+
+div[name="all-space"] {
+    display: inline;
+}
+
+div[name="space"] {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    display: inline-block;
+    justify-self: center;
+    margin: 0 25% 0 25%;
+    width: 50%;
+
+}
+
+.divTable {
+    display: table;
+
+}
+
+.divTableRow {
+    display: table-row;
+}
+
+.divTableHeading {
+    background-color: #EEE;
+    display: table-header-group;
+}
+
+.divTableCell, .divTableHead {
+
+    display: table-cell;
+
+}
+
+.divTableHeading {
+    background-color: #EEE;
+    display: table-header-group;
+
+}
+
+.divTableFoot {
+    background-color: #EEE;
+    display: table-footer-group;
+
+}
+
+.divTableBody {
+    display: table-row-group;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+div[name="buttons-left"] {
+    margin-top: 1%;
+    margin-left: 2%;
+    display: flex;
+    width: 50%;
+    float: left;
+}
+
+div[name="left_stats"] {
+    font-size: 1vmax;
+    display: flex;
+    width: 50%;
+    float: left;
+}
+
+div [name="text-center"] {
+    text-align: center;
+    display: inline-block;
+    float: left;
+    position: relative;
+    left: 33%;
+}
+
+div[name="stats"] {
+    margin-top: 1%;
+    margin-left: 2%;
+    display: inline-block;
+    float: left;
+    position: absolute;
+    left: 0;
+    top: 15%;
+}
+
+p {
+    font-size: 1vmax;
+}
+
+h3[name="time"] {
+    font-size: 1vmax;
+}
+
+h4[name="time"] {
+    font-size: 1vmax;
+}
+
+div[name="buttons-right"] {
+    margin-top: 1%;
+    margin-right: 2%;
+    display: flex;
+    width: 13%;
+    float: right;
+}
+
+button[name="stats"] {
+    font-size: 1vmax;
+    float: right;
+}
+
+button[name="delete"] {
+    font-size: 1vmax;
+    float: right;
+}
+
+button[name="Days"] {
+    font-size: 1.5vmax;
+    float: left;
+}
+
+button[name="Booking"] {
+    font-size: 1.5vmax;
+    float: left;
+}
+
+button {
+    margin: 1%;
+}
+
+div[name="left"] {
+    display: inline-block;
+}
+
+div[name="right"] {
+    float: right;
+    display: inline-block;
+}
+
+.divTableCell {
+    position: relative;
+    text-align: center;
+    color: black;
+
+}
+
+.II {
+    margin: 0;
+    padding: 0;
+    font-size: 0.9vw;
+    position: absolute;
+    left: 40%;
+    top: 80%;
+    transform: translate(-30%, -350%);
+    color: black;
+    font-weight: bold;
+
+}
+
+.III {
+    margin: 0;
+    padding: 0;
+    font-size: 0.9vw;
+    position: absolute;
+    left: 40%;
+    top: 80%;
+    transform: translate(-30%, -350%);
+    color: black;
+    font-weight: bold;
+
+}
+
+.I {
+    margin: 0;
+    padding: 0;
+    font-size: 0.9vw;
+    position: absolute;
+    left: 40%;
+    top: 80%;
+    transform: translate(-20%, -50%);
+    color: black;
+    font-weight: bold;
+
+}
+
+.IV {
+    font-size: 0.9vw;
+    position: absolute;
+    left: 40%;
+    top: 80%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-weight: bold;
+}
+
+a{
+	font-size: 0.9vw;
+	font-weight: bold;
+	color: black;
+}
+
+div[name="space"]{
+    height: 100%;
+    width:100%;
+}
+
+
+
+
+div[name="S3"]{
+    position: absolute;
+    width: 10%;
+    top:35%;
+    left: 30%;
+}
+
+p[name="Sector_3"]{
+    position: relative;
+    left: 25%;
+}
+
+p[name="3_label"]{
+    position: absolute;
+    top:80%;
+    left:0%;
+}
+
+
+
+div[name="S5"]{
+    position: absolute;
+    width: 10%;
+    top:20%;
+    left: 0%;
+}
+
+p[name="Sector_5"]{
+    position: relative;
+    left: 25%;
+}
+
+p[name="5_label"]{
+    position: absolute;
+    top:80%;
+    left:0%;
+}
+
+
+
+
+
+
+
+
+div[name="S4"]{
+    position: absolute;
+    width: 10%;
+    top:35%;
+    left: 5%;
+}
+
+p[name="Sector_4"]{
+    position: relative;
+    left: 25%;
+}
+
+p[name="4_label"]{
+    position: absolute;
+    top:80%;
+    left:0%;
+}
+
+
+
+
+
+div[name="S2"]{
+    position: absolute;
+    width: 10%;
+    top:20%;
+    left: 35%;
+}
+
+p[name="Sector_2"]{
+    position: relative;
+    left: 25%;
+}
+
+p[name="2_label"]{
+    position: absolute;
+    top:80%;
+    left:0%;
+}
+
+div[name="S1"]{
+    position: absolute;
+    width: 10%;
+    top:5%;
+    left: 30%;
+}
+
+p[name="Sector_1"]{
+    position: relative;
+    left: 25%;
+}
+
+p[name="1_label"]{
+    position: absolute;
+    top:80%;
+    left:0%;
+}
+
+div[name="S6"]{
+    position: absolute;
+    width: 10%;
+    top:5%;
+    left: 5%;
+}
+
+p[name="Sector_6"]{
+    position: relative;
+    left: 25%;
+}
+
+p[name="6_label"]{
+    position: absolute;
+    top:80%;
+    left:0%;
+}
+
+
+
+
+.VIP {
+    font-size: 0.9vw;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-weight: bold;
+
+}
