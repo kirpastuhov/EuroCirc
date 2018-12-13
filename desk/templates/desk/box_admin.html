@@ -118,15 +118,30 @@
                 // language=JQuery-CSS
                 $("button[name='one_one']").click(function() {
                     let price = {{ absolute_gain }};
-                    alert("К оплате: " + price);
+                    if (price == 0) {
+                      alert("Невозможно применить акцию");
+                    }
+                    else {
+                        alert("К оплате: " + price);
+                    }
                 });
                 $("button[name='two_one']").click(function() {
                     let price = {{ absolute_gain }};
-                    alert("К оплате: " + price);
+                    if (price == 0) {
+                      alert("Невозможно применить акцию");
+                    }
+                    else {
+                        alert("К оплате: " + price);
+                    }
                 });
                 $("button[name='three_one']").click(function() {
                     let price = {{ absolute_gain }};
-                    alert("К оплате: " + price);
+                    if (price == 0) {
+                      alert("Невозможно применить акцию");
+                    }
+                    else {
+                        alert("К оплате: " + price);
+                    }
                 });
             </script>
         </div>
