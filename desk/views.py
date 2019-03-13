@@ -264,6 +264,9 @@ class Odeum(LoginRequiredMixin, View):
             # seat_discount = Seat.objects.all().filter(date__date=date, date__hour=hour, sold='Discount')
             seat_free = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
                                                   sold='Free', sector__city__id=city_id)
+            seat_free_1 = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
+                                                  sold='Booked_admin', sector__city__id=city_id)
+
             gain_total = 0
             gain_sold = 0
             gain_share = 0
@@ -281,7 +284,7 @@ class Odeum(LoginRequiredMixin, View):
             count_share = len(seat_share)
             count_sold = len(seat_sold)
             # count_discount = len(seat_discount)
-            count_free = len(seat_free)
+            count_free = len(seat_free) + len(seat_free_1)
             count_vacant = len(seat_vacant)
             if len(seat_vacant) != 0:
                 stat = int(((828 - len(seat_vacant)) / 828) * 100)
@@ -352,7 +355,7 @@ class Odeum(LoginRequiredMixin, View):
             count_share = len(seat_share)
             count_sold = len(seat_sold)
             # count_discount = len(seat_discount)
-            count_free = len(seat_free)
+            count_free = len(seat_free) + len(seat_free_1)
             count_vacant = len(seat_vacant)
             if len(seat_vacant) != 0:
                 stat = int(((1059 - len(seat_vacant)) / 1059) * 100)
