@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <title>Bookings</title>
 
@@ -6,23 +6,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="{% static "desk/index.css" %}" type="text/css"/>
 <html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <div class="container-fluid-2 bg-2 text-center">
-        <h3>{{ time|date:"d.m H:i" }}</h3>
-        {% if seats %}
+	<head>
+		<meta charset="utf-8"/>
+		<div class="container-fluid-2 bg-2 text-center">
+			<h3>{{ time|date:"d.m H:i" }}</h3>
+			{% if seats %}
 
-            <h3>Активные брони: </h3>
-            <ul>
-                {% for booked_seat in seats %}
-                    <li class="active">
-                        <a href="{% url 'desk:box' booked_seat.sector.sector_number booked_seat.date.date booked_seat.date.hour booked_seat.sector.city_id booked_seat.name %} ">{{ booked_seat.name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <h3>Нет активных броней</h3>
-        {% endif %}
+			<h3>Активные брони: </h3>
+			<ul>
+				{% for booked_seat in seats %}
+				<li class="active">
+					<a href="{% url 'desk:box' booked_seat.sector.sector_number booked_seat.date.date booked_seat.date.hour booked_seat.sector.city_id booked_seat.name %} ">{{ booked_seat.name }}</a>
+				</li>
+				{% endfor %}
+			</ul>
+			{% else %}
+			<h3>Нет активных броней</h3>
+			{% endif %}
 
 
-    </div>
+		</div>

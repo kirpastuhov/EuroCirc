@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 
 
@@ -16,104 +16,104 @@
 
 <link rel="stylesheet" href="{% static "desk/odeum_kal.css" %}" type="text/css"/>
 <html lang="en">
-<head>
-    <title>Схема зала</title>
-    <meta charset="utf-8"/>
-</head>
+	<head>
+		<title>Схема зала</title>
+		<meta charset="utf-8"/>
+	</head>
 
-<body>
-<div name="buttons-right">
-    {% for sector  in all_sectors|slice:":1" %}
-        <div name="right">
-            <a href="{% url 'desk:city_stats' city_id %}">
-                <button name="stats" type="submit" class="btn-primary-backdays btn-lg sharp" name="sector"
-                        id="sell_button">Статистика
-                </button>
-            </a>
-            <form method="post" name='Delete'>
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{% url 'desk:days' city_id %}">
-                <button name="Delete" type="submit" class="btn-primary-backdays btn-lg sharp"
-                        onclick="return confirm('Вы уверены, что хотите удалить день? ')" id="sell_button"> Удалить день
-                </button>
-            </form>
-        </div>
+	<body>
+		<div name="buttons-right">
+			{% for sector  in all_sectors|slice:":1" %}
+			<div name="right">
+				<a href="{% url 'desk:city_stats' city_id %}">
+					<button name="stats" type="submit" class="btn-primary-backdays btn-lg sharp" name="sector"
+														     id="sell_button">Статистика
+					</button>
+				</a>
+				<form method="post" name='Delete'>
+					{% csrf_token %}
+					<input type="hidden" name="next" value="{% url 'desk:days' city_id %}">
+					<button name="Delete" type="submit" class="btn-primary-backdays btn-lg sharp"
+									    onclick="return confirm('Вы уверены, что хотите удалить день? ')" id="sell_button"> Удалить день
+					</button>
+				</form>
+			</div>
 
-    {% endfor %}
-</div>
+			{% endfor %}
+		</div>
 
-<div name="buttons-left">
-    <div name="left">
-        <a href="{% url 'desk:days' city_id %}">
-            <button name="Days" type="submit" class="btn-primary-backdays btn-lg sharp"> К выбору дней</button>
-        </a>
-        <a href="{% url 'desk:bookedlist' time.date time.hour city_id %}">
-            <button name="Booking" type="submit" class="btn-primary-backdays btn-lg sharp">Брони</button>
-        </a>
-    </div>
+		<div name="buttons-left">
+			<div name="left">
+				<a href="{% url 'desk:days' city_id %}">
+					<button name="Days" type="submit" class="btn-primary-backdays btn-lg sharp"> К выбору дней</button>
+				</a>
+				<a href="{% url 'desk:bookedlist' time.date time.hour city_id %}">
+					<button name="Booking" type="submit" class="btn-primary-backdays btn-lg sharp">Брони</button>
+				</a>
+			</div>
 
-    <div name="text-center">
-        {% if all_sectors %}
-            <h3 name="time">{{ time|date:"d.m H:i" }}</h3>
-            <h4 name="time"> Доступные для выбора сектора </h4>
-        {% endif %}
-    </div>
-</div>
-<div name="left_stats">
-    <ul>
-        <p></p>
-        <li>Загруженность зала : {{ stat }} %</li>
-        <li>Общая прибыль : {{ gain_total }} рублей</li>
-        <li>Продано : {{ count_sold }} билетов : {{ gain_sold_pr }} %</li>
-        <li>Продано по акции : {{ count_share }}</li>
-        <li>По пригласительным {{ count_free }} билетов: {{ gain_free_pr }} %</li>
-        <li>Не продано {{ count_vacant }} билетов</li>
-    </ul>
-</div>
-
-               
+			<div name="text-center">
+				{% if all_sectors %}
+				<h3 name="time">{{ time|date:"d.m H:i" }}</h3>
+				<h4 name="time"> Доступные для выбора сектора </h4>
+				{% endif %}
+			</div>
+		</div>
+		<div name="left_stats">
+			<ul>
+				<p></p>
+				<li>Загруженность зала : {{ stat }} %</li>
+				<li>Общая прибыль : {{ gain_total }} рублей</li>
+				<li>Продано : {{ count_sold }} билетов : {{ gain_sold_pr }} %</li>
+				<li>Продано по акции : {{ count_share }}</li>
+				<li>По пригласительным {{ count_free }} билетов: {{ gain_free_pr }} %</li>
+				<li>Не продано {{ count_vacant }} билетов</li>
+			</ul>
+		</div>
 
 
-<div name="space">
-    {% for sector  in all_sectors|slice:":1" %}
-        <div name="S1">
-            <a href="{% url 'desk:box' 1 sector.date.date sector.date.hour city_id 'Noname' %}">
-                <p name="Sector_1">СЕКТОР 1</p>
-                <p name="1_label">Свободно мест: {{ len_1 }}</p> </a>
-            </a>
-        </div>
-        <div name="S2">
-            <a href="{% url 'desk:box' 2 sector.date.date sector.date.hour city_id 'Noname' %}">
-                <p name="Sector_2">СЕКТОР 2</p>
-                <p name="2_label">Свободно мест: {{ len_2 }}</p> </a>
-            </a>
-        </div>
 
-        <div name="S3">
-            <a href="{% url 'desk:box' 3 sector.date.date sector.date.hour city_id 'Noname' %}">
-                <p name="Sector_3">СЕКТОР 3</p>
-                <p name="3_label">Свободно мест: {{ len_3 }}</p> </a>
-            </a>
-        </div>
-        <div name="S4">
-            <a href="{% url 'desk:box' 4 sector.date.date sector.date.hour city_id 'Noname' %}">
-                <p name="Sector_4">СЕКТОР 4</p>
-                <p name="4_label">Свободно мест: {{ len_4 }}</p> </a>
-            </a>
-        </div>
-        <div name="S5">
-            <a href="{% url 'desk:box' 5 sector.date.date sector.date.hour city_id 'Noname' %}">
-                <p name="Sector_5">СЕКТОР 5</p>
-                <p name="5_label">Свободно мест: {{ len_5 }}</p> </a>
-            </a>
-        </div>
 
-         <div name="S6">
-            <a href="{% url 'desk:box' 6 sector.date.date sector.date.hour city_id 'Noname' %}">
-                <p name="Sector_6">СЕКТОР 6</p>
-                <p name="6_label">Свободно мест: {{ len_6 }}</p> </a>
-            </a>
-        </div>
-    {% endfor %}
-</div>
-</body>
+		<div name="space">
+			{% for sector  in all_sectors|slice:":1" %}
+			<div name="S1">
+				<a href="{% url 'desk:box' 1 sector.date.date sector.date.hour city_id 'Noname' %}">
+					<p name="Sector_1">СЕКТОР 1</p>
+					<p name="1_label">Свободно мест: {{ len_1 }}</p> </a>
+				</a>
+			</div>
+			<div name="S2">
+				<a href="{% url 'desk:box' 2 sector.date.date sector.date.hour city_id 'Noname' %}">
+					<p name="Sector_2">СЕКТОР 2</p>
+					<p name="2_label">Свободно мест: {{ len_2 }}</p> </a>
+				</a>
+			</div>
+
+			<div name="S3">
+				<a href="{% url 'desk:box' 3 sector.date.date sector.date.hour city_id 'Noname' %}">
+					<p name="Sector_3">СЕКТОР 3</p>
+					<p name="3_label">Свободно мест: {{ len_3 }}</p> </a>
+				</a>
+			</div>
+			<div name="S4">
+				<a href="{% url 'desk:box' 4 sector.date.date sector.date.hour city_id 'Noname' %}">
+					<p name="Sector_4">СЕКТОР 4</p>
+					<p name="4_label">Свободно мест: {{ len_4 }}</p> </a>
+				</a>
+			</div>
+			<div name="S5">
+				<a href="{% url 'desk:box' 5 sector.date.date sector.date.hour city_id 'Noname' %}">
+					<p name="Sector_5">СЕКТОР 5</p>
+					<p name="5_label">Свободно мест: {{ len_5 }}</p> </a>
+				</a>
+			</div>
+
+			<div name="S6">
+				<a href="{% url 'desk:box' 6 sector.date.date sector.date.hour city_id 'Noname' %}">
+					<p name="Sector_6">СЕКТОР 6</p>
+					<p name="6_label">Свободно мест: {{ len_6 }}</p> </a>
+				</a>
+			</div>
+			{% endfor %}
+		</div>
+	</body>

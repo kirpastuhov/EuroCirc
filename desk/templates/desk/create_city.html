@@ -1,6 +1,4 @@
-
-
-{% load staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <title>CreateCity</title>
 
@@ -8,51 +6,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="{% static "desk/index.css" %}" type="text/css"/>
 <html lang="en">
-<head>
-    <title>Город</title>
-    <meta charset="utf-8"/>
-</head>
-<div class="back1">
-    <style>
+	<head>
+		<title>Город</title>
+		<meta charset="utf-8"/>
+	</head>
+	<div class="back1">
+		<style>
 
-        .btn-primary-backdays {
-            border-color: Black;
-            background-color: rgba(180, 180, 180, 0.7);
-            font-family: arial, monospace;
-            font-size: 14px;
-            color: #111;
-            cursor: pointer;
-        }
+.btn-primary-backdays {
+	border-color: Black;
+	background-color: rgba(180, 180, 180, 0.7);
+	font-family: arial, monospace;
+	font-size: 14px;
+	color: #111;
+	cursor: pointer;
+}
 
-        .btn-primary-backdays:hover {
-            background-color: rgba(195, 195, 195, 0.7);
-        }
-    </style>
-    <a href="{% url 'desk:index' %}">
-        <button class="btn-primary-backdays btn-lg sharp"> К выбору города</button>
-    </a>
-</div>
-<div class="container-fluid-create_day">
-    <form action="{% url 'desk:create_city' %}" method="post">
-        {% csrf_token %}
-        <div class="cName">
-            Введите название города:
-            <label>
-                <input type="text" name="city_name" required>
-            </label><br><br>
-        </div>
+	.btn-primary-backdays:hover {
+		background-color: rgba(195, 195, 195, 0.7);
+	}
+		</style>
+		<a href="{% url 'desk:index' %}">
+			<button class="btn-primary-backdays btn-lg sharp"> К выбору города</button>
+		</a>
+	</div>
+	<div class="container-fluid-create_day">
+		<form action="{% url 'desk:create_city' %}" method="post">
+			{% csrf_token %}
+			<div class="cName">
+				Введите название города:
+				<label>
+					<input type="text" name="city_name" required>
+				</label><br><br>
+			</div>
 
-        UTC +
-        <label>
-            <input type="number" required step="1" name="timezone">
-        </label><br><br>
+			UTC +
+			<label>
+				<input type="number" required step="1" name="timezone">
+			</label><br><br>
 
-        Пригласительных <input type="number" required step="1" name="limit"> <br><br>
-        
-        <!-- <input type="number" step="1" min="1" max="12" name='timezone'><br> -->
-        <div class="my_btn_discount">
-            <button type="submit" class="btn-primary-backdays btn-lg sharp">Открыть Город</button>
-        </div>
-    </form>
+			Пригласительных <input type="number" required step="1" name="limit"> <br><br>
 
-</div>
+			<!-- <input type="number" step="1" min="1" max="12" name='timezone'><br> -->
+			<div class="my_btn_discount">
+				<button type="submit" class="btn-primary-backdays btn-lg sharp">Открыть Город</button>
+			</div>
+		</form>
+
+	</div>

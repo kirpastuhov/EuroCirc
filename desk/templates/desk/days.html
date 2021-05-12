@@ -1,11 +1,11 @@
-{% load staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <title>Дни</title>
 <head>
 
-    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type="text/css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "desk/index.css" %}" type="text/css"/>
+	<link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type="text/css"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{% static "desk/index.css" %}" type="text/css"/>
 
 </head>
 
@@ -13,29 +13,29 @@
 <div class="container-fluid-2 bg-2 text-center">
 
 
-    <h2>{{ city }}</h2>
-    {% if all_days %}
+	<h2>{{ city }}</h2>
+	{% if all_days %}
 
-        <h3>Доступные для продажи дни: </h3>
-        <ul>
-            {% for day  in all_days %}
+	<h3>Доступные для продажи дни: </h3>
+	<ul>
+		{% for day  in all_days %}
 
-                <li class="active">
-                    <a href="{% url 'desk:odeum' day.date.date day.date.hour city_id %}">{{ day.date|date:"d F H-i" }}</a>
-                </li>
+		<li class="active">
+			<a href="{% url 'desk:odeum' day.date.date day.date.hour city_id %}">{{ day.date|date:"d F H-i" }}</a>
+		</li>
 
-            {% endfor %}
-        </ul>
-    {% else %}
-        <h3>Нет дотсупных для продажи дней.</h3>
-    {% endif %}
+		{% endfor %}
+	</ul>
+	{% else %}
+	<h3>Нет дотсупных для продажи дней.</h3>
+	{% endif %}
 
 
 </div>
 <li>
-    <a href="{% url 'desk:create_day' city_id %}">Открыть новый день </a>
+	<a href="{% url 'desk:create_day' city_id %}">Открыть новый день </a>
 </li>
 
 <li>
-    <a href="{% url 'desk:index' %}">К Городам</a>
+	<a href="{% url 'desk:index' %}">К Городам</a>
 </li>

@@ -1,175 +1,175 @@
-{% load staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 
 <head>
-    <title>Места</title>
-    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type="text/css"/>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+	<title>Места</title>
+	<link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" type="text/css"/>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static "desk/box.css" %}" type="text/css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8"/>
-    </head>
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{% static "desk/box.css" %}" type="text/css"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8"/>
+</head>
 
-    {% for row in all_rows|slice:":1" %}
-        <div class="back">
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{% url 'desk:odeum' date hour city.id %}">
-                <button type="submit" class="btn-primary-backdays btn-lg sharp" name="Back"  id="sell_button">Назад
-                </button>
+{% for row in all_rows|slice:":1" %}
+<div class="back">
+	<form method="post">
+		{% csrf_token %}
+		<input type="hidden" name="next" value="{% url 'desk:odeum' date hour city.id %}">
+		<button type="submit" class="btn-primary-backdays btn-lg sharp" name="Back"  id="sell_button">Назад
+		</button>
 
-            </form>
-        </div>
-    {% endfor %}
-    <h3 name="Sector">СЕКТОР: {{ sector }}</h3>
-    <h3>{{ city }}</h3>
-    <h3>{{ date_full|date:"d.m H:i" }}</h3>
-    {% for row in all_rows %}
-        <div class="myrow{{ forloop.counter }}">
-            <p6>Ряд {{ forloop.counter }} </p6>
-            {% for seat in row %}
-                <div class="seats">
-                    <form method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary" id="{{ seat.sold }}"
-                                title="{{ seat.price }},{{ seat.name }}" name="Select" selected="{{ seat.selected }}"
-                                value="{{ seat.id }}">{{ seat.seat_number }}</button>
-                        <input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
-                    </form>
-                </div>
-            {% endfor %}
-        </div>
-    {% endfor %}
-
-
-    <div class="all_buttons">
-        <div class="my_btn_sell">
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
-                <button type="submit" class="btn btn-primary-sell btn-lg round" name="Sell" id="sell_button">Продать
-                </button>
-            </form>
-            <script>
-                $("button[name='Sell']").click(function() {
-
-                    alert("К оплате: " + {{ batch }});
-                });
-            </script>
-        </div>
+	</form>
+</div>
+{% endfor %}
+<h3 name="Sector">СЕКТОР: {{ sector }}</h3>
+<h3>{{ city }}</h3>
+<h3>{{ date_full|date:"d.m H:i" }}</h3>
+{% for row in all_rows %}
+<div class="myrow{{ forloop.counter }}">
+	<p6>Ряд {{ forloop.counter }} </p6>
+	{% for seat in row %}
+	<div class="seats">
+		<form method="post">
+			{% csrf_token %}
+			<button type="submit" class="btn btn-primary" id="{{ seat.sold }}"
+								      title="{{ seat.price }},{{ seat.name }}" name="Select" selected="{{ seat.selected }}"
+															     value="{{ seat.id }}">{{ seat.seat_number }}</button>
+			<input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
+		</form>
+	</div>
+	{% endfor %}
+</div>
+{% endfor %}
 
 
-        <div class="my_btn_makefree">
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
-                <button type="submit" class="btn btn-primary-mkfree btn-lg round" name="Free" id="sell_button">
-                    Освободить
-                </button>
-            </form>
-        </div>
+<div class="all_buttons">
+	<div class="my_btn_sell">
+		<form method="post">
+			{% csrf_token %}
+			<input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
+			<button type="submit" class="btn btn-primary-sell btn-lg round" name="Sell" id="sell_button">Продать
+			</button>
+		</form>
+		<script>
+			$("button[name='Sell']").click(function() {
 
-        <!-- <div class="my_btn_share">
-						<form method="post">
-							{%csrf_token%}
-							<input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname'%}">
-							<button type="submit" class="btn btn-primary-event btn-lg round" name="Share", id="sell_button">Акция</button>
-						</form>
-		</div> -->
-
-        <!-- Default dropup button -->
-        <div class="btn-group dropup">
-            <button type="button" class="btn btn-primary-event btn-lg round dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                Акция
-            </button>
-            <div class="dropdown-menu">
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
-                    <button class="dropdown-item" name="one_one">1+1</button>
-                    <div class="dropdown-divider"></div>
-                    <button class="dropdown-item" name="two_one">2+1</button>
-                    <div class="dropdown-divider"></div>
-                    <button class="dropdown-item" name="three_one">3+1</button>
-                    <div class="dropdown-divider"></div>
-                    <button class="dropdown-item" name="ten">10%</button>
-                    <div class="dropdown-divider"></div>
-                    <button class="dropdown-item" name="fifteen">15%</button>
-                    <div class="dropdown-divider"></div>
-                    <button class="dropdown-item" name="twenty">20%</button>
-                </form>
-            </div>
-            <script>
-                $("button[name='twenty']").click(function() {
-                    let price = {{ batch }} * 0.8;
-                    alert("К оплате: " + price);
-                });
-                $("button[name='fifteen']").click(function() {
-                    let price = {{ batch }} * 0.85;
-                    alert("К оплате: " + price);
-                });
-                $("button[name='ten']").click(function() {
-                    let price = {{ batch }} * 0.9;
-                    alert("К оплате: " + price);
-                });
-                // language=JQuery-CSS
-                $("button[name='one_one']").click(function() {
-                    let price = {{ absolute_gain }};
-                    if (price == 0) {
-                      alert("Невозможно применить акцию");
-                    }
-                    else {
-                        alert("К оплате: " + price);
-                    }
-                });
-                $("button[name='two_one']").click(function() {
-                    let price = {{ absolute_gain }};
-                    if (price == 0) {
-                      alert("Невозможно применить акцию");
-                    }
-                    else {
-                        alert("К оплате: " + price);
-                    }
-                });
-                $("button[name='three_one']").click(function() {
-                    let price = {{ absolute_gain }};
-                    if (price == 0) {
-                      alert("Невозможно применить акцию");
-                    }
-                    else {
-                        alert("К оплате: " + price);
-                    }
-                });
-            </script>
-        </div>
-
-        <div class="my_btn_book">
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
-                <button type="submit" class="btn btn-primary-book btn-lg round" name="Book" id="sell_button">
-                    Забронировать
-                </button>
-                <label>
-                    <input type="text" name='booked_name' required/>
-                </label>
-            </form>
-        </div>
+				alert("К оплате: " + {{ batch }});
+			});
+		</script>
+	</div>
 
 
-        <div class="free2">
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
-                <button type="submit" class="btn btn-primary-free btn-lg sharp" name="Booked_admin"
-                        id="sell_button">Пригласительный
-                </button>
-            </form>
-        </div>
-        <h1>Цена: {{ batch }} </h1>
-    </div>
+	<div class="my_btn_makefree">
+		<form method="post">
+			{% csrf_token %}
+			<input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
+			<button type="submit" class="btn btn-primary-mkfree btn-lg round" name="Free" id="sell_button">
+				Освободить
+			</button>
+		</form>
+	</div>
+
+	<!-- <div class="my_btn_share">
+	 <form method="post">
+	 {%csrf_token%}
+	 <input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname'%}">
+	 <button type="submit" class="btn btn-primary-event btn-lg round" name="Share", id="sell_button">Акция</button>
+	 </form>
+	 </div> -->
+
+	 <!-- Default dropup button -->
+	 <div class="btn-group dropup">
+		 <button type="button" class="btn btn-primary-event btn-lg round dropdown-toggle" data-toggle="dropdown"
+												  aria-haspopup="true" aria-expanded="false">
+			 Акция
+		 </button>
+		 <div class="dropdown-menu">
+			 <form method="post">
+				 {% csrf_token %}
+				 <input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
+				 <button class="dropdown-item" name="one_one">1+1</button>
+				 <div class="dropdown-divider"></div>
+				 <button class="dropdown-item" name="two_one">2+1</button>
+				 <div class="dropdown-divider"></div>
+				 <button class="dropdown-item" name="three_one">3+1</button>
+				 <div class="dropdown-divider"></div>
+				 <button class="dropdown-item" name="ten">10%</button>
+				 <div class="dropdown-divider"></div>
+				 <button class="dropdown-item" name="fifteen">15%</button>
+				 <div class="dropdown-divider"></div>
+				 <button class="dropdown-item" name="twenty">20%</button>
+			 </form>
+		 </div>
+		 <script>
+			 $("button[name='twenty']").click(function() {
+				 let price = {{ batch }} * 0.8;
+				 alert("К оплате: " + price);
+			 });
+$("button[name='fifteen']").click(function() {
+	let price = {{ batch }} * 0.85;
+	alert("К оплате: " + price);
+});
+$("button[name='ten']").click(function() {
+	let price = {{ batch }} * 0.9;
+	alert("К оплате: " + price);
+});
+// language=JQuery-CSS
+$("button[name='one_one']").click(function() {
+	let price = {{ absolute_gain }};
+	if (price == 0) {
+		alert("Невозможно применить акцию");
+	}
+	else {
+		alert("К оплате: " + price);
+	}
+});
+$("button[name='two_one']").click(function() {
+	let price = {{ absolute_gain }};
+	if (price == 0) {
+		alert("Невозможно применить акцию");
+	}
+	else {
+		alert("К оплате: " + price);
+	}
+});
+$("button[name='three_one']").click(function() {
+	let price = {{ absolute_gain }};
+	if (price == 0) {
+		alert("Невозможно применить акцию");
+	}
+	else {
+		alert("К оплате: " + price);
+	}
+});
+		 </script>
+	 </div>
+
+	 <div class="my_btn_book">
+		 <form method="post">
+			 {% csrf_token %}
+			 <input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
+			 <button type="submit" class="btn btn-primary-book btn-lg round" name="Book" id="sell_button">
+				 Забронировать
+			 </button>
+			 <label>
+				 <input type="text" name='booked_name' required/>
+			 </label>
+		 </form>
+	 </div>
+
+
+	 <div class="free2">
+		 <form method="post">
+			 {% csrf_token %}
+			 <input type="hidden" name="next" value="{% url 'desk:box' sector date hour city.id 'Noname' %}">
+			 <button type="submit" class="btn btn-primary-free btn-lg sharp" name="Booked_admin"
+											 id="sell_button">Пригласительный
+			 </button>
+		 </form>
+	 </div>
+	 <h1>Цена: {{ batch }} </h1>
+</div>
