@@ -23,3 +23,7 @@ desk/static/desk/.DS_Store
 requirments.txt
 
 .idea/
+
+/venv/
+
+.vim
