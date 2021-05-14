@@ -148,8 +148,8 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                                         s_price = int(data.split(',')[1])
                                         for num in range(prev_num, (s_number+1)):
                                             Seat(seat_number=num, price=s_price,
-                                                        sector=row.sector, row=row, date=creation_date).save()
-                                        prev_num = s_number + 1
+                                                    sector=row.sector, row=row, date=creation_date).save()
+                                            prev_num = s_number + 1
 
                         return HttpResponseRedirect(next)
                     elif city_id == 2:
@@ -167,8 +167,8 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
                                         s_price = int(data.split(',')[1])
                                         for num in range(1, (s_number+1)):
                                             Seat(seat_number=num, price=s_price,
-                                                        sector=row.sector, row=row, date=creation_date).save()
-                        return HttpResponseRedirect(next)
+                                                    sector=row.sector, row=row, date=creation_date).save()
+                                            return HttpResponseRedirect(next)
 
         if 'Remember' in request.POST:
 
@@ -181,64 +181,64 @@ class CreateDay(UserPassesTestMixin, LoginRequiredMixin, View):
 
             cache_dict = {
 
-                'sector_1':
+                    'sector_1':
+                    {
+                        'row_1': [request.POST.get('s_1_row_1_1'), request.POST.get('s_1_row_1_2'), request.POST.get('s_1_row_1_3')],
+                        'row_2': [request.POST.get('s_1_row_2_1'), request.POST.get('s_1_row_2_2'), request.POST.get('s_1_row_2_3')],
+                        'row_3': [request.POST.get('s_1_row_3_1'), request.POST.get('s_1_row_3_2'), request.POST.get('s_1_row_3_3')],
+                        'row_4': [request.POST.get('s_1_row_4_1'), request.POST.get('s_1_row_4_2'), request.POST.get('s_1_row_4_3')],
+                        'row_5': [request.POST.get('s_1_row_5_1'), request.POST.get('s_1_row_5_2'), request.POST.get('s_1_row_5_3')],
+                        'row_6': [request.POST.get('s_1_row_6_1'), request.POST.get('s_1_row_6_2'), request.POST.get('s_1_row_6_3')],
+                        'row_7': [request.POST.get('s_1_row_7_1'), request.POST.get('s_1_row_7_2'), request.POST.get('s_1_row_7_3')],
+                        'row_8': [request.POST.get('s_1_row_8_1'), request.POST.get('s_1_row_8_2'), request.POST.get('s_1_row_8_3')],
+                        'row_9': [request.POST.get('s_1_row_9_1'), request.POST.get('s_1_row_9_2'), request.POST.get('s_1_row_9_3')],
+                        },
+                    'sector_2':
+                    {
+                        'row_1': [request.POST.get('s_2_row_1_1'), request.POST.get('s_2_row_1_2'), request.POST.get('s_2_row_1_3')],
+                        'row_2': [request.POST.get('s_2_row_2_1'), request.POST.get('s_2_row_2_2'), request.POST.get('s_2_row_2_3')],
+                        'row_3': [request.POST.get('s_2_row_3_1'), request.POST.get('s_2_row_3_2'), request.POST.get('s_2_row_3_3')],
+                        'row_4': [request.POST.get('s_2_row_4_1'), request.POST.get('s_2_row_4_2'), request.POST.get('s_2_row_4_3')],
+                        'row_5': [request.POST.get('s_2_row_5_1'), request.POST.get('s_2_row_5_2'), request.POST.get('s_2_row_5_3')],
+                        'row_6': [request.POST.get('s_2_row_6_1'), request.POST.get('s_2_row_6_2'), request.POST.get('s_2_row_6_3')],
+                        'row_7': [request.POST.get('s_2_row_7_1'), request.POST.get('s_2_row_7_2'), request.POST.get('s_2_row_7_3')],
+                        'row_8': [request.POST.get('s_2_row_8_1'), request.POST.get('s_2_row_8_2'), request.POST.get('s_2_row_8_3')],
+                        'row_9': [request.POST.get('s_2_row_9_1'), request.POST.get('s_2_row_9_2'), request.POST.get('s_2_row_9_3')],
+                        },
+                    'sector_3':
+                    {
+                        'row_1': [request.POST.get('s_3_row_1_1'), request.POST.get('s_3_row_1_2'), request.POST.get('s_3_row_1_3')],
+                        'row_2': [request.POST.get('s_3_row_2_1'), request.POST.get('s_3_row_2_2'), request.POST.get('s_3_row_2_3')],
+                        'row_3': [request.POST.get('s_3_row_3_1'), request.POST.get('s_3_row_3_2'), request.POST.get('s_3_row_3_3')],
+                        'row_4': [request.POST.get('s_3_row_4_1'), request.POST.get('s_3_row_4_2'), request.POST.get('s_3_row_4_3')],
+                        'row_5': [request.POST.get('s_3_row_5_1'), request.POST.get('s_3_row_5_2'), request.POST.get('s_3_row_5_3')],
+                        'row_6': [request.POST.get('s_3_row_6_1'), request.POST.get('s_3_row_6_2'), request.POST.get('s_3_row_6_3')],
+                        'row_7': [request.POST.get('s_3_row_7_1'), request.POST.get('s_3_row_7_2'), request.POST.get('s_3_row_7_3')],
+                        'row_8': [request.POST.get('s_3_row_8_1'), request.POST.get('s_3_row_8_2'), request.POST.get('s_3_row_8_3')],
+                        'row_9': [request.POST.get('s_3_row_9_1'), request.POST.get('s_3_row_9_2'), request.POST.get('s_3_row_9_3')],
+                        },
+                    'sector_4':
+                    {
+                        'row_1': [request.POST.get('s_4_row_1_1'), request.POST.get('s_4_row_1_2'), request.POST.get('s_4_row_1_3')],
+                        'row_2': [request.POST.get('s_4_row_2_1'), request.POST.get('s_4_row_2_2'), request.POST.get('s_4_row_2_3')],
+                        'row_3': [request.POST.get('s_4_row_3_1'), request.POST.get('s_4_row_3_2'), request.POST.get('s_4_row_3_3')],
+                        'row_4': [request.POST.get('s_4_row_4_1'), request.POST.get('s_4_row_4_2'), request.POST.get('s_4_row_4_3')],
+                        'row_5': [request.POST.get('s_4_row_5_1'), request.POST.get('s_4_row_5_2'), request.POST.get('s_4_row_5_3')],
+                        'row_6': [request.POST.get('s_4_row_6_1'), request.POST.get('s_4_row_6_2'), request.POST.get('s_4_row_6_3')],
+                        'row_7': [request.POST.get('s_4_row_7_1'), request.POST.get('s_4_row_7_2'), request.POST.get('s_4_row_7_3')],
+                        'row_8': [request.POST.get('s_4_row_8_1'), request.POST.get('s_4_row_8_2'), request.POST.get('s_4_row_8_3')],
+                        'row_9': [request.POST.get('s_4_row_9_1'), request.POST.get('s_4_row_9_2'), request.POST.get('s_4_row_9_3')],
+                        },
+                    'sector_5':
                 {
-                    'row_1': [request.POST.get('s_1_row_1_1'), request.POST.get('s_1_row_1_2'), request.POST.get('s_1_row_1_3')],
-                    'row_2': [request.POST.get('s_1_row_2_1'), request.POST.get('s_1_row_2_2'), request.POST.get('s_1_row_2_3')],
-                    'row_3': [request.POST.get('s_1_row_3_1'), request.POST.get('s_1_row_3_2'), request.POST.get('s_1_row_3_3')],
-                    'row_4': [request.POST.get('s_1_row_4_1'), request.POST.get('s_1_row_4_2'), request.POST.get('s_1_row_4_3')],
-                    'row_5': [request.POST.get('s_1_row_5_1'), request.POST.get('s_1_row_5_2'), request.POST.get('s_1_row_5_3')],
-                    'row_6': [request.POST.get('s_1_row_6_1'), request.POST.get('s_1_row_6_2'), request.POST.get('s_1_row_6_3')],
-                    'row_7': [request.POST.get('s_1_row_7_1'), request.POST.get('s_1_row_7_2'), request.POST.get('s_1_row_7_3')],
-                    'row_8': [request.POST.get('s_1_row_8_1'), request.POST.get('s_1_row_8_2'), request.POST.get('s_1_row_8_3')],
-                    'row_9': [request.POST.get('s_1_row_9_1'), request.POST.get('s_1_row_9_2'), request.POST.get('s_1_row_9_3')],
-                    },
-                'sector_2':
-                {
-                    'row_1': [request.POST.get('s_2_row_1_1'), request.POST.get('s_2_row_1_2'), request.POST.get('s_2_row_1_3')],
-                    'row_2': [request.POST.get('s_2_row_2_1'), request.POST.get('s_2_row_2_2'), request.POST.get('s_2_row_2_3')],
-                    'row_3': [request.POST.get('s_2_row_3_1'), request.POST.get('s_2_row_3_2'), request.POST.get('s_2_row_3_3')],
-                    'row_4': [request.POST.get('s_2_row_4_1'), request.POST.get('s_2_row_4_2'), request.POST.get('s_2_row_4_3')],
-                    'row_5': [request.POST.get('s_2_row_5_1'), request.POST.get('s_2_row_5_2'), request.POST.get('s_2_row_5_3')],
-                    'row_6': [request.POST.get('s_2_row_6_1'), request.POST.get('s_2_row_6_2'), request.POST.get('s_2_row_6_3')],
-                    'row_7': [request.POST.get('s_2_row_7_1'), request.POST.get('s_2_row_7_2'), request.POST.get('s_2_row_7_3')],
-                    'row_8': [request.POST.get('s_2_row_8_1'), request.POST.get('s_2_row_8_2'), request.POST.get('s_2_row_8_3')],
-                    'row_9': [request.POST.get('s_2_row_9_1'), request.POST.get('s_2_row_9_2'), request.POST.get('s_2_row_9_3')],
-                    },
-                'sector_3':
-                {
-                    'row_1': [request.POST.get('s_3_row_1_1'), request.POST.get('s_3_row_1_2'), request.POST.get('s_3_row_1_3')],
-                    'row_2': [request.POST.get('s_3_row_2_1'), request.POST.get('s_3_row_2_2'), request.POST.get('s_3_row_2_3')],
-                    'row_3': [request.POST.get('s_3_row_3_1'), request.POST.get('s_3_row_3_2'), request.POST.get('s_3_row_3_3')],
-                    'row_4': [request.POST.get('s_3_row_4_1'), request.POST.get('s_3_row_4_2'), request.POST.get('s_3_row_4_3')],
-                    'row_5': [request.POST.get('s_3_row_5_1'), request.POST.get('s_3_row_5_2'), request.POST.get('s_3_row_5_3')],
-                    'row_6': [request.POST.get('s_3_row_6_1'), request.POST.get('s_3_row_6_2'), request.POST.get('s_3_row_6_3')],
-                    'row_7': [request.POST.get('s_3_row_7_1'), request.POST.get('s_3_row_7_2'), request.POST.get('s_3_row_7_3')],
-                    'row_8': [request.POST.get('s_3_row_8_1'), request.POST.get('s_3_row_8_2'), request.POST.get('s_3_row_8_3')],
-                    'row_9': [request.POST.get('s_3_row_9_1'), request.POST.get('s_3_row_9_2'), request.POST.get('s_3_row_9_3')],
-                    },
-                'sector_4':
-                {
-                    'row_1': [request.POST.get('s_4_row_1_1'), request.POST.get('s_4_row_1_2'), request.POST.get('s_4_row_1_3')],
-                    'row_2': [request.POST.get('s_4_row_2_1'), request.POST.get('s_4_row_2_2'), request.POST.get('s_4_row_2_3')],
-                    'row_3': [request.POST.get('s_4_row_3_1'), request.POST.get('s_4_row_3_2'), request.POST.get('s_4_row_3_3')],
-                    'row_4': [request.POST.get('s_4_row_4_1'), request.POST.get('s_4_row_4_2'), request.POST.get('s_4_row_4_3')],
-                    'row_5': [request.POST.get('s_4_row_5_1'), request.POST.get('s_4_row_5_2'), request.POST.get('s_4_row_5_3')],
-                    'row_6': [request.POST.get('s_4_row_6_1'), request.POST.get('s_4_row_6_2'), request.POST.get('s_4_row_6_3')],
-                    'row_7': [request.POST.get('s_4_row_7_1'), request.POST.get('s_4_row_7_2'), request.POST.get('s_4_row_7_3')],
-                    'row_8': [request.POST.get('s_4_row_8_1'), request.POST.get('s_4_row_8_2'), request.POST.get('s_4_row_8_3')],
-                    'row_9': [request.POST.get('s_4_row_9_1'), request.POST.get('s_4_row_9_2'), request.POST.get('s_4_row_9_3')],
-                    },
-                'sector_5':
-                {
-                    'row_1': [request.POST.get('s_5_row_1_1'), request.POST.get('s_5_row_1_2'), request.POST.get('s_5_row_1_3')],
-                    'row_2': [request.POST.get('s_5_row_2_1'), request.POST.get('s_5_row_2_2'), request.POST.get('s_5_row_2_3')],
-                    'row_3': [request.POST.get('s_5_row_3_1'), request.POST.get('s_5_row_3_2'), request.POST.get('s_5_row_3_3')],
-                    'row_4': [request.POST.get('s_5_row_4_1'), request.POST.get('s_5_row_4_2'), request.POST.get('s_5_row_4_3')],
-                    'row_5': [request.POST.get('s_5_row_5_1'), request.POST.get('s_5_row_5_2'), request.POST.get('s_5_row_5_3')],
-                    'row_6': [request.POST.get('s_5_row_6_1'), request.POST.get('s_5_row_6_2'), request.POST.get('s_5_row_6_3')],
+                        'row_1': [request.POST.get('s_5_row_1_1'), request.POST.get('s_5_row_1_2'), request.POST.get('s_5_row_1_3')],
+                        'row_2': [request.POST.get('s_5_row_2_1'), request.POST.get('s_5_row_2_2'), request.POST.get('s_5_row_2_3')],
+                        'row_3': [request.POST.get('s_5_row_3_1'), request.POST.get('s_5_row_3_2'), request.POST.get('s_5_row_3_3')],
+                        'row_4': [request.POST.get('s_5_row_4_1'), request.POST.get('s_5_row_4_2'), request.POST.get('s_5_row_4_3')],
+                        'row_5': [request.POST.get('s_5_row_5_1'), request.POST.get('s_5_row_5_2'), request.POST.get('s_5_row_5_3')],
+                        'row_6': [request.POST.get('s_5_row_6_1'), request.POST.get('s_5_row_6_2'), request.POST.get('s_5_row_6_3')],
 
-                    }
+                        }
                 }
             with open('cache.txt', 'a') as file:
                 file.write('city_{}='.format(str(city_id)) + json.dumps(cache_dict) +"\n")
@@ -254,18 +254,18 @@ class Odeum(LoginRequiredMixin, View):
         if city_id != 2:
             template_name = 'desk/odeum.html'
             seat_given = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                   sold='Local_cashdesks', sector__city__id=city_id)
+                    sold='Local_cashdesks', sector__city__id=city_id)
             seat_vacant = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                    sold='Vacant', sector__city__id=city_id)
+                    sold='Vacant', sector__city__id=city_id)
             seat_sold = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                  sold='Sold', sector__city__id=city_id)
+                    sold='Sold', sector__city__id=city_id)
             seat_share = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                   sold='Share', sector__city__id=city_id)
+                    sold='Share', sector__city__id=city_id)
             # seat_discount = Seat.objects.all().filter(date__date=date, date__hour=hour, sold='Discount')
             seat_free = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                  sold='Free', sector__city__id=city_id)
+                    sold='Free', sector__city__id=city_id)
             seat_free_1 = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                  sold='Booked_admin', sector__city__id=city_id)
+                    sold='Booked_admin', sector__city__id=city_id)
 
             gain_total = 0
             gain_sold = 0
@@ -328,16 +328,16 @@ class Odeum(LoginRequiredMixin, View):
         elif city_id == 2:
             template_name = 'desk/odeum_kal.html'
             seat_given = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                   sold='Local_cashdesks', sector__city__id=city_id)
+                    sold='Local_cashdesks', sector__city__id=city_id)
             seat_vacant = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                    sold='Vacant', sector__city__id=city_id)
+                    sold='Vacant', sector__city__id=city_id)
             seat_sold = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                  sold='Sold', sector__city__id=city_id)
+                    sold='Sold', sector__city__id=city_id)
             seat_share = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                   sold='Share', sector__city__id=city_id)
+                    sold='Share', sector__city__id=city_id)
             # seat_discount = Seat.objects.all().filter(date__date=date, date__hour=hour, sold='Discount')
             seat_free = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                  sold='Free', sector__city__id=city_id)
+                    sold='Free', sector__city__id=city_id)
             gain_total = 0
             gain_sold = 0
             gain_share = 0
@@ -355,7 +355,7 @@ class Odeum(LoginRequiredMixin, View):
             count_share = len(seat_share)
             count_sold = len(seat_sold)
             # count_discount = len(seat_discount)
-            count_free = len(seat_free) + len(seat_free_1)
+            count_free = len(seat_free)
             count_vacant = len(seat_vacant)
             if len(seat_vacant) != 0:
                 stat = int(((1059 - len(seat_vacant)) / 1059) * 100)
@@ -405,9 +405,9 @@ class Odeum(LoginRequiredMixin, View):
             if User.objects.get(id=request.user.id).admin == True:
 
                 Day.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                         city__id=city_id).delete()
+                        city__id=city_id).delete()
                 Sector.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                            city__id=city_id).delete()
+                        city__id=city_id).delete()
                 print(str(User.objects.get(id=request.user.id).full_name) + " Удалил день " + "Дата: " + str(self.kwargs['date'] + " Время: "+ str(self.kwargs['hour'])))
                 return HttpResponseRedirect(next)
             else:
@@ -420,14 +420,14 @@ class Stats(LoginRequiredMixin, View):
 
     def post(self, request, city_id, *arg, **kwargs):
         seat_vacant = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                                sold='Vacant', sector__city__id=city_id)
+                sold='Vacant', sector__city__id=city_id)
         seat_sold = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                              sold='Sold', sector__city__id=city_id)
+                sold='Sold', sector__city__id=city_id)
         seat_share = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                               sold='Share', sector__city__id=city_id)
+                sold='Share', sector__city__id=city_id)
         # seat_discount = Seat.objects.all().filter(date__date=date, date__hour=hour, sold='Discount')
         seat_free = Seat.objects.all().filter(date__date=self.kwargs['date'], date__hour=self.kwargs['hour'],
-                                              sold='Free', sector__city__id=city_id)
+                sold='Free', sector__city__id=city_id)
         gain_total = 0
         gain_sold = 0
         gain_share = 0
@@ -461,16 +461,16 @@ class Stats(LoginRequiredMixin, View):
             gain_free_pr = 0
 
         context = {
-            'gain_sold': gain_sold,
-            'gain_total': gain_total,
-            'gain_discount': gain_discount,
-            'count_sold': count_sold,
-            'count_free': count_free,
-            'count_vacant': count_vacant,
-            'gaint_share': gain_share,
-            'stat': stat,
-            'gain_sold_pr': gain_sold_pr,
-            'gain_free_pr': gain_free_pr}
+                'gain_sold': gain_sold,
+                'gain_total': gain_total,
+                'gain_discount': gain_discount,
+                'count_sold': count_sold,
+                'count_free': count_free,
+                'count_vacant': count_vacant,
+                'gaint_share': gain_share,
+                'stat': stat,
+                'gain_sold_pr': gain_sold_pr,
+                'gain_free_pr': gain_free_pr}
         return render(request, self.template_name, context)
 
 
@@ -566,8 +566,8 @@ class CityStats(LoginRequiredMixin, View):
                 'points': [
                     {'fill': {'color': 'green'}},
                     {'fill': {'color': 'red'}},
-                ],
-            })
+                    ],
+                })
 
             worksheet1.insert_chart('D1', chart)
 
@@ -576,7 +576,7 @@ class CityStats(LoginRequiredMixin, View):
             output.seek(0)
 
             response = HttpResponse(output.read(),
-                                    content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
             response['Content-Disposition'] = "attachment; filename=" + str(city) + ".xlsx"
 
             output.close()
@@ -608,14 +608,14 @@ class CityStats(LoginRequiredMixin, View):
         count_vacant = len(seat_vacant)
 
         context = {
-            'city': city,
-            'gain_sold': gain_sold,
-            'gain_total': gain_total,
-            'gain_discount': gain_discount,
-            'count_sold': count_sold,
-            'count_free': count_free,
-            'count_vacant': count_vacant,
-            'gaint_share': gain_share}
+                'city': city,
+                'gain_sold': gain_sold,
+                'gain_total': gain_total,
+                'gain_discount': gain_discount,
+                'count_sold': count_sold,
+                'count_free': count_free,
+                'count_vacant': count_vacant,
+                'gaint_share': gain_share}
 
         return render(request, self.template_name, context)
 
@@ -626,12 +626,12 @@ class Box(LoginRequiredMixin, View):
         absolute_gain = 0
         current_user = User.objects.get(id=request.user.id)
         all_seats = Seat.get_all_selected_seats(self, current_user.id, city_id=city_id, hour=self.kwargs['hour'],
-                                                date=self.kwargs['date'])
+                date=self.kwargs['date'])
         if len(all_seats) == 0:
             pass
         elif(len(all_seats) == 2 and all_seats[0].price == all_seats[1].price):
 
-                all_seats = all_seats.order_by('price')
+            all_seats = all_seats.order_by('price')
                 min_seat = all_seats[0]
                 seat_1 = all_seats[1]
 
@@ -721,9 +721,9 @@ class Box(LoginRequiredMixin, View):
         current_user = User.objects.get(id=request.user.id)
         if self.kwargs['name'] != 'Noname':
             seats = Seat.objects.filter(sold='Booked', name=str(self.kwargs['name']),
-                                        sector__city=self.kwargs['city_id'], date__hour=self.kwargs['hour'],
-                                        date__date=self.kwargs['date'],
-                                        sector__sector_number=int(self.kwargs['sector_number']))
+                    sector__city=self.kwargs['city_id'], date__hour=self.kwargs['hour'],
+                    date__date=self.kwargs['date'],
+                    sector__sector_number=int(self.kwargs['sector_number']))
             for seat in seats:
                 seat.selected = True
                 seat.user_id = current_user.id
@@ -731,7 +731,7 @@ class Box(LoginRequiredMixin, View):
                 seat.save()
                 current_user.save()
         sector = Sector.get_sector(self, self.kwargs['date'], self.kwargs['hour'], self.kwargs['sector_number'],
-                                   city_id)
+                city_id)
         current_time = datetime.datetime.now()
         print("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n")
         print("[ Текущее время на сервере : {} ]".format(str(current_time)))
@@ -778,31 +778,31 @@ class Box(LoginRequiredMixin, View):
             for row in all_rows:
                 row.sort(key=lambda x: x.seat_number, reverse=False)
         elif self.kwargs['sector_number'] == '1' or self.kwargs['sector_number'] == '2' or self.kwargs[
-            'sector_number'] == '5':
+                'sector_number'] == '5':
             for row in all_rows:
                 row.sort(key=lambda x: x.seat_number, reverse=True)
 
 
-        
+
         if city_id != 2:
             all_rows = sorted(all_rows, key=len)
         Box.context = {'all_rows': all_rows,
-                   'batch': batch,
-                   'sector': self.kwargs['sector_number'],
-                   'city': city,
-                   'date': date,
-                   'hour': hour,
-                   'date_full': sector.date,
-                   'absolute_gain':absolute_gain,
+                'batch': batch,
+                'sector': self.kwargs['sector_number'],
+                'city': city,
+                'date': date,
+                'hour': hour,
+                'date_full': sector.date,
+                'absolute_gain':absolute_gain,
 
-           }
+                }
         return render(request, template_name, Box.context)
 
     def post(self, request, *arg, city_id, **kwargs):
         next = request.POST.get('next')
         current_user = User.objects.get(id=request.user.id)
         all_seats = Seat.get_all_selected_seats(self, current_user.id, city_id=city_id, hour=self.kwargs['hour'],
-                                                date=self.kwargs['date'])
+                date=self.kwargs['date'])
         city = City.objects.get(id=city_id)
         if 'Booked_admin' in request.POST:
             count = 0
@@ -1194,7 +1194,7 @@ class Box(LoginRequiredMixin, View):
             next = request.POST.get('next', '/')
             # all_seats = Seat.get_all_selected_seats(self, self.kwargs['sector_number'], current_user.id)
             if len(all_seats) == 4 and all_seats[0].price == all_seats[1].price == all_seats[2].price == all_seats[
-                3].price:
+                    3].price:
                 all_seats = all_seats.order_by('price')
                 min_seat = all_seats[0]
                 seat_1 = all_seats[1]
